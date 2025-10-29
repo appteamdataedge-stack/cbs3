@@ -1,0 +1,6 @@
+GL_Code,GL_Name,Opening_Bal,DR_Summation,CR_Summation,Closing_Bal
+110102001,Current Account Regular,0.00,0.00,100000.00,100000.00
+130101001,Interest Payable Savings Bank Regular,0.00,0.00,21.92,21.92
+210201001,OD against TD,0.00,100000.00,0.00,-100000.00
+240101001,Interest Expenditure Savings Bank Regular,0.00,21.92,0.00,-21.92
+TOTAL,,0.00,100021.92,100021.92,0.00

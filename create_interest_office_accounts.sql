@@ -1,0 +1,2 @@
+-- Create office accounts for interest GL numbers
+-- This will enable Interest Accrual Transaction Update (Job 2) to find contra accounts

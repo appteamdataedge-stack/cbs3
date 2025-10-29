@@ -1,0 +1,7 @@
+GL_Code,GL_Name,Opening_Bal,DR_Summation,CR_Summation,Closing_Bal
+110101001,Savings Bank Regular,10625.00,0.00,100.00,10725.00
+110102001,Current Account Regular,475.00,100.00,0.00,375.00
+130101001,Interest Payable Savings Bank Regular,2.42,0.00,1.91,4.33
+140102001,IIHLWMN,-0.19,0.08,0.00,-0.27
+240101001,Interest Expenditure Savings Bank Regular,-2.23,1.83,0.00,-4.06
+TOTAL,,11100.00,101.91,101.91,11100.00

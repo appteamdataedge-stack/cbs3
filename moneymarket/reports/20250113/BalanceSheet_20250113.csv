@@ -1,0 +1,22 @@
+Category,GL_Code,GL_Name,Closing_Bal
+=== ASSETS ===,,,
+ASSET,240101001,Interest Expenditure Savings Bank Regular,-4.06
+TOTAL ASSETS,,,-4.06
+
+=== LIABILITIES ===,,,
+LIABILITY,110101001,Savings Bank Regular,10725.00
+LIABILITY,110102001,Current Account Regular,375.00
+LIABILITY,130101001,Interest Payable Savings Bank Regular,4.33
+TOTAL LIABILITIES,,,11104.33
+
+=== INCOME ===,,,
+INCOME,140102001,IIHLWMN,-0.27
+TOTAL INCOME,,,-0.27
+
+=== EXPENDITURE ===,,,
+EXPENDITURE,240101001,Interest Expenditure Savings Bank Regular,-4.06
+TOTAL EXPENDITURE,,,-4.06
+
+NET PROFIT/LOSS,,,3.79
+
+TOTAL LIABILITIES + NET PROFIT/LOSS,,,11108.12

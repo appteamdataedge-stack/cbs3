@@ -1,0 +1,21 @@
+Category,GL_Code,GL_Name,Closing_Bal
+=== ASSETS ===,,,
+ASSET,210201001,OD against TD,-100000.00
+ASSET,240101001,Interest Expenditure Savings Bank Regular,-21.92
+TOTAL ASSETS,,,-100021.92
+
+=== LIABILITIES ===,,,
+LIABILITY,110102001,Current Account Regular,100000.00
+LIABILITY,130101001,Interest Payable Savings Bank Regular,21.92
+TOTAL LIABILITIES,,,100021.92
+
+=== INCOME ===,,,
+TOTAL INCOME,,,0
+
+=== EXPENDITURE ===,,,
+EXPENDITURE,240101001,Interest Expenditure Savings Bank Regular,-21.92
+TOTAL EXPENDITURE,,,-21.92
+
+NET PROFIT/LOSS,,,21.92
+
+TOTAL LIABILITIES + NET PROFIT/LOSS,,,100043.84

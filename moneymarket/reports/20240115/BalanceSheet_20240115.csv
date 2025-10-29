@@ -1,0 +1,4 @@
+Category,GL_Code,GL_Name,Amount
+Assets,110101001,Call Money - Overnight,1000000.00
+Assets,110101002,Call Money - Weekly,500000.00
+Liabilities,210101001,Term Money - Monthly,1500000.00
