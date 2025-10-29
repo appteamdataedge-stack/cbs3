@@ -29,7 +29,8 @@ public class CorsConfig implements WebMvcConfigurer {
                     "http://localhost:5176",
                     "http://localhost:5177",
                     "http://localhost:5178",
-                    "https://cbs3.vercel.app"
+                    "https://cbs3.vercel.app",
+                    "https://moneymarket.duckdns.org"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD")
                 .allowedHeaders("*")
@@ -51,7 +52,8 @@ public class CorsConfig implements WebMvcConfigurer {
             "http://localhost:5176",
             "http://localhost:5177",
             "http://localhost:5178",
-            "https://cbs3.vercel.app"
+            "https://cbs3.vercel.app",
+            "https://moneymarket.duckdns.org"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", "X-XSRF-TOKEN"));
@@ -83,6 +85,7 @@ public class CorsConfig implements WebMvcConfigurer {
         corsConfiguration.addAllowedOrigin("http://localhost:5175");
         corsConfiguration.addAllowedOrigin("http://localhost:5176");
         corsConfiguration.addAllowedOrigin("https://cbs3.vercel.app");
+        corsConfiguration.addAllowedOrigin("https://moneymarket.duckdns.org");
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.setMaxAge(3600L);
