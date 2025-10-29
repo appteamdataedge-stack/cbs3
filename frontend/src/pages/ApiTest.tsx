@@ -3,7 +3,7 @@ import { Box, Button, Typography, Paper, CircularProgress, Alert, TextField } fr
 import axios from 'axios';
 
 // Default API URL - can be changed by the user
-const DEFAULT_API_URL = 'http://localhost:8082/api';
+const DEFAULT_API_URL = `${import.meta.env.VITE_API_URL || 'http://localhost:8082'}/api`;
 
 const ApiTest = () => {
   const [loading, setLoading] = useState(false);

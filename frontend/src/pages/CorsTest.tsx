@@ -13,10 +13,10 @@ const CorsTest = () => {
     setError(null);
     setSuccess(null);
     setResponse(null);
-    
+
     try {
       // Use direct axios call to test CORS without any interceptors
-      const result = await axios.get(`http://localhost:8082${endpoint}`, {
+      const result = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:8082'}${endpoint}`, {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'

@@ -8,7 +8,7 @@ import { getAuthToken, clearAuthToken } from '../utils/authUtils';
 
 // Get API base URL from environment variable
 // Ensure we're using the correct backend port
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8082/api';
+const API_BASE_URL = `${import.meta.env.VITE_API_URL || 'http://localhost:8082'}/api`;
 console.log('API Base URL:', API_BASE_URL);
 
 // Security configuration
