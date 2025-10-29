@@ -21,14 +21,15 @@ public class CorsConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // Map all paths, not just /api/**
                 .allowedOrigins(
-                    "http://localhost:3000", 
-                    "http://localhost:4173", 
-                    "http://localhost:5173", 
-                    "http://localhost:5174", 
-                    "http://localhost:5175", 
-                    "http://localhost:5176", 
+                    "http://localhost:3000",
+                    "http://localhost:4173",
+                    "http://localhost:5173",
+                    "http://localhost:5174",
+                    "http://localhost:5175",
+                    "http://localhost:5176",
                     "http://localhost:5177",
-                    "http://localhost:5178"
+                    "http://localhost:5178",
+                    "https://cbs3.vercel.app"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD")
                 .allowedHeaders("*")
@@ -42,14 +43,15 @@ public class CorsConfig implements WebMvcConfigurer {
         CorsConfiguration configuration = new CorsConfiguration();
         // Add specific origins and a pattern to catch dynamic ports
         configuration.setAllowedOrigins(Arrays.asList(
-            "http://localhost:3000", 
-            "http://localhost:4173", 
-            "http://localhost:5173", 
-            "http://localhost:5174", 
-            "http://localhost:5175", 
-            "http://localhost:5176", 
+            "http://localhost:3000",
+            "http://localhost:4173",
+            "http://localhost:5173",
+            "http://localhost:5174",
+            "http://localhost:5175",
+            "http://localhost:5176",
             "http://localhost:5177",
-            "http://localhost:5178"
+            "http://localhost:5178",
+            "https://cbs3.vercel.app"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", "X-XSRF-TOKEN"));
@@ -80,6 +82,7 @@ public class CorsConfig implements WebMvcConfigurer {
         corsConfiguration.addAllowedOrigin("http://localhost:5174");
         corsConfiguration.addAllowedOrigin("http://localhost:5175");
         corsConfiguration.addAllowedOrigin("http://localhost:5176");
+        corsConfiguration.addAllowedOrigin("https://cbs3.vercel.app");
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.setMaxAge(3600L);
