@@ -20,6 +20,7 @@ import {
   Tooltip
 } from '@mui/material';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { PageHeader } from '../../components/common';
 import {
@@ -44,6 +45,8 @@ interface BatchJob {
 }
 
 const EOD = () => {
+  const navigate = useNavigate();
+  
   // Get system date from backend parameter table
   const [systemDate, setSystemDate] = useState<string>('');
   const [jobStatuses, setJobStatuses] = useState<EODJobStatus[]>([]);
@@ -178,9 +181,9 @@ const EOD = () => {
             { autoClose: 2000 }
           );
           
-          // Wait 2 seconds then redirect to system date page
+          // Wait 2 seconds then redirect to system date page using React Router
           await new Promise(resolve => setTimeout(resolve, 2000));
-          window.location.href = '/admin/system-date';
+          navigate('/admin/system-date');
           return;
         }
         
