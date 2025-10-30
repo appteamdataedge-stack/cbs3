@@ -21,14 +21,14 @@ public class CustAcctMaster {
     @Column(name = "Account_No", length = 13)
     private String accountNo;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Sub_Product_Id", nullable = false)
     private SubProdMaster subProduct;
 
     @Column(name = "GL_Num", nullable = false, length = 20)
     private String glNum;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Cust_Id", nullable = false)
     private CustMaster customer;
 

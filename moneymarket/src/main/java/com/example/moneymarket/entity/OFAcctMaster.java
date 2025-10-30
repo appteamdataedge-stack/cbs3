@@ -20,7 +20,7 @@ public class OFAcctMaster {
     @Column(name = "Account_No", length = 13)
     private String accountNo;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Sub_Product_Id", nullable = false)
     private SubProdMaster subProduct;
 

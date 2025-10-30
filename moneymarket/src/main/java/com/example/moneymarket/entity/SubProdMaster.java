@@ -22,7 +22,7 @@ public class SubProdMaster {
     @Column(name = "Sub_Product_Id")
     private Integer subProductId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Product_Id", nullable = false)
     private ProdMaster product;
 
