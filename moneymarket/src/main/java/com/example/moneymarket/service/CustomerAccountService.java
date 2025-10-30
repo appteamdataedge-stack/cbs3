@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  * Service for customer account operations
@@ -157,6 +156,7 @@ public class CustomerAccountService {
      * @param accountNo The account number
      * @return The account response
      */
+    @Transactional(readOnly = true)
     public CustomerAccountResponseDTO getAccount(String accountNo) {
         // Find the account
         CustAcctMaster account = custAcctMasterRepository.findById(accountNo)
@@ -176,11 +176,12 @@ public class CustomerAccountService {
      * @param pageable The pagination information
      * @return Page of account responses
      */
+    @Transactional(readOnly = true)
     public Page<CustomerAccountResponseDTO> getAllAccounts(Pageable pageable) {
         // Get the accounts page
         Page<CustAcctMaster> accounts = custAcctMasterRepository.findAll(pageable);
 
-        // Map to response DTOs
+        // Map to response DTOs (within transaction to allow lazy loading)
         return accounts.map(account -> {
             AcctBal balance = acctBalRepository.findLatestByAccountNo(account.getAccountNo()).orElse(
                     AcctBal.builder()

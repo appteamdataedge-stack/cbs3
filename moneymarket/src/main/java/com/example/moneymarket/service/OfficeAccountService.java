@@ -117,6 +117,7 @@ public class OfficeAccountService {
      * @param accountNo The account number
      * @return The account response
      */
+    @Transactional(readOnly = true)
     public OfficeAccountResponseDTO getAccount(String accountNo) {
         // Find the account
         OFAcctMaster account = ofAcctMasterRepository.findById(accountNo)
@@ -132,11 +133,12 @@ public class OfficeAccountService {
      * @param pageable The pagination information
      * @return Page of account responses
      */
+    @Transactional(readOnly = true)
     public Page<OfficeAccountResponseDTO> getAllAccounts(Pageable pageable) {
         // Get the accounts page
         Page<OFAcctMaster> accounts = ofAcctMasterRepository.findAll(pageable);
 
-        // Map to response DTOs
+        // Map to response DTOs (within transaction to allow lazy loading)
         return accounts.map(this::mapToResponse);
     }
 
