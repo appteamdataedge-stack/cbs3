@@ -183,6 +183,14 @@ public class BalanceService {
             glNum = customerAccount.getGlNum();
             loanLimit = customerAccount.getLoanLimit() != null ? customerAccount.getLoanLimit() : BigDecimal.ZERO;
             isCustomerAccount = true;
+            
+            // Force initialization of lazy-loaded entities if needed
+            if (customerAccount.getSubProduct() != null) {
+                customerAccount.getSubProduct().getSubProductId();
+            }
+            if (customerAccount.getCustomer() != null) {
+                customerAccount.getCustomer().getCustId();
+            }
         } catch (ResourceNotFoundException e) {
             // Try office account if customer account not found
             OFAcctMaster officeAccount = ofAcctMasterRepository.findById(accountNo)
@@ -191,6 +199,11 @@ public class BalanceService {
             glNum = officeAccount.getGlNum();
             loanLimit = BigDecimal.ZERO; // Office accounts don't have loan limits
             isCustomerAccount = false;
+            
+            // Force initialization of lazy-loaded entities if needed
+            if (officeAccount.getSubProduct() != null) {
+                officeAccount.getSubProduct().getSubProductId();
+            }
         }
 
         // Calculate debits and credits for the current system date
