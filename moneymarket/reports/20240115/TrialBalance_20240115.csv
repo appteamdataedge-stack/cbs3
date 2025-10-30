@@ -1,4 +1,2 @@
-GL_Code,GL_Name,Debit_Amount,Credit_Amount
-110101001,Call Money - Overnight,1000000.00,0.00
-110101002,Call Money - Weekly,500000.00,0.00
-210101001,Term Money - Monthly,0.00,1500000.00
+GL_Code,GL_Name,Opening_Bal,DR_Summation,CR_Summation,Closing_Bal
+TOTAL,,0,0,0,0

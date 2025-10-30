@@ -1,0 +1,4416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.example.moneymarket.integration.EODIntegrationTest" time="10.085" tests="3" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.specification.version" value="21"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="G:\Backup-Source Code\Money Market PTTP-reback\moneymarket\target\test-classes;G:\Backup-Source Code\Money Market PTTP-reback\moneymarket\target\classes;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.1.5\spring-boot-starter-web-3.1.5.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-starter\3.1.5\spring-boot-starter-3.1.5.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot\3.1.5\spring-boot-3.1.5.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.1.5\spring-boot-autoconfigure-3.1.5.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.1.5\spring-boot-starter-logging-3.1.5.jar;C:\Users\aemon\.m2\repository\ch\qos\logback\logback-classic\1.4.11\logback-classic-1.4.11.jar;C:\Users\aemon\.m2\repository\ch\qos\logback\logback-core\1.4.11\logback-core-1.4.11.jar;C:\Users\aemon\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.20.0\log4j-to-slf4j-2.20.0.jar;C:\Users\aemon\.m2\repository\org\slf4j\jul-to-slf4j\2.0.9\jul-to-slf4j-2.0.9.jar;C:\Users\aemon\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\aemon\.m2\repository\org\yaml\snakeyaml\1.33\snakeyaml-1.33.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.1.5\spring-boot-starter-json-3.1.5.jar;C:\Users\aemon\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.3\jackson-databind-2.15.3.jar;C:\Users\aemon\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.15.3\jackson-datatype-jdk8-2.15.3.jar;C:\Users\aemon\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.15.3\jackson-datatype-jsr310-2.15.3.jar;C:\Users\aemon\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.15.3\jackson-module-parameter-names-2.15.3.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.1.5\spring-boot-starter-tomcat-3.1.5.jar;C:\Users\aemon\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.15\tomcat-embed-core-10.1.15.jar;C:\Users\aemon\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.15\tomcat-embed-websocket-10.1.15.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-web\6.0.13\spring-web-6.0.13.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-beans\6.0.13\spring-beans-6.0.13.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-webmvc\6.0.13\spring-webmvc-6.0.13.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-aop\6.0.13\spring-aop-6.0.13.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-context\6.0.13\spring-context-6.0.13.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-expression\6.0.13\spring-expression-6.0.13.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.1.5\spring-boot-starter-data-jpa-3.1.5.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.1.5\spring-boot-starter-aop-3.1.5.jar;C:\Users\aemon\.m2\repository\org\aspectj\aspectjweaver\1.9.20\aspectjweaver-1.9.20.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.1.5\spring-boot-starter-jdbc-3.1.5.jar;C:\Users\aemon\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-jdbc\6.0.13\spring-jdbc-6.0.13.jar;C:\Users\aemon\.m2\repository\org\hibernate\orm\hibernate-core\6.2.13.Final\hibernate-core-6.2.13.Final.jar;C:\Users\aemon\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\aemon\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\aemon\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;C:\Users\aemon\.m2\repository\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;C:\Users\aemon\.m2\repository\io\smallrye\jandex\3.0.5\jandex-3.0.5.jar;C:\Users\aemon\.m2\repository\com\fasterxml\classmate\1.5.1\classmate-1.5.1.jar;C:\Users\aemon\.m2\repository\net\bytebuddy\byte-buddy\1.14.9\byte-buddy-1.14.9.jar;C:\Users\aemon\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.3\jaxb-runtime-4.0.3.jar;C:\Users\aemon\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.3\jaxb-core-4.0.3.jar;C:\Users\aemon\.m2\repository\org\eclipse\angus\angus-activation\2.0.1\angus-activation-2.0.1.jar;C:\Users\aemon\.m2\repository\org\glassfish\jaxb\txw2\4.0.3\txw2-4.0.3.jar;C:\Users\aemon\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\aemon\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\aemon\.m2\repository\org\antlr\antlr4-runtime\4.10.1\antlr4-runtime-4.10.1.jar;C:\Users\aemon\.m2\repository\org\springframework\data\spring-data-jpa\3.1.5\spring-data-jpa-3.1.5.jar;C:\Users\aemon\.m2\repository\org\springframework\data\spring-data-commons\3.1.5\spring-data-commons-3.1.5.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-orm\6.0.13\spring-orm-6.0.13.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-tx\6.0.13\spring-tx-6.0.13.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-aspects\6.0.13\spring-aspects-6.0.13.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.1.5\spring-boot-starter-validation-3.1.5.jar;C:\Users\aemon\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.15\tomcat-embed-el-10.1.15.jar;C:\Users\aemon\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar;C:\Users\aemon\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-starter-actuator\3.1.5\spring-boot-starter-actuator-3.1.5.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-actuator-autoconfigure\3.1.5\spring-boot-actuator-autoconfigure-3.1.5.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-actuator\3.1.5\spring-boot-actuator-3.1.5.jar;C:\Users\aemon\.m2\repository\io\micrometer\micrometer-observation\1.11.5\micrometer-observation-1.11.5.jar;C:\Users\aemon\.m2\repository\io\micrometer\micrometer-commons\1.11.5\micrometer-commons-1.11.5.jar;C:\Users\aemon\.m2\repository\io\micrometer\micrometer-core\1.11.5\micrometer-core-1.11.5.jar;C:\Users\aemon\.m2\repository\org\hdrhistogram\HdrHistogram\2.1.12\HdrHistogram-2.1.12.jar;C:\Users\aemon\.m2\repository\org\latencyutils\LatencyUtils\2.0.3\LatencyUtils-2.0.3.jar;C:\Users\aemon\.m2\repository\org\springframework\retry\spring-retry\2.0.4\spring-retry-2.0.4.jar;C:\Users\aemon\.m2\repository\com\mysql\mysql-connector-j\8.0.33\mysql-connector-j-8.0.33.jar;C:\Users\aemon\.m2\repository\com\h2database\h2\2.1.214\h2-2.1.214.jar;C:\Users\aemon\.m2\repository\org\flywaydb\flyway-core\9.16.3\flyway-core-9.16.3.jar;C:\Users\aemon\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-toml\2.15.3\jackson-dataformat-toml-2.15.3.jar;C:\Users\aemon\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.3\jackson-core-2.15.3.jar;C:\Users\aemon\.m2\repository\org\apache\commons\commons-text\1.10.0\commons-text-1.10.0.jar;C:\Users\aemon\.m2\repository\org\apache\commons\commons-lang3\3.12.0\commons-lang3-3.12.0.jar;C:\Users\aemon\.m2\repository\org\flywaydb\flyway-mysql\9.16.3\flyway-mysql-9.16.3.jar;C:\Users\aemon\.m2\repository\org\projectlombok\lombok\1.18.30\lombok-1.18.30.jar;C:\Users\aemon\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-ui\2.2.0\springdoc-openapi-starter-webmvc-ui-2.2.0.jar;C:\Users\aemon\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-api\2.2.0\springdoc-openapi-starter-webmvc-api-2.2.0.jar;C:\Users\aemon\.m2\repository\org\springdoc\springdoc-openapi-starter-common\2.2.0\springdoc-openapi-starter-common-2.2.0.jar;C:\Users\aemon\.m2\repository\io\swagger\core\v3\swagger-core-jakarta\2.2.15\swagger-core-jakarta-2.2.15.jar;C:\Users\aemon\.m2\repository\io\swagger\core\v3\swagger-annotations-jakarta\2.2.15\swagger-annotations-jakarta-2.2.15.jar;C:\Users\aemon\.m2\repository\io\swagger\core\v3\swagger-models-jakarta\2.2.15\swagger-models-jakarta-2.2.15.jar;C:\Users\aemon\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-yaml\2.15.3\jackson-dataformat-yaml-2.15.3.jar;C:\Users\aemon\.m2\repository\org\webjars\swagger-ui\5.2.0\swagger-ui-5.2.0.jar;C:\Users\aemon\.m2\repository\org\apache\poi\poi\5.2.3\poi-5.2.3.jar;C:\Users\aemon\.m2\repository\commons-codec\commons-codec\1.15\commons-codec-1.15.jar;C:\Users\aemon\.m2\repository\org\apache\commons\commons-collections4\4.4\commons-collections4-4.4.jar;C:\Users\aemon\.m2\repository\org\apache\commons\commons-math3\3.6.1\commons-math3-3.6.1.jar;C:\Users\aemon\.m2\repository\commons-io\commons-io\2.11.0\commons-io-2.11.0.jar;C:\Users\aemon\.m2\repository\com\zaxxer\SparseBitSet\1.2\SparseBitSet-1.2.jar;C:\Users\aemon\.m2\repository\org\apache\logging\log4j\log4j-api\2.20.0\log4j-api-2.20.0.jar;C:\Users\aemon\.m2\repository\org\apache\poi\poi-ooxml\5.2.3\poi-ooxml-5.2.3.jar;C:\Users\aemon\.m2\repository\org\apache\poi\poi-ooxml-lite\5.2.3\poi-ooxml-lite-5.2.3.jar;C:\Users\aemon\.m2\repository\org\apache\xmlbeans\xmlbeans\5.1.1\xmlbeans-5.1.1.jar;C:\Users\aemon\.m2\repository\org\apache\commons\commons-compress\1.21\commons-compress-1.21.jar;C:\Users\aemon\.m2\repository\com\github\virtuald\curvesapi\1.07\curvesapi-1.07.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.1.5\spring-boot-starter-test-3.1.5.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-test\3.1.5\spring-boot-test-3.1.5.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.1.5\spring-boot-test-autoconfigure-3.1.5.jar;C:\Users\aemon\.m2\repository\com\jayway\jsonpath\json-path\2.8.0\json-path-2.8.0.jar;C:\Users\aemon\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.1\jakarta.xml.bind-api-4.0.1.jar;C:\Users\aemon\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.2\jakarta.activation-api-2.1.2.jar;C:\Users\aemon\.m2\repository\net\minidev\json-smart\2.4.11\json-smart-2.4.11.jar;C:\Users\aemon\.m2\repository\net\minidev\accessors-smart\2.4.11\accessors-smart-2.4.11.jar;C:\Users\aemon\.m2\repository\org\ow2\asm\asm\9.3\asm-9.3.jar;C:\Users\aemon\.m2\repository\org\assertj\assertj-core\3.24.2\assertj-core-3.24.2.jar;C:\Users\aemon\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;C:\Users\aemon\.m2\repository\org\junit\jupiter\junit-jupiter\5.9.3\junit-jupiter-5.9.3.jar;C:\Users\aemon\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.3\junit-jupiter-api-5.9.3.jar;C:\Users\aemon\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\aemon\.m2\repository\org\junit\platform\junit-platform-commons\1.9.3\junit-platform-commons-1.9.3.jar;C:\Users\aemon\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\aemon\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.9.3\junit-jupiter-params-5.9.3.jar;C:\Users\aemon\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.9.3\junit-jupiter-engine-5.9.3.jar;C:\Users\aemon\.m2\repository\org\junit\platform\junit-platform-engine\1.9.3\junit-platform-engine-1.9.3.jar;C:\Users\aemon\.m2\repository\org\mockito\mockito-core\5.3.1\mockito-core-5.3.1.jar;C:\Users\aemon\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.9\byte-buddy-agent-1.14.9.jar;C:\Users\aemon\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\aemon\.m2\repository\org\mockito\mockito-junit-jupiter\5.3.1\mockito-junit-jupiter-5.3.1.jar;C:\Users\aemon\.m2\repository\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;C:\Users\aemon\.m2\repository\com\vaadin\external\google\android-json\0.0.20131108.vaadin1\android-json-0.0.20131108.vaadin1.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-core\6.0.13\spring-core-6.0.13.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-jcl\6.0.13\spring-jcl-6.0.13.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-test\6.0.13\spring-test-6.0.13.jar;C:\Users\aemon\.m2\repository\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;C:\Users\aemon\.m2\repository\org\testcontainers\testcontainers\1.18.3\testcontainers-1.18.3.jar;C:\Users\aemon\.m2\repository\junit\junit\4.13.2\junit-4.13.2.jar;C:\Users\aemon\.m2\repository\org\hamcrest\hamcrest-core\2.2\hamcrest-core-2.2.jar;C:\Users\aemon\.m2\repository\org\slf4j\slf4j-api\2.0.9\slf4j-api-2.0.9.jar;C:\Users\aemon\.m2\repository\org\rnorth\duct-tape\duct-tape\1.0.8\duct-tape-1.0.8.jar;C:\Users\aemon\.m2\repository\org\jetbrains\annotations\17.0.0\annotations-17.0.0.jar;C:\Users\aemon\.m2\repository\com\github\docker-java\docker-java-api\3.3.0\docker-java-api-3.3.0.jar;C:\Users\aemon\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.3\jackson-annotations-2.15.3.jar;C:\Users\aemon\.m2\repository\com\github\docker-java\docker-java-transport-zerodep\3.3.0\docker-java-transport-zerodep-3.3.0.jar;C:\Users\aemon\.m2\repository\com\github\docker-java\docker-java-transport\3.3.0\docker-java-transport-3.3.0.jar;C:\Users\aemon\.m2\repository\net\java\dev\jna\jna\5.12.1\jna-5.12.1.jar;C:\Users\aemon\.m2\repository\org\testcontainers\mysql\1.18.3\mysql-1.18.3.jar;C:\Users\aemon\.m2\repository\org\testcontainers\jdbc\1.18.3\jdbc-1.18.3.jar;C:\Users\aemon\.m2\repository\org\testcontainers\database-commons\1.18.3\database-commons-1.18.3.jar;C:\Users\aemon\.m2\repository\org\testcontainers\junit-jupiter\1.18.3\junit-jupiter-1.18.3.jar;"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://java.oracle.com/"/>
+    <property name="user.timezone" value="Asia/Dhaka"/>
+    <property name="org.jboss.logging.provider" value="slf4j"/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="java.vm.specification.version" value="21"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-21\bin"/>
+    <property name="sun.java.command" value="C:\Users\aemon\AppData\Local\Temp\surefire6593782215568594130\surefirebooter-20251030100647023_3.jar C:\Users\aemon\AppData\Local\Temp\surefire6593782215568594130 2025-10-30T10-06-36_742-jvmRun1 surefire-20251030100647023_1tmp surefire_0-20251030100647023_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="G:\Backup-Source Code\Money Market PTTP-reback\moneymarket\target\test-classes;G:\Backup-Source Code\Money Market PTTP-reback\moneymarket\target\classes;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.1.5\spring-boot-starter-web-3.1.5.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-starter\3.1.5\spring-boot-starter-3.1.5.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot\3.1.5\spring-boot-3.1.5.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.1.5\spring-boot-autoconfigure-3.1.5.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.1.5\spring-boot-starter-logging-3.1.5.jar;C:\Users\aemon\.m2\repository\ch\qos\logback\logback-classic\1.4.11\logback-classic-1.4.11.jar;C:\Users\aemon\.m2\repository\ch\qos\logback\logback-core\1.4.11\logback-core-1.4.11.jar;C:\Users\aemon\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.20.0\log4j-to-slf4j-2.20.0.jar;C:\Users\aemon\.m2\repository\org\slf4j\jul-to-slf4j\2.0.9\jul-to-slf4j-2.0.9.jar;C:\Users\aemon\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\aemon\.m2\repository\org\yaml\snakeyaml\1.33\snakeyaml-1.33.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.1.5\spring-boot-starter-json-3.1.5.jar;C:\Users\aemon\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.3\jackson-databind-2.15.3.jar;C:\Users\aemon\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.15.3\jackson-datatype-jdk8-2.15.3.jar;C:\Users\aemon\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.15.3\jackson-datatype-jsr310-2.15.3.jar;C:\Users\aemon\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.15.3\jackson-module-parameter-names-2.15.3.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.1.5\spring-boot-starter-tomcat-3.1.5.jar;C:\Users\aemon\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.15\tomcat-embed-core-10.1.15.jar;C:\Users\aemon\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.15\tomcat-embed-websocket-10.1.15.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-web\6.0.13\spring-web-6.0.13.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-beans\6.0.13\spring-beans-6.0.13.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-webmvc\6.0.13\spring-webmvc-6.0.13.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-aop\6.0.13\spring-aop-6.0.13.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-context\6.0.13\spring-context-6.0.13.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-expression\6.0.13\spring-expression-6.0.13.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.1.5\spring-boot-starter-data-jpa-3.1.5.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.1.5\spring-boot-starter-aop-3.1.5.jar;C:\Users\aemon\.m2\repository\org\aspectj\aspectjweaver\1.9.20\aspectjweaver-1.9.20.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.1.5\spring-boot-starter-jdbc-3.1.5.jar;C:\Users\aemon\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-jdbc\6.0.13\spring-jdbc-6.0.13.jar;C:\Users\aemon\.m2\repository\org\hibernate\orm\hibernate-core\6.2.13.Final\hibernate-core-6.2.13.Final.jar;C:\Users\aemon\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\aemon\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\aemon\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;C:\Users\aemon\.m2\repository\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;C:\Users\aemon\.m2\repository\io\smallrye\jandex\3.0.5\jandex-3.0.5.jar;C:\Users\aemon\.m2\repository\com\fasterxml\classmate\1.5.1\classmate-1.5.1.jar;C:\Users\aemon\.m2\repository\net\bytebuddy\byte-buddy\1.14.9\byte-buddy-1.14.9.jar;C:\Users\aemon\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.3\jaxb-runtime-4.0.3.jar;C:\Users\aemon\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.3\jaxb-core-4.0.3.jar;C:\Users\aemon\.m2\repository\org\eclipse\angus\angus-activation\2.0.1\angus-activation-2.0.1.jar;C:\Users\aemon\.m2\repository\org\glassfish\jaxb\txw2\4.0.3\txw2-4.0.3.jar;C:\Users\aemon\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\aemon\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\aemon\.m2\repository\org\antlr\antlr4-runtime\4.10.1\antlr4-runtime-4.10.1.jar;C:\Users\aemon\.m2\repository\org\springframework\data\spring-data-jpa\3.1.5\spring-data-jpa-3.1.5.jar;C:\Users\aemon\.m2\repository\org\springframework\data\spring-data-commons\3.1.5\spring-data-commons-3.1.5.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-orm\6.0.13\spring-orm-6.0.13.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-tx\6.0.13\spring-tx-6.0.13.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-aspects\6.0.13\spring-aspects-6.0.13.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.1.5\spring-boot-starter-validation-3.1.5.jar;C:\Users\aemon\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.15\tomcat-embed-el-10.1.15.jar;C:\Users\aemon\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar;C:\Users\aemon\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-starter-actuator\3.1.5\spring-boot-starter-actuator-3.1.5.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-actuator-autoconfigure\3.1.5\spring-boot-actuator-autoconfigure-3.1.5.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-actuator\3.1.5\spring-boot-actuator-3.1.5.jar;C:\Users\aemon\.m2\repository\io\micrometer\micrometer-observation\1.11.5\micrometer-observation-1.11.5.jar;C:\Users\aemon\.m2\repository\io\micrometer\micrometer-commons\1.11.5\micrometer-commons-1.11.5.jar;C:\Users\aemon\.m2\repository\io\micrometer\micrometer-core\1.11.5\micrometer-core-1.11.5.jar;C:\Users\aemon\.m2\repository\org\hdrhistogram\HdrHistogram\2.1.12\HdrHistogram-2.1.12.jar;C:\Users\aemon\.m2\repository\org\latencyutils\LatencyUtils\2.0.3\LatencyUtils-2.0.3.jar;C:\Users\aemon\.m2\repository\org\springframework\retry\spring-retry\2.0.4\spring-retry-2.0.4.jar;C:\Users\aemon\.m2\repository\com\mysql\mysql-connector-j\8.0.33\mysql-connector-j-8.0.33.jar;C:\Users\aemon\.m2\repository\com\h2database\h2\2.1.214\h2-2.1.214.jar;C:\Users\aemon\.m2\repository\org\flywaydb\flyway-core\9.16.3\flyway-core-9.16.3.jar;C:\Users\aemon\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-toml\2.15.3\jackson-dataformat-toml-2.15.3.jar;C:\Users\aemon\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.3\jackson-core-2.15.3.jar;C:\Users\aemon\.m2\repository\org\apache\commons\commons-text\1.10.0\commons-text-1.10.0.jar;C:\Users\aemon\.m2\repository\org\apache\commons\commons-lang3\3.12.0\commons-lang3-3.12.0.jar;C:\Users\aemon\.m2\repository\org\flywaydb\flyway-mysql\9.16.3\flyway-mysql-9.16.3.jar;C:\Users\aemon\.m2\repository\org\projectlombok\lombok\1.18.30\lombok-1.18.30.jar;C:\Users\aemon\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-ui\2.2.0\springdoc-openapi-starter-webmvc-ui-2.2.0.jar;C:\Users\aemon\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-api\2.2.0\springdoc-openapi-starter-webmvc-api-2.2.0.jar;C:\Users\aemon\.m2\repository\org\springdoc\springdoc-openapi-starter-common\2.2.0\springdoc-openapi-starter-common-2.2.0.jar;C:\Users\aemon\.m2\repository\io\swagger\core\v3\swagger-core-jakarta\2.2.15\swagger-core-jakarta-2.2.15.jar;C:\Users\aemon\.m2\repository\io\swagger\core\v3\swagger-annotations-jakarta\2.2.15\swagger-annotations-jakarta-2.2.15.jar;C:\Users\aemon\.m2\repository\io\swagger\core\v3\swagger-models-jakarta\2.2.15\swagger-models-jakarta-2.2.15.jar;C:\Users\aemon\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-yaml\2.15.3\jackson-dataformat-yaml-2.15.3.jar;C:\Users\aemon\.m2\repository\org\webjars\swagger-ui\5.2.0\swagger-ui-5.2.0.jar;C:\Users\aemon\.m2\repository\org\apache\poi\poi\5.2.3\poi-5.2.3.jar;C:\Users\aemon\.m2\repository\commons-codec\commons-codec\1.15\commons-codec-1.15.jar;C:\Users\aemon\.m2\repository\org\apache\commons\commons-collections4\4.4\commons-collections4-4.4.jar;C:\Users\aemon\.m2\repository\org\apache\commons\commons-math3\3.6.1\commons-math3-3.6.1.jar;C:\Users\aemon\.m2\repository\commons-io\commons-io\2.11.0\commons-io-2.11.0.jar;C:\Users\aemon\.m2\repository\com\zaxxer\SparseBitSet\1.2\SparseBitSet-1.2.jar;C:\Users\aemon\.m2\repository\org\apache\logging\log4j\log4j-api\2.20.0\log4j-api-2.20.0.jar;C:\Users\aemon\.m2\repository\org\apache\poi\poi-ooxml\5.2.3\poi-ooxml-5.2.3.jar;C:\Users\aemon\.m2\repository\org\apache\poi\poi-ooxml-lite\5.2.3\poi-ooxml-lite-5.2.3.jar;C:\Users\aemon\.m2\repository\org\apache\xmlbeans\xmlbeans\5.1.1\xmlbeans-5.1.1.jar;C:\Users\aemon\.m2\repository\org\apache\commons\commons-compress\1.21\commons-compress-1.21.jar;C:\Users\aemon\.m2\repository\com\github\virtuald\curvesapi\1.07\curvesapi-1.07.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.1.5\spring-boot-starter-test-3.1.5.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-test\3.1.5\spring-boot-test-3.1.5.jar;C:\Users\aemon\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.1.5\spring-boot-test-autoconfigure-3.1.5.jar;C:\Users\aemon\.m2\repository\com\jayway\jsonpath\json-path\2.8.0\json-path-2.8.0.jar;C:\Users\aemon\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.1\jakarta.xml.bind-api-4.0.1.jar;C:\Users\aemon\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.2\jakarta.activation-api-2.1.2.jar;C:\Users\aemon\.m2\repository\net\minidev\json-smart\2.4.11\json-smart-2.4.11.jar;C:\Users\aemon\.m2\repository\net\minidev\accessors-smart\2.4.11\accessors-smart-2.4.11.jar;C:\Users\aemon\.m2\repository\org\ow2\asm\asm\9.3\asm-9.3.jar;C:\Users\aemon\.m2\repository\org\assertj\assertj-core\3.24.2\assertj-core-3.24.2.jar;C:\Users\aemon\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;C:\Users\aemon\.m2\repository\org\junit\jupiter\junit-jupiter\5.9.3\junit-jupiter-5.9.3.jar;C:\Users\aemon\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.3\junit-jupiter-api-5.9.3.jar;C:\Users\aemon\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\aemon\.m2\repository\org\junit\platform\junit-platform-commons\1.9.3\junit-platform-commons-1.9.3.jar;C:\Users\aemon\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\aemon\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.9.3\junit-jupiter-params-5.9.3.jar;C:\Users\aemon\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.9.3\junit-jupiter-engine-5.9.3.jar;C:\Users\aemon\.m2\repository\org\junit\platform\junit-platform-engine\1.9.3\junit-platform-engine-1.9.3.jar;C:\Users\aemon\.m2\repository\org\mockito\mockito-core\5.3.1\mockito-core-5.3.1.jar;C:\Users\aemon\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.9\byte-buddy-agent-1.14.9.jar;C:\Users\aemon\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\aemon\.m2\repository\org\mockito\mockito-junit-jupiter\5.3.1\mockito-junit-jupiter-5.3.1.jar;C:\Users\aemon\.m2\repository\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;C:\Users\aemon\.m2\repository\com\vaadin\external\google\android-json\0.0.20131108.vaadin1\android-json-0.0.20131108.vaadin1.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-core\6.0.13\spring-core-6.0.13.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-jcl\6.0.13\spring-jcl-6.0.13.jar;C:\Users\aemon\.m2\repository\org\springframework\spring-test\6.0.13\spring-test-6.0.13.jar;C:\Users\aemon\.m2\repository\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;C:\Users\aemon\.m2\repository\org\testcontainers\testcontainers\1.18.3\testcontainers-1.18.3.jar;C:\Users\aemon\.m2\repository\junit\junit\4.13.2\junit-4.13.2.jar;C:\Users\aemon\.m2\repository\org\hamcrest\hamcrest-core\2.2\hamcrest-core-2.2.jar;C:\Users\aemon\.m2\repository\org\slf4j\slf4j-api\2.0.9\slf4j-api-2.0.9.jar;C:\Users\aemon\.m2\repository\org\rnorth\duct-tape\duct-tape\1.0.8\duct-tape-1.0.8.jar;C:\Users\aemon\.m2\repository\org\jetbrains\annotations\17.0.0\annotations-17.0.0.jar;C:\Users\aemon\.m2\repository\com\github\docker-java\docker-java-api\3.3.0\docker-java-api-3.3.0.jar;C:\Users\aemon\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.3\jackson-annotations-2.15.3.jar;C:\Users\aemon\.m2\repository\com\github\docker-java\docker-java-transport-zerodep\3.3.0\docker-java-transport-zerodep-3.3.0.jar;C:\Users\aemon\.m2\repository\com\github\docker-java\docker-java-transport\3.3.0\docker-java-transport-3.3.0.jar;C:\Users\aemon\.m2\repository\net\java\dev\jna\jna\5.12.1\jna-5.12.1.jar;C:\Users\aemon\.m2\repository\org\testcontainers\mysql\1.18.3\mysql-1.18.3.jar;C:\Users\aemon\.m2\repository\org\testcontainers\jdbc\1.18.3\jdbc-1.18.3.jar;C:\Users\aemon\.m2\repository\org\testcontainers\database-commons\1.18.3\database-commons-1.18.3.jar;C:\Users\aemon\.m2\repository\org\testcontainers\junit-jupiter\1.18.3\junit-jupiter-1.18.3.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\aemon"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2025-04-15"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk-21"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="G:\Backup-Source Code\Money Market PTTP-reback\moneymarket"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="FILE_LOG_CHARSET" value="UTF-8"/>
+    <property name="java.awt.headless" value="true"/>
+    <property name="surefire.real.class.path" value="C:\Users\aemon\AppData\Local\Temp\surefire6593782215568594130\surefirebooter-20251030100647023_3.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="21.0.7+8-LTS-245"/>
+    <property name="user.name" value="aemon"/>
+    <property name="stdout.encoding" value="Cp1252"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="localRepository" value="C:\Users\aemon\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="C:\Users\aemon\AppData\Local\Temp\"/>
+    <property name="com.zaxxer.hikari.pool_number" value="1"/>
+    <property name="java.version" value="21.0.7"/>
+    <property name="user.dir" value="G:\Backup-Source Code\Money Market PTTP-reback\moneymarket"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="PID" value="11912"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="CONSOLE_LOG_CHARSET" value="UTF-8"/>
+    <property name="native.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk-21\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Users\aemon\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\aemon\bin;C:\Users\aemon\AppData\Local\npm-cache\_npx\becf7b9e49303068\node_modules\.bin;G:\Backup-Source Code\Money Market PTTP-reback\moneymarket\node_modules\.bin;G:\Backup-Source Code\Money Market PTTP-reback\node_modules\.bin;G:\Backup-Source Code\node_modules\.bin;G:\node_modules\.bin;C:\Program Files\nodejs\node_modules\npm\node_modules\@npmcli\run-script\lib\node-gyp-bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\cursor\resources\app\bin;C:\Program Files\Java\jdk-21\bin;C:\Program Files\nodejs;C:\Program Files\Git\cmd;C:\Program Files\Maven\apache-maven-3.9.11\bin;C:\Program Files\Maven\apache-maven-3.9.11\bin;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Users\aemon\AppData\Local\Microsoft\WindowsApps;C:\Users\aemon\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="Cp1252"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="21.0.7+8-LTS-245"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="65.0"/>
+    <property name="CONSOLE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} [%X{correlationId}] - %msg%n"/>
+  </properties>
+  <testcase name="testEODProcessWithDebitCreditMismatch" classname="com.example.moneymarket.integration.EODIntegrationTest" time="0.316">
+    <system-out><![CDATA[2025-10-30 10:07:04 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils [] - Could not detect default configuration classes for test class [com.example.moneymarket.integration.EODIntegrationTest]: EODIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-10-30 10:07:04 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper [] - Found @SpringBootConfiguration com.example.moneymarket.MoneyMarketApplication for test class com.example.moneymarket.integration.EODIntegrationTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.1.5)
+
+2025-10-30 10:07:04 [main] INFO  c.e.m.integration.EODIntegrationTest [] - Starting EODIntegrationTest using Java 21.0.7 with PID 11912 (started by aemon in G:\Backup-Source Code\Money Market PTTP-reback\moneymarket)
+2025-10-30 10:07:04 [main] DEBUG c.e.m.integration.EODIntegrationTest [] - Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-10-30 10:07:04 [main] INFO  c.e.m.integration.EODIntegrationTest [] - The following 1 profile is active: "test"
+2025-10-30 10:07:06 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate [] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-30 10:07:06 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate [] - Finished Spring Data repository scanning in 120 ms. Found 17 JPA repository interfaces.
+2025-10-30 10:07:07 [main] INFO  o.h.jpa.internal.util.LogHelper [] - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-30 10:07:07 [main] INFO  org.hibernate.Version [] - HHH000412: Hibernate ORM core version 6.2.13.Final
+2025-10-30 10:07:07 [main] INFO  org.hibernate.cfg.Environment [] - HHH000406: Using bytecode reflection optimizer
+2025-10-30 10:07:07 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo [] - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-30 10:07:07 [main] INFO  com.zaxxer.hikari.HikariDataSource [] - HikariPool-1 - Starting...
+2025-10-30 10:07:07 [main] INFO  com.zaxxer.hikari.pool.HikariPool [] - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2025-10-30 10:07:07 [main] INFO  com.zaxxer.hikari.HikariDataSource [] - HikariPool-1 - Start completed.
+2025-10-30 10:07:07 [main] WARN  org.hibernate.orm.deprecation [] - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-30 10:07:09 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator [] - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    drop table if exists account_seq cascade 
+Hibernate: 
+    drop table if exists account_seq cascade 
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    drop table if exists acct_bal cascade 
+Hibernate: 
+    drop table if exists acct_bal cascade 
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    drop table if exists acct_bal_accrual cascade 
+Hibernate: 
+    drop table if exists acct_bal_accrual cascade 
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    drop table if exists cust_acct_master cascade 
+Hibernate: 
+    drop table if exists cust_acct_master cascade 
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    drop table if exists cust_master cascade 
+Hibernate: 
+    drop table if exists cust_master cascade 
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    drop table if exists eod_log_table cascade 
+Hibernate: 
+    drop table if exists eod_log_table cascade 
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    drop table if exists gl_balance cascade 
+Hibernate: 
+    drop table if exists gl_balance cascade 
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    drop table if exists gl_movement cascade 
+Hibernate: 
+    drop table if exists gl_movement cascade 
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    drop table if exists gl_movement_accrual cascade 
+Hibernate: 
+    drop table if exists gl_movement_accrual cascade 
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    drop table if exists gl_setup cascade 
+Hibernate: 
+    drop table if exists gl_setup cascade 
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    drop table if exists interest_rate_master cascade 
+Hibernate: 
+    drop table if exists interest_rate_master cascade 
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    drop table if exists intt_accr_tran cascade 
+Hibernate: 
+    drop table if exists intt_accr_tran cascade 
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    drop table if exists of_acct_master cascade 
+Hibernate: 
+    drop table if exists of_acct_master cascade 
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    drop table if exists parameter_table cascade 
+Hibernate: 
+    drop table if exists parameter_table cascade 
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    drop table if exists prod_master cascade 
+Hibernate: 
+    drop table if exists prod_master cascade 
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    drop table if exists sub_prod_master cascade 
+Hibernate: 
+    drop table if exists sub_prod_master cascade 
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    drop table if exists tran_table cascade 
+Hibernate: 
+    drop table if exists tran_table cascade 
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    create table account_seq (
+        seq_number integer not null,
+        last_updated timestamp(6) not null,
+        gl_num varchar(9) not null,
+        primary key (gl_num)
+    )
+Hibernate: 
+    create table account_seq (
+        seq_number integer not null,
+        last_updated timestamp(6) not null,
+        gl_num varchar(9) not null,
+        primary key (gl_num)
+    )
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    create table acct_bal (
+        available_balance numeric(20,2) not null,
+        closing_bal numeric(20,2),
+        cr_summation numeric(20,2),
+        current_balance numeric(20,2) not null,
+        dr_summation numeric(20,2),
+        opening_bal numeric(20,2),
+        tran_date date not null,
+        last_updated timestamp(6) not null,
+        account_no varchar(13) not null,
+        primary key (tran_date, account_no)
+    )
+Hibernate: 
+    create table acct_bal (
+        available_balance numeric(20,2) not null,
+        closing_bal numeric(20,2),
+        cr_summation numeric(20,2),
+        current_balance numeric(20,2) not null,
+        dr_summation numeric(20,2),
+        opening_bal numeric(20,2),
+        tran_date date not null,
+        last_updated timestamp(6) not null,
+        account_no varchar(13) not null,
+        primary key (tran_date, account_no)
+    )
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    create table acct_bal_accrual (
+        accrual_date date not null,
+        closing_bal numeric(20,2),
+        cr_summation numeric(20,2),
+        dr_summation numeric(20,2),
+        interest_amount numeric(20,2) not null,
+        opening_bal numeric(20,2),
+        tran_date date,
+        accr_bal_id bigint generated by default as identity,
+        gl_num varchar(9),
+        account_no varchar(13) not null,
+        primary key (accr_bal_id)
+    )
+Hibernate: 
+    create table acct_bal_accrual (
+        accrual_date date not null,
+        closing_bal numeric(20,2),
+        cr_summation numeric(20,2),
+        dr_summation numeric(20,2),
+        interest_amount numeric(20,2) not null,
+        opening_bal numeric(20,2),
+        tran_date date,
+        accr_bal_id bigint generated by default as identity,
+        gl_num varchar(9),
+        account_no varchar(13) not null,
+        primary key (accr_bal_id)
+    )
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    create table cust_acct_master (
+        cust_id integer not null,
+        date_closure date,
+        date_maturity date,
+        date_opening date not null,
+        loan_limit numeric(18,2),
+        sub_product_id integer not null,
+        tenor integer,
+        branch_code varchar(10) not null,
+        account_no varchar(13) not null,
+        gl_num varchar(20) not null,
+        acct_name varchar(100) not null,
+        cust_name varchar(100),
+        account_status varchar(255) not null check (account_status in ('Active','Inactive','Closed','Dormant')),
+        primary key (account_no)
+    )
+Hibernate: 
+    create table cust_acct_master (
+        cust_id integer not null,
+        date_closure date,
+        date_maturity date,
+        date_opening date not null,
+        loan_limit numeric(18,2),
+        sub_product_id integer not null,
+        tenor integer,
+        branch_code varchar(10) not null,
+        account_no varchar(13) not null,
+        gl_num varchar(20) not null,
+        acct_name varchar(100) not null,
+        cust_name varchar(100),
+        account_status varchar(255) not null check (account_status in ('Active','Inactive','Closed','Dormant')),
+        primary key (account_no)
+    )
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    create table cust_master (
+        cust_id integer not null,
+        entry_date date not null,
+        entry_time time(6) not null,
+        verification_date date,
+        verification_time time(6),
+        branch_code varchar(10),
+        mobile varchar(15),
+        ext_cust_id varchar(20) not null,
+        maker_id varchar(20) not null,
+        verifier_id varchar(20),
+        first_name varchar(50),
+        last_name varchar(50),
+        trade_name varchar(100),
+        address_1 varchar(200),
+        cust_type varchar(255) not null check (cust_type in ('Individual','Corporate','Bank')),
+        primary key (cust_id)
+    )
+Hibernate: 
+    create table cust_master (
+        cust_id integer not null,
+        entry_date date not null,
+        entry_time time(6) not null,
+        verification_date date,
+        verification_time time(6),
+        branch_code varchar(10),
+        mobile varchar(15),
+        ext_cust_id varchar(20) not null,
+        maker_id varchar(20) not null,
+        verifier_id varchar(20),
+        first_name varchar(50),
+        last_name varchar(50),
+        trade_name varchar(100),
+        address_1 varchar(200),
+        cust_type varchar(255) not null check (cust_type in ('Individual','Corporate','Bank')),
+        primary key (cust_id)
+    )
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    create table eod_log_table (
+        eod_date date not null,
+        records_processed integer,
+        system_date date not null,
+        created_timestamp timestamp(6) not null,
+        end_timestamp timestamp(6),
+        eod_log_id bigint generated by default as identity,
+        start_timestamp timestamp(6) not null,
+        user_id varchar(20) not null,
+        job_name varchar(50) not null,
+        failed_at_step varchar(500),
+        error_message TEXT,
+        status varchar(255) not null check (status in ('Running','Success','Failed')),
+        primary key (eod_log_id)
+    )
+Hibernate: 
+    create table eod_log_table (
+        eod_date date not null,
+        records_processed integer,
+        system_date date not null,
+        created_timestamp timestamp(6) not null,
+        end_timestamp timestamp(6),
+        eod_log_id bigint generated by default as identity,
+        start_timestamp timestamp(6) not null,
+        user_id varchar(20) not null,
+        job_name varchar(50) not null,
+        failed_at_step varchar(500),
+        error_message TEXT,
+        status varchar(255) not null check (status in ('Running','Success','Failed')),
+        primary key (eod_log_id)
+    )
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    create table gl_balance (
+        closing_bal numeric(20,2),
+        cr_summation numeric(20,2),
+        current_balance numeric(20,2) not null,
+        dr_summation numeric(20,2),
+        opening_bal numeric(20,2),
+        tran_date date not null,
+        id bigint generated by default as identity,
+        last_updated timestamp(6) not null,
+        gl_num varchar(9) not null,
+        primary key (id),
+        constraint uq_gl_balance_gl_num_tran_date unique (gl_num, tran_date)
+    )
+Hibernate: 
+    create table gl_balance (
+        closing_bal numeric(20,2),
+        cr_summation numeric(20,2),
+        current_balance numeric(20,2) not null,
+        dr_summation numeric(20,2),
+        opening_bal numeric(20,2),
+        tran_date date not null,
+        id bigint generated by default as identity,
+        last_updated timestamp(6) not null,
+        gl_num varchar(9) not null,
+        primary key (id),
+        constraint uq_gl_balance_gl_num_tran_date unique (gl_num, tran_date)
+    )
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    create table gl_movement (
+        amount numeric(20,2) not null,
+        balance_after numeric(20,2) not null,
+        fcy_amt numeric(20,2),
+        lcy_amt numeric(20,2),
+        tran_ccy varchar(3),
+        tran_date date not null,
+        value_date date not null,
+        movement_id bigint generated by default as identity,
+        gl_num varchar(9) not null,
+        tran_id varchar(20) not null,
+        narration varchar(100),
+        dr_cr_flag varchar(255) not null check (dr_cr_flag in ('D','C')),
+        primary key (movement_id)
+    )
+Hibernate: 
+    create table gl_movement (
+        amount numeric(20,2) not null,
+        balance_after numeric(20,2) not null,
+        fcy_amt numeric(20,2),
+        lcy_amt numeric(20,2),
+        tran_ccy varchar(3),
+        tran_date date not null,
+        value_date date not null,
+        movement_id bigint generated by default as identity,
+        gl_num varchar(9) not null,
+        tran_id varchar(20) not null,
+        narration varchar(100),
+        dr_cr_flag varchar(255) not null check (dr_cr_flag in ('D','C')),
+        primary key (movement_id)
+    )
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    create table gl_movement_accrual (
+        accrual_date date not null,
+        amount numeric(20,2) not null,
+        exchange_rate numeric(10,4),
+        fcy_amt numeric(20,2),
+        lcy_amt numeric(20,2),
+        tran_ccy varchar(3),
+        tran_date date,
+        movement_id bigint generated by default as identity,
+        gl_num varchar(9) not null,
+        accr_tran_id varchar(20) not null,
+        tran_id varchar(20),
+        narration varchar(100),
+        dr_cr_flag varchar(255) not null check (dr_cr_flag in ('D','C')),
+        status varchar(255) not null check (status in ('Pending','Posted','Verified')),
+        primary key (movement_id)
+    )
+Hibernate: 
+    create table gl_movement_accrual (
+        accrual_date date not null,
+        amount numeric(20,2) not null,
+        exchange_rate numeric(10,4),
+        fcy_amt numeric(20,2),
+        lcy_amt numeric(20,2),
+        tran_ccy varchar(3),
+        tran_date date,
+        movement_id bigint generated by default as identity,
+        gl_num varchar(9) not null,
+        accr_tran_id varchar(20) not null,
+        tran_id varchar(20),
+        narration varchar(100),
+        dr_cr_flag varchar(255) not null check (dr_cr_flag in ('D','C')),
+        status varchar(255) not null check (status in ('Pending','Posted','Verified')),
+        primary key (movement_id)
+    )
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    create table gl_setup (
+        layer_id integer,
+        gl_num varchar(9) not null,
+        layer_gl_num varchar(9),
+        parent_gl_num varchar(9),
+        gl_name varchar(50),
+        primary key (gl_num)
+    )
+Hibernate: 
+    create table gl_setup (
+        layer_id integer,
+        gl_num varchar(9) not null,
+        layer_gl_num varchar(9),
+        parent_gl_num varchar(9),
+        gl_name varchar(50),
+        primary key (gl_num)
+    )
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    create table interest_rate_master (
+        intt_effctv_date date not null,
+        intt_rate numeric(5,2) not null,
+        intt_code varchar(20) not null,
+        primary key (intt_code)
+    )
+Hibernate: 
+    create table interest_rate_master (
+        intt_effctv_date date not null,
+        intt_rate numeric(5,2) not null,
+        intt_code varchar(20) not null,
+        primary key (intt_code)
+    )
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    create table intt_accr_tran (
+        accrual_date date not null,
+        amount numeric(20,2) not null,
+        exchange_rate numeric(10,4),
+        fcy_amt numeric(20,2),
+        interest_rate numeric(10,4) not null,
+        lcy_amt numeric(20,2),
+        tran_ccy varchar(3),
+        tran_date date,
+        value_date date,
+        account_no varchar(13) not null,
+        accr_tran_id varchar(20) not null,
+        gl_account_no varchar(20),
+        udf1 varchar(50),
+        narration varchar(100),
+        dr_cr_flag varchar(255) check (dr_cr_flag in ('D','C')),
+        status varchar(255) not null check (status in ('Pending','Posted','Verified')),
+        tran_status varchar(255) check (tran_status in ('Entry','Posted','Verified')),
+        primary key (accr_tran_id)
+    )
+Hibernate: 
+    create table intt_accr_tran (
+        accrual_date date not null,
+        amount numeric(20,2) not null,
+        exchange_rate numeric(10,4),
+        fcy_amt numeric(20,2),
+        interest_rate numeric(10,4) not null,
+        lcy_amt numeric(20,2),
+        tran_ccy varchar(3),
+        tran_date date,
+        value_date date,
+        account_no varchar(13) not null,
+        accr_tran_id varchar(20) not null,
+        gl_account_no varchar(20),
+        udf1 varchar(50),
+        narration varchar(100),
+        dr_cr_flag varchar(255) check (dr_cr_flag in ('D','C')),
+        status varchar(255) not null check (status in ('Pending','Posted','Verified')),
+        tran_status varchar(255) check (tran_status in ('Entry','Posted','Verified')),
+        primary key (accr_tran_id)
+    )
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    create table of_acct_master (
+        date_closure date,
+        date_opening date not null,
+        reconciliation_required boolean not null,
+        sub_product_id integer not null,
+        branch_code varchar(10) not null,
+        account_no varchar(13) not null,
+        gl_num varchar(20) not null,
+        acct_name varchar(100) not null,
+        account_status varchar(255) not null check (account_status in ('Active','Inactive','Closed')),
+        primary key (account_no)
+    )
+Hibernate: 
+    create table of_acct_master (
+        date_closure date,
+        date_opening date not null,
+        reconciliation_required boolean not null,
+        sub_product_id integer not null,
+        branch_code varchar(10) not null,
+        account_no varchar(13) not null,
+        gl_num varchar(20) not null,
+        acct_name varchar(100) not null,
+        account_status varchar(255) not null check (account_status in ('Active','Inactive','Closed')),
+        primary key (account_no)
+    )
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    create table parameter_table (
+        parameter_id integer generated by default as identity,
+        last_updated timestamp(6) not null,
+        updated_by varchar(20) not null,
+        parameter_name varchar(50) not null unique,
+        parameter_value varchar(100) not null,
+        parameter_description varchar(200),
+        primary key (parameter_id)
+    )
+Hibernate: 
+    create table parameter_table (
+        parameter_id integer generated by default as identity,
+        last_updated timestamp(6) not null,
+        updated_by varchar(20) not null,
+        parameter_name varchar(50) not null unique,
+        parameter_value varchar(100) not null,
+        parameter_description varchar(200),
+        primary key (parameter_id)
+    )
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    create table prod_master (
+        currency varchar(3),
+        customer_product_flag boolean,
+        entry_date date not null,
+        entry_time time(6) not null,
+        interest_bearing_flag boolean,
+        product_id integer generated by default as identity,
+        verification_date date,
+        verification_time time(6),
+        deal_or_running varchar(10),
+        product_code varchar(10) not null unique,
+        cum_gl_num varchar(20) not null,
+        maker_id varchar(20) not null,
+        verifier_id varchar(20),
+        product_name varchar(50) not null,
+        primary key (product_id)
+    )
+Hibernate: 
+    create table prod_master (
+        currency varchar(3),
+        customer_product_flag boolean,
+        entry_date date not null,
+        entry_time time(6) not null,
+        interest_bearing_flag boolean,
+        product_id integer generated by default as identity,
+        verification_date date,
+        verification_time time(6),
+        deal_or_running varchar(10),
+        product_code varchar(10) not null unique,
+        cum_gl_num varchar(20) not null,
+        maker_id varchar(20) not null,
+        verifier_id varchar(20),
+        product_name varchar(50) not null,
+        primary key (product_id)
+    )
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    create table sub_prod_master (
+        effective_interest_rate numeric(10,4),
+        entry_date date not null,
+        entry_time time(6) not null,
+        interest_increment numeric(10,4),
+        product_id integer not null,
+        sub_product_id integer generated by default as identity,
+        verification_date date,
+        verification_time time(6),
+        cum_gl_num varchar(10) not null,
+        ext_gl_num varchar(10),
+        sub_product_code varchar(10) not null unique,
+        interest_income_expenditure_gl_num varchar(20),
+        interest_receivable_payable_gl_num varchar(20),
+        intt_code varchar(20),
+        maker_id varchar(20) not null,
+        verifier_id varchar(20),
+        sub_product_name varchar(50) not null,
+        sub_product_status varchar(255) not null check (sub_product_status in ('Active','Inactive','Deactive')),
+        primary key (sub_product_id)
+    )
+Hibernate: 
+    create table sub_prod_master (
+        effective_interest_rate numeric(10,4),
+        entry_date date not null,
+        entry_time time(6) not null,
+        interest_increment numeric(10,4),
+        product_id integer not null,
+        sub_product_id integer generated by default as identity,
+        verification_date date,
+        verification_time time(6),
+        cum_gl_num varchar(10) not null,
+        ext_gl_num varchar(10),
+        sub_product_code varchar(10) not null unique,
+        interest_income_expenditure_gl_num varchar(20),
+        interest_receivable_payable_gl_num varchar(20),
+        intt_code varchar(20),
+        maker_id varchar(20) not null,
+        verifier_id varchar(20),
+        sub_product_name varchar(50) not null,
+        sub_product_status varchar(255) not null check (sub_product_status in ('Active','Inactive','Deactive')),
+        primary key (sub_product_id)
+    )
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    create table tran_table (
+        credit_amount numeric(20,2),
+        debit_amount numeric(20,2),
+        exchange_rate numeric(10,4) not null,
+        fcy_amt numeric(20,2) not null,
+        lcy_amt numeric(20,2) not null,
+        pointing_id integer,
+        tran_ccy varchar(3) not null,
+        tran_date date not null,
+        value_date date not null,
+        account_no varchar(20) not null,
+        tran_id varchar(20) not null,
+        udf1 varchar(50),
+        narration varchar(100),
+        dr_cr_flag varchar(255) not null check (dr_cr_flag in ('D','C')),
+        tran_status varchar(255) not null check (tran_status in ('Entry','Posted','Verified')),
+        primary key (tran_id)
+    )
+Hibernate: 
+    create table tran_table (
+        credit_amount numeric(20,2),
+        debit_amount numeric(20,2),
+        exchange_rate numeric(10,4) not null,
+        fcy_amt numeric(20,2) not null,
+        lcy_amt numeric(20,2) not null,
+        pointing_id integer,
+        tran_ccy varchar(3) not null,
+        tran_date date not null,
+        value_date date not null,
+        account_no varchar(20) not null,
+        tran_id varchar(20) not null,
+        udf1 varchar(50),
+        narration varchar(100),
+        dr_cr_flag varchar(255) not null check (dr_cr_flag in ('D','C')),
+        tran_status varchar(255) not null check (tran_status in ('Entry','Posted','Verified')),
+        primary key (tran_id)
+    )
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    alter table if exists account_seq 
+       add constraint FKvm338t4c9r5mjuihtfihtvt2 
+       foreign key (gl_num) 
+       references gl_setup
+Hibernate: 
+    alter table if exists account_seq 
+       add constraint FKvm338t4c9r5mjuihtfihtvt2 
+       foreign key (gl_num) 
+       references gl_setup
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    alter table if exists acct_bal_accrual 
+       add constraint FKa1hj2s0ynapoa0cpcxtsc4cp3 
+       foreign key (account_no) 
+       references cust_acct_master
+Hibernate: 
+    alter table if exists acct_bal_accrual 
+       add constraint FKa1hj2s0ynapoa0cpcxtsc4cp3 
+       foreign key (account_no) 
+       references cust_acct_master
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    alter table if exists cust_acct_master 
+       add constraint FKrhncccvlnjc8qeui6osucydh9 
+       foreign key (cust_id) 
+       references cust_master
+Hibernate: 
+    alter table if exists cust_acct_master 
+       add constraint FKrhncccvlnjc8qeui6osucydh9 
+       foreign key (cust_id) 
+       references cust_master
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    alter table if exists cust_acct_master 
+       add constraint FKg6lsaaf8t62pajynapwp79i22 
+       foreign key (sub_product_id) 
+       references sub_prod_master
+Hibernate: 
+    alter table if exists cust_acct_master 
+       add constraint FKg6lsaaf8t62pajynapwp79i22 
+       foreign key (sub_product_id) 
+       references sub_prod_master
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    alter table if exists gl_balance 
+       add constraint FKl9y0vv9b4gmunbg4pki35rtcv 
+       foreign key (gl_num) 
+       references gl_setup
+Hibernate: 
+    alter table if exists gl_balance 
+       add constraint FKl9y0vv9b4gmunbg4pki35rtcv 
+       foreign key (gl_num) 
+       references gl_setup
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    alter table if exists gl_movement 
+       add constraint FKab4pthk39vka929la1dnx5hkp 
+       foreign key (gl_num) 
+       references gl_setup
+Hibernate: 
+    alter table if exists gl_movement 
+       add constraint FKab4pthk39vka929la1dnx5hkp 
+       foreign key (gl_num) 
+       references gl_setup
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    alter table if exists gl_movement 
+       add constraint FKfjxt1e7ka35bl3c9qvd6xs2wv 
+       foreign key (tran_id) 
+       references tran_table
+Hibernate: 
+    alter table if exists gl_movement 
+       add constraint FKfjxt1e7ka35bl3c9qvd6xs2wv 
+       foreign key (tran_id) 
+       references tran_table
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    alter table if exists gl_movement_accrual 
+       add constraint FKhs7lwoetl3uvvkhthqidfg111 
+       foreign key (accr_tran_id) 
+       references intt_accr_tran
+Hibernate: 
+    alter table if exists gl_movement_accrual 
+       add constraint FKhs7lwoetl3uvvkhthqidfg111 
+       foreign key (accr_tran_id) 
+       references intt_accr_tran
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    alter table if exists gl_movement_accrual 
+       add constraint FKdpiq7utwa84kovm54finvpsg9 
+       foreign key (gl_num) 
+       references gl_setup
+Hibernate: 
+    alter table if exists gl_movement_accrual 
+       add constraint FKdpiq7utwa84kovm54finvpsg9 
+       foreign key (gl_num) 
+       references gl_setup
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    alter table if exists of_acct_master 
+       add constraint FKn1k8lkf9vvmm2mnsty0agvdkd 
+       foreign key (sub_product_id) 
+       references sub_prod_master
+Hibernate: 
+    alter table if exists of_acct_master 
+       add constraint FKn1k8lkf9vvmm2mnsty0agvdkd 
+       foreign key (sub_product_id) 
+       references sub_prod_master
+2025-10-30 10:07:09 [main] DEBUG org.hibernate.SQL [] - 
+    alter table if exists sub_prod_master 
+       add constraint FKovwkwt3sfptrq94b1c16w1jbe 
+       foreign key (product_id) 
+       references prod_master
+Hibernate: 
+    alter table if exists sub_prod_master 
+       add constraint FKovwkwt3sfptrq94b1c16w1jbe 
+       foreign key (product_id) 
+       references prod_master
+2025-10-30 10:07:09 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean [] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-30 10:07:09 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory [] - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-10-30 10:07:12 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-30 10:07:13 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver [] - Exposing 3 endpoint(s) beneath base path '/actuator'
+2025-10-30 10:07:13 [main] INFO  c.e.m.integration.EODIntegrationTest [] - Started EODIntegrationTest in 8.418 seconds (process running for 26.024)
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        parameter_table
+        (last_updated,parameter_description,parameter_name,parameter_value,updated_by,parameter_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        parameter_table
+        (last_updated,parameter_description,parameter_name,parameter_value,updated_by,parameter_id) 
+    values
+        (?,?,?,?,?,default)
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        parameter_table
+        (last_updated,parameter_description,parameter_name,parameter_value,updated_by,parameter_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        parameter_table
+        (last_updated,parameter_description,parameter_name,parameter_value,updated_by,parameter_id) 
+    values
+        (?,?,?,?,?,default)
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date,
+        g1_0.tran_id,
+        g1_0.movement_id,
+        g1_0.amount,
+        g1_0.balance_after,
+        g1_0.dr_cr_flag,
+        g1_0.fcy_amt,
+        g1_0.gl_num,
+        g1_0.lcy_amt,
+        g1_0.narration,
+        g1_0.tran_ccy,
+        g1_0.tran_date,
+        g1_0.value_date 
+    from
+        tran_table t1_0 
+    left join
+        gl_movement g1_0 
+            on t1_0.tran_id=g1_0.tran_id 
+    where
+        t1_0.tran_id=?
+Hibernate: 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date,
+        g1_0.tran_id,
+        g1_0.movement_id,
+        g1_0.amount,
+        g1_0.balance_after,
+        g1_0.dr_cr_flag,
+        g1_0.fcy_amt,
+        g1_0.gl_num,
+        g1_0.lcy_amt,
+        g1_0.narration,
+        g1_0.tran_ccy,
+        g1_0.tran_date,
+        g1_0.value_date 
+    from
+        tran_table t1_0 
+    left join
+        gl_movement g1_0 
+            on t1_0.tran_id=g1_0.tran_id 
+    where
+        t1_0.tran_id=?
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date,
+        g1_0.tran_id,
+        g1_0.movement_id,
+        g1_0.amount,
+        g1_0.balance_after,
+        g1_0.dr_cr_flag,
+        g1_0.fcy_amt,
+        g1_0.gl_num,
+        g1_0.lcy_amt,
+        g1_0.narration,
+        g1_0.tran_ccy,
+        g1_0.tran_date,
+        g1_0.value_date 
+    from
+        tran_table t1_0 
+    left join
+        gl_movement g1_0 
+            on t1_0.tran_id=g1_0.tran_id 
+    where
+        t1_0.tran_id=?
+Hibernate: 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date,
+        g1_0.tran_id,
+        g1_0.movement_id,
+        g1_0.amount,
+        g1_0.balance_after,
+        g1_0.dr_cr_flag,
+        g1_0.fcy_amt,
+        g1_0.gl_num,
+        g1_0.lcy_amt,
+        g1_0.narration,
+        g1_0.tran_ccy,
+        g1_0.tran_date,
+        g1_0.value_date 
+    from
+        tran_table t1_0 
+    left join
+        gl_movement g1_0 
+            on t1_0.tran_id=g1_0.tran_id 
+    where
+        t1_0.tran_id=?
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.EODOrchestrationService [] - === STARTING EOD PROCESS ===
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.EODOrchestrationService [] - EOD initiated by user: ADMIN
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.EODOrchestrationService [] - Starting pre-EOD validations for system date: 2024-01-15
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.EODValidationService [] - Starting pre-EOD validations for user: ADMIN, system date: 2024-01-15
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.EODValidationService [] - Validating EOD admin user: ADMIN
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='EOD_Admin_User'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='EOD_Admin_User'
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.EODValidationService [] - EOD admin user validation passed
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.EODValidationService [] - Validating no transactions in 'Entry' status for system date: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        tran_table
+        (account_no,credit_amount,debit_amount,dr_cr_flag,exchange_rate,fcy_amt,lcy_amt,narration,pointing_id,tran_ccy,tran_date,tran_status,udf1,value_date,tran_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+Hibernate: 
+    insert 
+    into
+        tran_table
+        (account_no,credit_amount,debit_amount,dr_cr_flag,exchange_rate,fcy_amt,lcy_amt,narration,pointing_id,tran_ccy,tran_date,tran_status,udf1,value_date,tran_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        tran_table
+        (account_no,credit_amount,debit_amount,dr_cr_flag,exchange_rate,fcy_amt,lcy_amt,narration,pointing_id,tran_ccy,tran_date,tran_status,udf1,value_date,tran_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+Hibernate: 
+    insert 
+    into
+        tran_table
+        (account_no,credit_amount,debit_amount,dr_cr_flag,exchange_rate,fcy_amt,lcy_amt,narration,pointing_id,tran_ccy,tran_date,tran_status,udf1,value_date,tran_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    update
+        tran_table 
+    set
+        account_no=?,
+        credit_amount=?,
+        debit_amount=?,
+        dr_cr_flag=?,
+        exchange_rate=?,
+        fcy_amt=?,
+        lcy_amt=?,
+        narration=?,
+        pointing_id=?,
+        tran_ccy=?,
+        tran_date=?,
+        tran_status=?,
+        udf1=?,
+        value_date=? 
+    where
+        tran_id=?
+Hibernate: 
+    update
+        tran_table 
+    set
+        account_no=?,
+        credit_amount=?,
+        debit_amount=?,
+        dr_cr_flag=?,
+        exchange_rate=?,
+        fcy_amt=?,
+        lcy_amt=?,
+        narration=?,
+        pointing_id=?,
+        tran_ccy=?,
+        tran_date=?,
+        tran_status=?,
+        udf1=?,
+        value_date=? 
+    where
+        tran_id=?
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date 
+    from
+        tran_table t1_0 
+    where
+        t1_0.tran_date between ? and ?
+Hibernate: 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date 
+    from
+        tran_table t1_0 
+    where
+        t1_0.tran_date between ? and ?
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.EODValidationService [] - No transactions in 'Entry' status found - validation passed
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.EODValidationService [] - Validating debit-credit balance for system date: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date 
+    from
+        tran_table t1_0 
+    where
+        t1_0.tran_date between ? and ?
+Hibernate: 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date 
+    from
+        tran_table t1_0 
+    where
+        t1_0.tran_date between ? and ?
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.EODValidationService [] - Total Debit: 1000.00, Total Credit: 500.00
+2025-10-30 10:07:13 [main] ERROR c.e.m.service.EODValidationService [] - Debit-Credit balance mismatch for system date 2024-01-15. Total Debit: 1000.00, Total Credit: 500.00, Difference: 500.00
+2025-10-30 10:07:13 [main] ERROR c.e.m.s.EODOrchestrationService [] - Pre-EOD validations failed: Debit-Credit balance mismatch for system date 2024-01-15. Total Debit: 1000.00, Total Credit: 500.00, Difference: 500.00
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.684960100
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.685960200
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.687958
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        eod_log_table
+        (created_timestamp,end_timestamp,eod_date,error_message,failed_at_step,job_name,records_processed,start_timestamp,status,system_date,user_id,eod_log_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        eod_log_table
+        (created_timestamp,end_timestamp,eod_date,error_message,failed_at_step,job_name,records_processed,start_timestamp,status,system_date,user_id,eod_log_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,default)
+]]></system-out>
+  </testcase>
+  <testcase name="testEODProcessWithValidationFailure" classname="com.example.moneymarket.integration.EODIntegrationTest" time="0.041">
+    <system-out><![CDATA[2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        parameter_table
+        (last_updated,parameter_description,parameter_name,parameter_value,updated_by,parameter_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        parameter_table
+        (last_updated,parameter_description,parameter_name,parameter_value,updated_by,parameter_id) 
+    values
+        (?,?,?,?,?,default)
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        parameter_table
+        (last_updated,parameter_description,parameter_name,parameter_value,updated_by,parameter_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        parameter_table
+        (last_updated,parameter_description,parameter_name,parameter_value,updated_by,parameter_id) 
+    values
+        (?,?,?,?,?,default)
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date,
+        g1_0.tran_id,
+        g1_0.movement_id,
+        g1_0.amount,
+        g1_0.balance_after,
+        g1_0.dr_cr_flag,
+        g1_0.fcy_amt,
+        g1_0.gl_num,
+        g1_0.lcy_amt,
+        g1_0.narration,
+        g1_0.tran_ccy,
+        g1_0.tran_date,
+        g1_0.value_date 
+    from
+        tran_table t1_0 
+    left join
+        gl_movement g1_0 
+            on t1_0.tran_id=g1_0.tran_id 
+    where
+        t1_0.tran_id=?
+Hibernate: 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date,
+        g1_0.tran_id,
+        g1_0.movement_id,
+        g1_0.amount,
+        g1_0.balance_after,
+        g1_0.dr_cr_flag,
+        g1_0.fcy_amt,
+        g1_0.gl_num,
+        g1_0.lcy_amt,
+        g1_0.narration,
+        g1_0.tran_ccy,
+        g1_0.tran_date,
+        g1_0.value_date 
+    from
+        tran_table t1_0 
+    left join
+        gl_movement g1_0 
+            on t1_0.tran_id=g1_0.tran_id 
+    where
+        t1_0.tran_id=?
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date,
+        g1_0.tran_id,
+        g1_0.movement_id,
+        g1_0.amount,
+        g1_0.balance_after,
+        g1_0.dr_cr_flag,
+        g1_0.fcy_amt,
+        g1_0.gl_num,
+        g1_0.lcy_amt,
+        g1_0.narration,
+        g1_0.tran_ccy,
+        g1_0.tran_date,
+        g1_0.value_date 
+    from
+        tran_table t1_0 
+    left join
+        gl_movement g1_0 
+            on t1_0.tran_id=g1_0.tran_id 
+    where
+        t1_0.tran_id=?
+Hibernate: 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date,
+        g1_0.tran_id,
+        g1_0.movement_id,
+        g1_0.amount,
+        g1_0.balance_after,
+        g1_0.dr_cr_flag,
+        g1_0.fcy_amt,
+        g1_0.gl_num,
+        g1_0.lcy_amt,
+        g1_0.narration,
+        g1_0.tran_ccy,
+        g1_0.tran_date,
+        g1_0.value_date 
+    from
+        tran_table t1_0 
+    left join
+        gl_movement g1_0 
+            on t1_0.tran_id=g1_0.tran_id 
+    where
+        t1_0.tran_id=?
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.EODOrchestrationService [] - === STARTING EOD PROCESS ===
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.EODOrchestrationService [] - EOD initiated by user: ADMIN
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.EODOrchestrationService [] - Starting pre-EOD validations for system date: 2024-01-15
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.EODValidationService [] - Starting pre-EOD validations for user: ADMIN, system date: 2024-01-15
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.EODValidationService [] - Validating EOD admin user: ADMIN
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='EOD_Admin_User'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='EOD_Admin_User'
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.EODValidationService [] - EOD admin user validation passed
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.EODValidationService [] - Validating no transactions in 'Entry' status for system date: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        tran_table
+        (account_no,credit_amount,debit_amount,dr_cr_flag,exchange_rate,fcy_amt,lcy_amt,narration,pointing_id,tran_ccy,tran_date,tran_status,udf1,value_date,tran_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+Hibernate: 
+    insert 
+    into
+        tran_table
+        (account_no,credit_amount,debit_amount,dr_cr_flag,exchange_rate,fcy_amt,lcy_amt,narration,pointing_id,tran_ccy,tran_date,tran_status,udf1,value_date,tran_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        tran_table
+        (account_no,credit_amount,debit_amount,dr_cr_flag,exchange_rate,fcy_amt,lcy_amt,narration,pointing_id,tran_ccy,tran_date,tran_status,udf1,value_date,tran_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+Hibernate: 
+    insert 
+    into
+        tran_table
+        (account_no,credit_amount,debit_amount,dr_cr_flag,exchange_rate,fcy_amt,lcy_amt,narration,pointing_id,tran_ccy,tran_date,tran_status,udf1,value_date,tran_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    update
+        tran_table 
+    set
+        account_no=?,
+        credit_amount=?,
+        debit_amount=?,
+        dr_cr_flag=?,
+        exchange_rate=?,
+        fcy_amt=?,
+        lcy_amt=?,
+        narration=?,
+        pointing_id=?,
+        tran_ccy=?,
+        tran_date=?,
+        tran_status=?,
+        udf1=?,
+        value_date=? 
+    where
+        tran_id=?
+Hibernate: 
+    update
+        tran_table 
+    set
+        account_no=?,
+        credit_amount=?,
+        debit_amount=?,
+        dr_cr_flag=?,
+        exchange_rate=?,
+        fcy_amt=?,
+        lcy_amt=?,
+        narration=?,
+        pointing_id=?,
+        tran_ccy=?,
+        tran_date=?,
+        tran_status=?,
+        udf1=?,
+        value_date=? 
+    where
+        tran_id=?
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date 
+    from
+        tran_table t1_0 
+    where
+        t1_0.tran_date between ? and ?
+Hibernate: 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date 
+    from
+        tran_table t1_0 
+    where
+        t1_0.tran_date between ? and ?
+2025-10-30 10:07:13 [main] ERROR c.e.m.service.EODValidationService [] - Found 1 transactions in 'Entry' status that must be verified before EOD. Transaction IDs: TXN001
+2025-10-30 10:07:13 [main] ERROR c.e.m.s.EODOrchestrationService [] - Pre-EOD validations failed: Found 1 transactions in 'Entry' status that must be verified before EOD. Transaction IDs: TXN001
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.747124800
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.748714200
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.748714200
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        eod_log_table
+        (created_timestamp,end_timestamp,eod_date,error_message,failed_at_step,job_name,records_processed,start_timestamp,status,system_date,user_id,eod_log_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        eod_log_table
+        (created_timestamp,end_timestamp,eod_date,error_message,failed_at_step,job_name,records_processed,start_timestamp,status,system_date,user_id,eod_log_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,default)
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+]]></system-out>
+  </testcase>
+  <testcase name="testFullEODProcess" classname="com.example.moneymarket.integration.EODIntegrationTest" time="1.067">
+    <system-out><![CDATA[2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        parameter_table
+        (last_updated,parameter_description,parameter_name,parameter_value,updated_by,parameter_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        parameter_table
+        (last_updated,parameter_description,parameter_name,parameter_value,updated_by,parameter_id) 
+    values
+        (?,?,?,?,?,default)
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        parameter_table
+        (last_updated,parameter_description,parameter_name,parameter_value,updated_by,parameter_id) 
+    values
+        (?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        parameter_table
+        (last_updated,parameter_description,parameter_name,parameter_value,updated_by,parameter_id) 
+    values
+        (?,?,?,?,?,default)
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date,
+        g1_0.tran_id,
+        g1_0.movement_id,
+        g1_0.amount,
+        g1_0.balance_after,
+        g1_0.dr_cr_flag,
+        g1_0.fcy_amt,
+        g1_0.gl_num,
+        g1_0.lcy_amt,
+        g1_0.narration,
+        g1_0.tran_ccy,
+        g1_0.tran_date,
+        g1_0.value_date 
+    from
+        tran_table t1_0 
+    left join
+        gl_movement g1_0 
+            on t1_0.tran_id=g1_0.tran_id 
+    where
+        t1_0.tran_id=?
+Hibernate: 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date,
+        g1_0.tran_id,
+        g1_0.movement_id,
+        g1_0.amount,
+        g1_0.balance_after,
+        g1_0.dr_cr_flag,
+        g1_0.fcy_amt,
+        g1_0.gl_num,
+        g1_0.lcy_amt,
+        g1_0.narration,
+        g1_0.tran_ccy,
+        g1_0.tran_date,
+        g1_0.value_date 
+    from
+        tran_table t1_0 
+    left join
+        gl_movement g1_0 
+            on t1_0.tran_id=g1_0.tran_id 
+    where
+        t1_0.tran_id=?
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date,
+        g1_0.tran_id,
+        g1_0.movement_id,
+        g1_0.amount,
+        g1_0.balance_after,
+        g1_0.dr_cr_flag,
+        g1_0.fcy_amt,
+        g1_0.gl_num,
+        g1_0.lcy_amt,
+        g1_0.narration,
+        g1_0.tran_ccy,
+        g1_0.tran_date,
+        g1_0.value_date 
+    from
+        tran_table t1_0 
+    left join
+        gl_movement g1_0 
+            on t1_0.tran_id=g1_0.tran_id 
+    where
+        t1_0.tran_id=?
+Hibernate: 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date,
+        g1_0.tran_id,
+        g1_0.movement_id,
+        g1_0.amount,
+        g1_0.balance_after,
+        g1_0.dr_cr_flag,
+        g1_0.fcy_amt,
+        g1_0.gl_num,
+        g1_0.lcy_amt,
+        g1_0.narration,
+        g1_0.tran_ccy,
+        g1_0.tran_date,
+        g1_0.value_date 
+    from
+        tran_table t1_0 
+    left join
+        gl_movement g1_0 
+            on t1_0.tran_id=g1_0.tran_id 
+    where
+        t1_0.tran_id=?
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.EODOrchestrationService [] - === STARTING EOD PROCESS ===
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.EODOrchestrationService [] - EOD initiated by user: ADMIN
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.EODOrchestrationService [] - Starting pre-EOD validations for system date: 2024-01-15
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.EODValidationService [] - Starting pre-EOD validations for user: ADMIN, system date: 2024-01-15
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.EODValidationService [] - Validating EOD admin user: ADMIN
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='EOD_Admin_User'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='EOD_Admin_User'
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.EODValidationService [] - EOD admin user validation passed
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.EODValidationService [] - Validating no transactions in 'Entry' status for system date: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        tran_table
+        (account_no,credit_amount,debit_amount,dr_cr_flag,exchange_rate,fcy_amt,lcy_amt,narration,pointing_id,tran_ccy,tran_date,tran_status,udf1,value_date,tran_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+Hibernate: 
+    insert 
+    into
+        tran_table
+        (account_no,credit_amount,debit_amount,dr_cr_flag,exchange_rate,fcy_amt,lcy_amt,narration,pointing_id,tran_ccy,tran_date,tran_status,udf1,value_date,tran_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        tran_table
+        (account_no,credit_amount,debit_amount,dr_cr_flag,exchange_rate,fcy_amt,lcy_amt,narration,pointing_id,tran_ccy,tran_date,tran_status,udf1,value_date,tran_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+Hibernate: 
+    insert 
+    into
+        tran_table
+        (account_no,credit_amount,debit_amount,dr_cr_flag,exchange_rate,fcy_amt,lcy_amt,narration,pointing_id,tran_ccy,tran_date,tran_status,udf1,value_date,tran_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date 
+    from
+        tran_table t1_0 
+    where
+        t1_0.tran_date between ? and ?
+Hibernate: 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date 
+    from
+        tran_table t1_0 
+    where
+        t1_0.tran_date between ? and ?
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.EODValidationService [] - No transactions in 'Entry' status found - validation passed
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.EODValidationService [] - Validating debit-credit balance for system date: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date 
+    from
+        tran_table t1_0 
+    where
+        t1_0.tran_date between ? and ?
+Hibernate: 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date 
+    from
+        tran_table t1_0 
+    where
+        t1_0.tran_date between ? and ?
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.EODValidationService [] - Total Debit: 1000.00, Total Credit: 1000.00
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.EODValidationService [] - Debit-credit balance validation passed
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.EODValidationService [] - All pre-EOD validations passed successfully
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.EODOrchestrationService [] - Pre-EOD validations passed successfully
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.EODOrchestrationService [] - Starting Batch Job 1: Account Balance Update
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.795588600
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.AccountBalanceUpdateService [] - Starting EOD Account Balance Update for date: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date 
+    from
+        tran_table t1_0 
+    where
+        t1_0.tran_date between ? and ?
+Hibernate: 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date 
+    from
+        tran_table t1_0 
+    where
+        t1_0.tran_date between ? and ?
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        a1_0.account_no,
+        a1_0.tran_date,
+        a1_0.available_balance,
+        a1_0.closing_bal,
+        a1_0.cr_summation,
+        a1_0.current_balance,
+        a1_0.dr_summation,
+        a1_0.last_updated,
+        a1_0.opening_bal 
+    from
+        acct_bal a1_0 
+    where
+        a1_0.account_no=? 
+        and a1_0.tran_date=?
+Hibernate: 
+    select
+        a1_0.account_no,
+        a1_0.tran_date,
+        a1_0.available_balance,
+        a1_0.closing_bal,
+        a1_0.cr_summation,
+        a1_0.current_balance,
+        a1_0.dr_summation,
+        a1_0.last_updated,
+        a1_0.opening_bal 
+    from
+        acct_bal a1_0 
+    where
+        a1_0.account_no=? 
+        and a1_0.tran_date=?
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        a1_0.account_no,
+        a1_0.tran_date,
+        a1_0.available_balance,
+        a1_0.closing_bal,
+        a1_0.cr_summation,
+        a1_0.current_balance,
+        a1_0.dr_summation,
+        a1_0.last_updated,
+        a1_0.opening_bal 
+    from
+        acct_bal a1_0 
+    where
+        a1_0.account_no=? 
+        and a1_0.tran_date<? 
+    order by
+        a1_0.tran_date desc
+Hibernate: 
+    select
+        a1_0.account_no,
+        a1_0.tran_date,
+        a1_0.available_balance,
+        a1_0.closing_bal,
+        a1_0.cr_summation,
+        a1_0.current_balance,
+        a1_0.dr_summation,
+        a1_0.last_updated,
+        a1_0.opening_bal 
+    from
+        acct_bal a1_0 
+    where
+        a1_0.account_no=? 
+        and a1_0.tran_date<? 
+    order by
+        a1_0.tran_date desc
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.AccountBalanceUpdateService [] - 3-Tier Fallback [Tier 3 - New Account]: Account ACC001 has no previous records before 2024-01-15. Using Opening_Bal = 0
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date 
+    from
+        tran_table t1_0 
+    where
+        t1_0.account_no=? 
+        and t1_0.tran_date=?
+Hibernate: 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date 
+    from
+        tran_table t1_0 
+    where
+        t1_0.account_no=? 
+        and t1_0.tran_date=?
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.826837300
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        a1_0.account_no,
+        a1_0.tran_date,
+        a1_0.available_balance,
+        a1_0.closing_bal,
+        a1_0.cr_summation,
+        a1_0.current_balance,
+        a1_0.dr_summation,
+        a1_0.last_updated,
+        a1_0.opening_bal 
+    from
+        acct_bal a1_0 
+    where
+        (
+            a1_0.account_no,a1_0.tran_date
+        ) in ((?,?))
+Hibernate: 
+    select
+        a1_0.account_no,
+        a1_0.tran_date,
+        a1_0.available_balance,
+        a1_0.closing_bal,
+        a1_0.cr_summation,
+        a1_0.current_balance,
+        a1_0.dr_summation,
+        a1_0.last_updated,
+        a1_0.opening_bal 
+    from
+        acct_bal a1_0 
+    where
+        (
+            a1_0.account_no,a1_0.tran_date
+        ) in ((?,?))
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        acct_bal
+        (available_balance,closing_bal,cr_summation,current_balance,dr_summation,last_updated,opening_bal,account_no,tran_date) 
+    values
+        (?,?,?,?,?,?,?,?,?)
+Hibernate: 
+    insert 
+    into
+        acct_bal
+        (available_balance,closing_bal,cr_summation,current_balance,dr_summation,last_updated,opening_bal,account_no,tran_date) 
+    values
+        (?,?,?,?,?,?,?,?,?)
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        a1_0.account_no,
+        a1_0.tran_date,
+        a1_0.available_balance,
+        a1_0.closing_bal,
+        a1_0.cr_summation,
+        a1_0.current_balance,
+        a1_0.dr_summation,
+        a1_0.last_updated,
+        a1_0.opening_bal 
+    from
+        acct_bal a1_0 
+    where
+        a1_0.account_no=? 
+        and a1_0.tran_date=?
+Hibernate: 
+    select
+        a1_0.account_no,
+        a1_0.tran_date,
+        a1_0.available_balance,
+        a1_0.closing_bal,
+        a1_0.cr_summation,
+        a1_0.current_balance,
+        a1_0.dr_summation,
+        a1_0.last_updated,
+        a1_0.opening_bal 
+    from
+        acct_bal a1_0 
+    where
+        a1_0.account_no=? 
+        and a1_0.tran_date=?
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        a1_0.account_no,
+        a1_0.tran_date,
+        a1_0.available_balance,
+        a1_0.closing_bal,
+        a1_0.cr_summation,
+        a1_0.current_balance,
+        a1_0.dr_summation,
+        a1_0.last_updated,
+        a1_0.opening_bal 
+    from
+        acct_bal a1_0 
+    where
+        a1_0.account_no=? 
+        and a1_0.tran_date<? 
+    order by
+        a1_0.tran_date desc
+Hibernate: 
+    select
+        a1_0.account_no,
+        a1_0.tran_date,
+        a1_0.available_balance,
+        a1_0.closing_bal,
+        a1_0.cr_summation,
+        a1_0.current_balance,
+        a1_0.dr_summation,
+        a1_0.last_updated,
+        a1_0.opening_bal 
+    from
+        acct_bal a1_0 
+    where
+        a1_0.account_no=? 
+        and a1_0.tran_date<? 
+    order by
+        a1_0.tran_date desc
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.AccountBalanceUpdateService [] - 3-Tier Fallback [Tier 3 - New Account]: Account ACC002 has no previous records before 2024-01-15. Using Opening_Bal = 0
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date 
+    from
+        tran_table t1_0 
+    where
+        t1_0.account_no=? 
+        and t1_0.tran_date=?
+Hibernate: 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date 
+    from
+        tran_table t1_0 
+    where
+        t1_0.account_no=? 
+        and t1_0.tran_date=?
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.861364900
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        a1_0.account_no,
+        a1_0.tran_date,
+        a1_0.available_balance,
+        a1_0.closing_bal,
+        a1_0.cr_summation,
+        a1_0.current_balance,
+        a1_0.dr_summation,
+        a1_0.last_updated,
+        a1_0.opening_bal 
+    from
+        acct_bal a1_0 
+    where
+        (
+            a1_0.account_no,a1_0.tran_date
+        ) in ((?,?))
+Hibernate: 
+    select
+        a1_0.account_no,
+        a1_0.tran_date,
+        a1_0.available_balance,
+        a1_0.closing_bal,
+        a1_0.cr_summation,
+        a1_0.current_balance,
+        a1_0.dr_summation,
+        a1_0.last_updated,
+        a1_0.opening_bal 
+    from
+        acct_bal a1_0 
+    where
+        (
+            a1_0.account_no,a1_0.tran_date
+        ) in ((?,?))
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.AccountBalanceUpdateService [] - EOD Account Balance Update completed. Processed: 2, Errors: 0, Total Accounts with Transactions: 2 for date: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.865630100
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.867629600
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.870627800
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        acct_bal
+        (available_balance,closing_bal,cr_summation,current_balance,dr_summation,last_updated,opening_bal,account_no,tran_date) 
+    values
+        (?,?,?,?,?,?,?,?,?)
+Hibernate: 
+    insert 
+    into
+        acct_bal
+        (available_balance,closing_bal,cr_summation,current_balance,dr_summation,last_updated,opening_bal,account_no,tran_date) 
+    values
+        (?,?,?,?,?,?,?,?,?)
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        eod_log_table
+        (created_timestamp,end_timestamp,eod_date,error_message,failed_at_step,job_name,records_processed,start_timestamp,status,system_date,user_id,eod_log_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        eod_log_table
+        (created_timestamp,end_timestamp,eod_date,error_message,failed_at_step,job_name,records_processed,start_timestamp,status,system_date,user_id,eod_log_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,default)
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.EODOrchestrationService [] - Batch Job 1 completed successfully. Records processed: 2
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.EODOrchestrationService [] - Starting Batch Job 2: Interest Accrual Transaction Update
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.InterestAccrualService [] - Starting Batch Job 2: Interest Accrual Transaction Update for date: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        c1_0.account_no,
+        c1_0.account_status,
+        c1_0.acct_name,
+        c1_0.branch_code,
+        c1_0.cust_name,
+        c1_0.cust_id,
+        c1_0.date_closure,
+        c1_0.date_maturity,
+        c1_0.date_opening,
+        c1_0.gl_num,
+        c1_0.loan_limit,
+        c1_0.sub_product_id,
+        c1_0.tenor 
+    from
+        cust_acct_master c1_0 
+    where
+        c1_0.account_status=?
+Hibernate: 
+    select
+        c1_0.account_no,
+        c1_0.account_status,
+        c1_0.acct_name,
+        c1_0.branch_code,
+        c1_0.cust_name,
+        c1_0.cust_id,
+        c1_0.date_closure,
+        c1_0.date_maturity,
+        c1_0.date_opening,
+        c1_0.gl_num,
+        c1_0.loan_limit,
+        c1_0.sub_product_id,
+        c1_0.tenor 
+    from
+        cust_acct_master c1_0 
+    where
+        c1_0.account_status=?
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.InterestAccrualService [] - No active customer accounts found for accrual processing
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.882621
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.884619700
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.886618500
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        eod_log_table
+        (created_timestamp,end_timestamp,eod_date,error_message,failed_at_step,job_name,records_processed,start_timestamp,status,system_date,user_id,eod_log_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        eod_log_table
+        (created_timestamp,end_timestamp,eod_date,error_message,failed_at_step,job_name,records_processed,start_timestamp,status,system_date,user_id,eod_log_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,default)
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.EODOrchestrationService [] - Batch Job 2 completed successfully. Records processed: 0
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.EODOrchestrationService [] - Starting Batch Job 3: Interest Accrual GL Movement Update
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.InterestAccrualGLMovementService [] - Starting Batch Job 3: Interest Accrual GL Movement Update for date: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        i1_0.accr_tran_id,
+        i1_0.account_no,
+        i1_0.accrual_date,
+        i1_0.amount,
+        i1_0.dr_cr_flag,
+        i1_0.exchange_rate,
+        i1_0.fcy_amt,
+        i1_0.gl_account_no,
+        i1_0.interest_rate,
+        i1_0.lcy_amt,
+        i1_0.narration,
+        i1_0.status,
+        i1_0.tran_ccy,
+        i1_0.tran_date,
+        i1_0.tran_status,
+        i1_0.udf1,
+        i1_0.value_date 
+    from
+        intt_accr_tran i1_0 
+    where
+        i1_0.accrual_date=? 
+        and i1_0.status=?
+Hibernate: 
+    select
+        i1_0.accr_tran_id,
+        i1_0.account_no,
+        i1_0.accrual_date,
+        i1_0.amount,
+        i1_0.dr_cr_flag,
+        i1_0.exchange_rate,
+        i1_0.fcy_amt,
+        i1_0.gl_account_no,
+        i1_0.interest_rate,
+        i1_0.lcy_amt,
+        i1_0.narration,
+        i1_0.status,
+        i1_0.tran_ccy,
+        i1_0.tran_date,
+        i1_0.tran_status,
+        i1_0.udf1,
+        i1_0.value_date 
+    from
+        intt_accr_tran i1_0 
+    where
+        i1_0.accrual_date=? 
+        and i1_0.status=?
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.InterestAccrualGLMovementService [] - No pending interest accrual transactions found for date: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.895318200
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.895318200
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.895318200
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        eod_log_table
+        (created_timestamp,end_timestamp,eod_date,error_message,failed_at_step,job_name,records_processed,start_timestamp,status,system_date,user_id,eod_log_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        eod_log_table
+        (created_timestamp,end_timestamp,eod_date,error_message,failed_at_step,job_name,records_processed,start_timestamp,status,system_date,user_id,eod_log_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,default)
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.EODOrchestrationService [] - Batch Job 3 completed successfully. Records processed: 0
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.EODOrchestrationService [] - Starting Batch Job 4: GL Movement Update
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.GLMovementUpdateService [] - Starting Batch Job 4: GL Movement Update for date: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date 
+    from
+        tran_table t1_0 
+    where
+        t1_0.tran_date=? 
+        and t1_0.tran_status=?
+Hibernate: 
+    select
+        t1_0.tran_id,
+        t1_0.account_no,
+        t1_0.credit_amount,
+        t1_0.debit_amount,
+        t1_0.dr_cr_flag,
+        t1_0.exchange_rate,
+        t1_0.fcy_amt,
+        t1_0.lcy_amt,
+        t1_0.narration,
+        t1_0.pointing_id,
+        t1_0.tran_ccy,
+        t1_0.tran_date,
+        t1_0.tran_status,
+        t1_0.udf1,
+        t1_0.value_date 
+    from
+        tran_table t1_0 
+    where
+        t1_0.tran_date=? 
+        and t1_0.tran_status=?
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.GLMovementUpdateService [] - Found 2 verified transactions to process
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        g1_0.movement_id 
+    from
+        gl_movement g1_0 
+    where
+        g1_0.tran_id=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        g1_0.movement_id 
+    from
+        gl_movement g1_0 
+    where
+        g1_0.tran_id=? 
+    fetch
+        first ? rows only
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        g1_0.movement_id 
+    from
+        gl_movement g1_0 
+    where
+        g1_0.tran_id=? 
+    fetch
+        first ? rows only
+Hibernate: 
+    select
+        g1_0.movement_id 
+    from
+        gl_movement g1_0 
+    where
+        g1_0.tran_id=? 
+    fetch
+        first ? rows only
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.GLMovementUpdateService [] - 2 transactions need GL movement creation
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        c1_0.account_no,
+        c1_0.account_status,
+        c1_0.acct_name,
+        c1_0.branch_code,
+        c1_0.cust_name,
+        c1_0.cust_id,
+        c2_0.cust_id,
+        c2_0.address_1,
+        c2_0.branch_code,
+        c2_0.cust_type,
+        c2_0.entry_date,
+        c2_0.entry_time,
+        c2_0.ext_cust_id,
+        c2_0.first_name,
+        c2_0.last_name,
+        c2_0.maker_id,
+        c2_0.mobile,
+        c2_0.trade_name,
+        c2_0.verification_date,
+        c2_0.verification_time,
+        c2_0.verifier_id,
+        c1_0.date_closure,
+        c1_0.date_maturity,
+        c1_0.date_opening,
+        c1_0.gl_num,
+        c1_0.loan_limit,
+        c1_0.sub_product_id,
+        s1_0.sub_product_id,
+        s1_0.cum_gl_num,
+        s1_0.effective_interest_rate,
+        s1_0.entry_date,
+        s1_0.entry_time,
+        s1_0.ext_gl_num,
+        s1_0.interest_income_expenditure_gl_num,
+        s1_0.interest_increment,
+        s1_0.interest_receivable_payable_gl_num,
+        s1_0.intt_code,
+        s1_0.maker_id,
+        s1_0.product_id,
+        p1_0.product_id,
+        p1_0.cum_gl_num,
+        p1_0.currency,
+        p1_0.customer_product_flag,
+        p1_0.deal_or_running,
+        p1_0.entry_date,
+        p1_0.entry_time,
+        p1_0.interest_bearing_flag,
+        p1_0.maker_id,
+        p1_0.product_code,
+        p1_0.product_name,
+        p1_0.verification_date,
+        p1_0.verification_time,
+        p1_0.verifier_id,
+        s1_0.sub_product_code,
+        s1_0.sub_product_name,
+        s1_0.sub_product_status,
+        s1_0.verification_date,
+        s1_0.verification_time,
+        s1_0.verifier_id,
+        c1_0.tenor 
+    from
+        cust_acct_master c1_0 
+    join
+        cust_master c2_0 
+            on c2_0.cust_id=c1_0.cust_id 
+    join
+        sub_prod_master s1_0 
+            on s1_0.sub_product_id=c1_0.sub_product_id 
+    left join
+        prod_master p1_0 
+            on p1_0.product_id=s1_0.product_id 
+    where
+        c1_0.account_no=?
+Hibernate: 
+    select
+        c1_0.account_no,
+        c1_0.account_status,
+        c1_0.acct_name,
+        c1_0.branch_code,
+        c1_0.cust_name,
+        c1_0.cust_id,
+        c2_0.cust_id,
+        c2_0.address_1,
+        c2_0.branch_code,
+        c2_0.cust_type,
+        c2_0.entry_date,
+        c2_0.entry_time,
+        c2_0.ext_cust_id,
+        c2_0.first_name,
+        c2_0.last_name,
+        c2_0.maker_id,
+        c2_0.mobile,
+        c2_0.trade_name,
+        c2_0.verification_date,
+        c2_0.verification_time,
+        c2_0.verifier_id,
+        c1_0.date_closure,
+        c1_0.date_maturity,
+        c1_0.date_opening,
+        c1_0.gl_num,
+        c1_0.loan_limit,
+        c1_0.sub_product_id,
+        s1_0.sub_product_id,
+        s1_0.cum_gl_num,
+        s1_0.effective_interest_rate,
+        s1_0.entry_date,
+        s1_0.entry_time,
+        s1_0.ext_gl_num,
+        s1_0.interest_income_expenditure_gl_num,
+        s1_0.interest_increment,
+        s1_0.interest_receivable_payable_gl_num,
+        s1_0.intt_code,
+        s1_0.maker_id,
+        s1_0.product_id,
+        p1_0.product_id,
+        p1_0.cum_gl_num,
+        p1_0.currency,
+        p1_0.customer_product_flag,
+        p1_0.deal_or_running,
+        p1_0.entry_date,
+        p1_0.entry_time,
+        p1_0.interest_bearing_flag,
+        p1_0.maker_id,
+        p1_0.product_code,
+        p1_0.product_name,
+        p1_0.verification_date,
+        p1_0.verification_time,
+        p1_0.verifier_id,
+        s1_0.sub_product_code,
+        s1_0.sub_product_name,
+        s1_0.sub_product_status,
+        s1_0.verification_date,
+        s1_0.verification_time,
+        s1_0.verifier_id,
+        c1_0.tenor 
+    from
+        cust_acct_master c1_0 
+    join
+        cust_master c2_0 
+            on c2_0.cust_id=c1_0.cust_id 
+    join
+        sub_prod_master s1_0 
+            on s1_0.sub_product_id=c1_0.sub_product_id 
+    left join
+        prod_master p1_0 
+            on p1_0.product_id=s1_0.product_id 
+    where
+        c1_0.account_no=?
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        o1_0.account_no,
+        o1_0.account_status,
+        o1_0.acct_name,
+        o1_0.branch_code,
+        o1_0.date_closure,
+        o1_0.date_opening,
+        o1_0.gl_num,
+        o1_0.reconciliation_required,
+        o1_0.sub_product_id,
+        s1_0.sub_product_id,
+        s1_0.cum_gl_num,
+        s1_0.effective_interest_rate,
+        s1_0.entry_date,
+        s1_0.entry_time,
+        s1_0.ext_gl_num,
+        s1_0.interest_income_expenditure_gl_num,
+        s1_0.interest_increment,
+        s1_0.interest_receivable_payable_gl_num,
+        s1_0.intt_code,
+        s1_0.maker_id,
+        s1_0.product_id,
+        p1_0.product_id,
+        p1_0.cum_gl_num,
+        p1_0.currency,
+        p1_0.customer_product_flag,
+        p1_0.deal_or_running,
+        p1_0.entry_date,
+        p1_0.entry_time,
+        p1_0.interest_bearing_flag,
+        p1_0.maker_id,
+        p1_0.product_code,
+        p1_0.product_name,
+        p1_0.verification_date,
+        p1_0.verification_time,
+        p1_0.verifier_id,
+        s1_0.sub_product_code,
+        s1_0.sub_product_name,
+        s1_0.sub_product_status,
+        s1_0.verification_date,
+        s1_0.verification_time,
+        s1_0.verifier_id 
+    from
+        of_acct_master o1_0 
+    join
+        sub_prod_master s1_0 
+            on s1_0.sub_product_id=o1_0.sub_product_id 
+    left join
+        prod_master p1_0 
+            on p1_0.product_id=s1_0.product_id 
+    where
+        o1_0.account_no=?
+Hibernate: 
+    select
+        o1_0.account_no,
+        o1_0.account_status,
+        o1_0.acct_name,
+        o1_0.branch_code,
+        o1_0.date_closure,
+        o1_0.date_opening,
+        o1_0.gl_num,
+        o1_0.reconciliation_required,
+        o1_0.sub_product_id,
+        s1_0.sub_product_id,
+        s1_0.cum_gl_num,
+        s1_0.effective_interest_rate,
+        s1_0.entry_date,
+        s1_0.entry_time,
+        s1_0.ext_gl_num,
+        s1_0.interest_income_expenditure_gl_num,
+        s1_0.interest_increment,
+        s1_0.interest_receivable_payable_gl_num,
+        s1_0.intt_code,
+        s1_0.maker_id,
+        s1_0.product_id,
+        p1_0.product_id,
+        p1_0.cum_gl_num,
+        p1_0.currency,
+        p1_0.customer_product_flag,
+        p1_0.deal_or_running,
+        p1_0.entry_date,
+        p1_0.entry_time,
+        p1_0.interest_bearing_flag,
+        p1_0.maker_id,
+        p1_0.product_code,
+        p1_0.product_name,
+        p1_0.verification_date,
+        p1_0.verification_time,
+        p1_0.verifier_id,
+        s1_0.sub_product_code,
+        s1_0.sub_product_name,
+        s1_0.sub_product_status,
+        s1_0.verification_date,
+        s1_0.verification_time,
+        s1_0.verifier_id 
+    from
+        of_acct_master o1_0 
+    join
+        sub_prod_master s1_0 
+            on s1_0.sub_product_id=o1_0.sub_product_id 
+    left join
+        prod_master p1_0 
+            on p1_0.product_id=s1_0.product_id 
+    where
+        o1_0.account_no=?
+2025-10-30 10:07:13 [main] ERROR c.e.m.s.GLMovementUpdateService [] - Error processing transaction ID TXN001: Account ACC001 not found in customer or office account master
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        c1_0.account_no,
+        c1_0.account_status,
+        c1_0.acct_name,
+        c1_0.branch_code,
+        c1_0.cust_name,
+        c1_0.cust_id,
+        c2_0.cust_id,
+        c2_0.address_1,
+        c2_0.branch_code,
+        c2_0.cust_type,
+        c2_0.entry_date,
+        c2_0.entry_time,
+        c2_0.ext_cust_id,
+        c2_0.first_name,
+        c2_0.last_name,
+        c2_0.maker_id,
+        c2_0.mobile,
+        c2_0.trade_name,
+        c2_0.verification_date,
+        c2_0.verification_time,
+        c2_0.verifier_id,
+        c1_0.date_closure,
+        c1_0.date_maturity,
+        c1_0.date_opening,
+        c1_0.gl_num,
+        c1_0.loan_limit,
+        c1_0.sub_product_id,
+        s1_0.sub_product_id,
+        s1_0.cum_gl_num,
+        s1_0.effective_interest_rate,
+        s1_0.entry_date,
+        s1_0.entry_time,
+        s1_0.ext_gl_num,
+        s1_0.interest_income_expenditure_gl_num,
+        s1_0.interest_increment,
+        s1_0.interest_receivable_payable_gl_num,
+        s1_0.intt_code,
+        s1_0.maker_id,
+        s1_0.product_id,
+        p1_0.product_id,
+        p1_0.cum_gl_num,
+        p1_0.currency,
+        p1_0.customer_product_flag,
+        p1_0.deal_or_running,
+        p1_0.entry_date,
+        p1_0.entry_time,
+        p1_0.interest_bearing_flag,
+        p1_0.maker_id,
+        p1_0.product_code,
+        p1_0.product_name,
+        p1_0.verification_date,
+        p1_0.verification_time,
+        p1_0.verifier_id,
+        s1_0.sub_product_code,
+        s1_0.sub_product_name,
+        s1_0.sub_product_status,
+        s1_0.verification_date,
+        s1_0.verification_time,
+        s1_0.verifier_id,
+        c1_0.tenor 
+    from
+        cust_acct_master c1_0 
+    join
+        cust_master c2_0 
+            on c2_0.cust_id=c1_0.cust_id 
+    join
+        sub_prod_master s1_0 
+            on s1_0.sub_product_id=c1_0.sub_product_id 
+    left join
+        prod_master p1_0 
+            on p1_0.product_id=s1_0.product_id 
+    where
+        c1_0.account_no=?
+Hibernate: 
+    select
+        c1_0.account_no,
+        c1_0.account_status,
+        c1_0.acct_name,
+        c1_0.branch_code,
+        c1_0.cust_name,
+        c1_0.cust_id,
+        c2_0.cust_id,
+        c2_0.address_1,
+        c2_0.branch_code,
+        c2_0.cust_type,
+        c2_0.entry_date,
+        c2_0.entry_time,
+        c2_0.ext_cust_id,
+        c2_0.first_name,
+        c2_0.last_name,
+        c2_0.maker_id,
+        c2_0.mobile,
+        c2_0.trade_name,
+        c2_0.verification_date,
+        c2_0.verification_time,
+        c2_0.verifier_id,
+        c1_0.date_closure,
+        c1_0.date_maturity,
+        c1_0.date_opening,
+        c1_0.gl_num,
+        c1_0.loan_limit,
+        c1_0.sub_product_id,
+        s1_0.sub_product_id,
+        s1_0.cum_gl_num,
+        s1_0.effective_interest_rate,
+        s1_0.entry_date,
+        s1_0.entry_time,
+        s1_0.ext_gl_num,
+        s1_0.interest_income_expenditure_gl_num,
+        s1_0.interest_increment,
+        s1_0.interest_receivable_payable_gl_num,
+        s1_0.intt_code,
+        s1_0.maker_id,
+        s1_0.product_id,
+        p1_0.product_id,
+        p1_0.cum_gl_num,
+        p1_0.currency,
+        p1_0.customer_product_flag,
+        p1_0.deal_or_running,
+        p1_0.entry_date,
+        p1_0.entry_time,
+        p1_0.interest_bearing_flag,
+        p1_0.maker_id,
+        p1_0.product_code,
+        p1_0.product_name,
+        p1_0.verification_date,
+        p1_0.verification_time,
+        p1_0.verifier_id,
+        s1_0.sub_product_code,
+        s1_0.sub_product_name,
+        s1_0.sub_product_status,
+        s1_0.verification_date,
+        s1_0.verification_time,
+        s1_0.verifier_id,
+        c1_0.tenor 
+    from
+        cust_acct_master c1_0 
+    join
+        cust_master c2_0 
+            on c2_0.cust_id=c1_0.cust_id 
+    join
+        sub_prod_master s1_0 
+            on s1_0.sub_product_id=c1_0.sub_product_id 
+    left join
+        prod_master p1_0 
+            on p1_0.product_id=s1_0.product_id 
+    where
+        c1_0.account_no=?
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        o1_0.account_no,
+        o1_0.account_status,
+        o1_0.acct_name,
+        o1_0.branch_code,
+        o1_0.date_closure,
+        o1_0.date_opening,
+        o1_0.gl_num,
+        o1_0.reconciliation_required,
+        o1_0.sub_product_id,
+        s1_0.sub_product_id,
+        s1_0.cum_gl_num,
+        s1_0.effective_interest_rate,
+        s1_0.entry_date,
+        s1_0.entry_time,
+        s1_0.ext_gl_num,
+        s1_0.interest_income_expenditure_gl_num,
+        s1_0.interest_increment,
+        s1_0.interest_receivable_payable_gl_num,
+        s1_0.intt_code,
+        s1_0.maker_id,
+        s1_0.product_id,
+        p1_0.product_id,
+        p1_0.cum_gl_num,
+        p1_0.currency,
+        p1_0.customer_product_flag,
+        p1_0.deal_or_running,
+        p1_0.entry_date,
+        p1_0.entry_time,
+        p1_0.interest_bearing_flag,
+        p1_0.maker_id,
+        p1_0.product_code,
+        p1_0.product_name,
+        p1_0.verification_date,
+        p1_0.verification_time,
+        p1_0.verifier_id,
+        s1_0.sub_product_code,
+        s1_0.sub_product_name,
+        s1_0.sub_product_status,
+        s1_0.verification_date,
+        s1_0.verification_time,
+        s1_0.verifier_id 
+    from
+        of_acct_master o1_0 
+    join
+        sub_prod_master s1_0 
+            on s1_0.sub_product_id=o1_0.sub_product_id 
+    left join
+        prod_master p1_0 
+            on p1_0.product_id=s1_0.product_id 
+    where
+        o1_0.account_no=?
+Hibernate: 
+    select
+        o1_0.account_no,
+        o1_0.account_status,
+        o1_0.acct_name,
+        o1_0.branch_code,
+        o1_0.date_closure,
+        o1_0.date_opening,
+        o1_0.gl_num,
+        o1_0.reconciliation_required,
+        o1_0.sub_product_id,
+        s1_0.sub_product_id,
+        s1_0.cum_gl_num,
+        s1_0.effective_interest_rate,
+        s1_0.entry_date,
+        s1_0.entry_time,
+        s1_0.ext_gl_num,
+        s1_0.interest_income_expenditure_gl_num,
+        s1_0.interest_increment,
+        s1_0.interest_receivable_payable_gl_num,
+        s1_0.intt_code,
+        s1_0.maker_id,
+        s1_0.product_id,
+        p1_0.product_id,
+        p1_0.cum_gl_num,
+        p1_0.currency,
+        p1_0.customer_product_flag,
+        p1_0.deal_or_running,
+        p1_0.entry_date,
+        p1_0.entry_time,
+        p1_0.interest_bearing_flag,
+        p1_0.maker_id,
+        p1_0.product_code,
+        p1_0.product_name,
+        p1_0.verification_date,
+        p1_0.verification_time,
+        p1_0.verifier_id,
+        s1_0.sub_product_code,
+        s1_0.sub_product_name,
+        s1_0.sub_product_status,
+        s1_0.verification_date,
+        s1_0.verification_time,
+        s1_0.verifier_id 
+    from
+        of_acct_master o1_0 
+    join
+        sub_prod_master s1_0 
+            on s1_0.sub_product_id=o1_0.sub_product_id 
+    left join
+        prod_master p1_0 
+            on p1_0.product_id=s1_0.product_id 
+    where
+        o1_0.account_no=?
+2025-10-30 10:07:13 [main] ERROR c.e.m.s.GLMovementUpdateService [] - Error processing transaction ID TXN002: Account ACC002 not found in customer or office account master
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.GLMovementUpdateService [] - Batch Job 4 completed. Records created: 0, Errors: 2
+2025-10-30 10:07:13 [main] WARN  c.e.m.s.GLMovementUpdateService [] - GL movement process completed with 2 errors: Transaction TXN001: Account ACC001 not found in customer or office account master; Transaction TXN002: Account ACC002 not found in customer or office account master
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.929178500
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.931177900
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.934387
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        eod_log_table
+        (created_timestamp,end_timestamp,eod_date,error_message,failed_at_step,job_name,records_processed,start_timestamp,status,system_date,user_id,eod_log_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        eod_log_table
+        (created_timestamp,end_timestamp,eod_date,error_message,failed_at_step,job_name,records_processed,start_timestamp,status,system_date,user_id,eod_log_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,default)
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.EODOrchestrationService [] - Batch Job 4 completed successfully. Records processed: 0
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.EODOrchestrationService [] - Starting Batch Job 5: GL Balance Update
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.GLBalanceUpdateService [] - Starting Batch Job 5: GL Balance Update for date: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    SELECT
+        DISTINCT gl.GL_Num 
+    FROM
+        gl_setup gl 
+    WHERE
+        gl.GL_Num IN (     -- Get GLs 
+    from
+        sub-products that have customer accounts     SELECT
+            DISTINCT sp.Cum_GL_Num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            cust_acct_master ca 
+                ON ca.Sub_Product_Id = sp.Sub_Product_Id      
+        UNION
+        -- Get GLs 
+    from
+        sub-products that have office accounts     SELECT
+            DISTINCT sp.Cum_GL_Num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            of_acct_master oa 
+                ON oa.Sub_Product_Id = sp.Sub_Product_Id      
+        UNION
+        -- Get interest income/expenditure GLs 
+    from
+        sub-products with customer accounts     SELECT
+            DISTINCT sp.interest_income_expenditure_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            cust_acct_master ca 
+                ON ca.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_income_expenditure_gl_num IS NOT NULL      
+        UNION
+        -- Get interest receivable/payable GLs 
+    from
+        sub-products with customer accounts     SELECT
+            DISTINCT sp.interest_receivable_payable_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            cust_acct_master ca 
+                ON ca.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_receivable_payable_gl_num IS NOT NULL      
+        UNION
+        -- Get interest income/expenditure GLs 
+    from
+        sub-products with office accounts     SELECT
+            DISTINCT sp.interest_income_expenditure_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            of_acct_master oa 
+                ON oa.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_income_expenditure_gl_num IS NOT NULL      
+        UNION
+        -- Get interest receivable/payable GLs 
+    from
+        sub-products with office accounts     SELECT
+            DISTINCT sp.interest_receivable_payable_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            of_acct_master oa 
+                ON oa.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_receivable_payable_gl_num IS NOT NULL ) 
+    ORDER BY
+        gl.GL_Num 
+Hibernate: 
+    SELECT
+        DISTINCT gl.GL_Num 
+    FROM
+        gl_setup gl 
+    WHERE
+        gl.GL_Num IN (     -- Get GLs 
+    from
+        sub-products that have customer accounts     SELECT
+            DISTINCT sp.Cum_GL_Num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            cust_acct_master ca 
+                ON ca.Sub_Product_Id = sp.Sub_Product_Id      
+        UNION
+        -- Get GLs 
+    from
+        sub-products that have office accounts     SELECT
+            DISTINCT sp.Cum_GL_Num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            of_acct_master oa 
+                ON oa.Sub_Product_Id = sp.Sub_Product_Id      
+        UNION
+        -- Get interest income/expenditure GLs 
+    from
+        sub-products with customer accounts     SELECT
+            DISTINCT sp.interest_income_expenditure_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            cust_acct_master ca 
+                ON ca.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_income_expenditure_gl_num IS NOT NULL      
+        UNION
+        -- Get interest receivable/payable GLs 
+    from
+        sub-products with customer accounts     SELECT
+            DISTINCT sp.interest_receivable_payable_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            cust_acct_master ca 
+                ON ca.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_receivable_payable_gl_num IS NOT NULL      
+        UNION
+        -- Get interest income/expenditure GLs 
+    from
+        sub-products with office accounts     SELECT
+            DISTINCT sp.interest_income_expenditure_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            of_acct_master oa 
+                ON oa.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_income_expenditure_gl_num IS NOT NULL      
+        UNION
+        -- Get interest receivable/payable GLs 
+    from
+        sub-products with office accounts     SELECT
+            DISTINCT sp.interest_receivable_payable_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            of_acct_master oa 
+                ON oa.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_receivable_payable_gl_num IS NOT NULL ) 
+    ORDER BY
+        gl.GL_Num 
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.GLBalanceUpdateService [] - Retrieved 0 active GL accounts (used in account creation)
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    SELECT
+        DISTINCT GL_Num 
+    FROM
+        GL_Movement 
+    WHERE
+        Tran_Date = ?
+Hibernate: 
+    SELECT
+        DISTINCT GL_Num 
+    FROM
+        GL_Movement 
+    WHERE
+        Tran_Date = ?
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    SELECT
+        DISTINCT GL_Num 
+    FROM
+        GL_Movement_Accrual 
+    WHERE
+        Accrual_Date = ?
+Hibernate: 
+    SELECT
+        DISTINCT GL_Num 
+    FROM
+        GL_Movement_Accrual 
+    WHERE
+        Accrual_Date = ?
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.GLBalanceUpdateService [] - Active GLs with transactions today: 0 (from gl_movement: 0, from gl_movement_accrual: 0)
+2025-10-30 10:07:13 [main] INFO  c.e.m.service.GLBalanceUpdateService [] - Active GLs without transactions today: 0 (will carry forward previous balance)
+2025-10-30 10:07:13 [main] WARN  c.e.m.service.GLBalanceUpdateService [] - No active GL accounts found (no accounts created yet)
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.964382200
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.980007100
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.980007100
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        eod_log_table
+        (created_timestamp,end_timestamp,eod_date,error_message,failed_at_step,job_name,records_processed,start_timestamp,status,system_date,user_id,eod_log_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        eod_log_table
+        (created_timestamp,end_timestamp,eod_date,error_message,failed_at_step,job_name,records_processed,start_timestamp,status,system_date,user_id,eod_log_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,default)
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.EODOrchestrationService [] - Batch Job 5 completed successfully. Records processed: 0
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.EODOrchestrationService [] - Starting Batch Job 6: Interest Accrual Account Balance Update
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.InterestAccrualAccountBalanceService [] - Starting Batch Job 6: Interest Accrual Account Balance Update for date: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        distinct i1_0.account_no 
+    from
+        intt_accr_tran i1_0 
+    where
+        i1_0.accrual_date=?
+Hibernate: 
+    select
+        distinct i1_0.account_no 
+    from
+        intt_accr_tran i1_0 
+    where
+        i1_0.accrual_date=?
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.InterestAccrualAccountBalanceService [] - No interest accrual transactions found for date: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.980007100
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.980007100
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:13 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:13.980007100
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        eod_log_table
+        (created_timestamp,end_timestamp,eod_date,error_message,failed_at_step,job_name,records_processed,start_timestamp,status,system_date,user_id,eod_log_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        eod_log_table
+        (created_timestamp,end_timestamp,eod_date,error_message,failed_at_step,job_name,records_processed,start_timestamp,status,system_date,user_id,eod_log_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,default)
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.EODOrchestrationService [] - Batch Job 6 completed successfully. Records processed: 0
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.EODOrchestrationService [] - Starting Batch Job 7: Financial Reports Generation
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.FinancialReportsService [] - Starting Batch Job 7: Financial Reports Generation for date: 2024-01-15
+2025-10-30 10:07:13 [main] INFO  c.e.m.s.FinancialReportsService [] - Generating Trial Balance Report: reports\20240115\TrialBalance_20240115.csv
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    SELECT
+        DISTINCT gl.GL_Num 
+    FROM
+        gl_setup gl 
+    WHERE
+        gl.GL_Num IN (     -- Get GLs 
+    from
+        sub-products that have customer accounts     SELECT
+            DISTINCT sp.Cum_GL_Num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            cust_acct_master ca 
+                ON ca.Sub_Product_Id = sp.Sub_Product_Id      
+        UNION
+        -- Get GLs 
+    from
+        sub-products that have office accounts     SELECT
+            DISTINCT sp.Cum_GL_Num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            of_acct_master oa 
+                ON oa.Sub_Product_Id = sp.Sub_Product_Id      
+        UNION
+        -- Get interest income/expenditure GLs 
+    from
+        sub-products with customer accounts     SELECT
+            DISTINCT sp.interest_income_expenditure_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            cust_acct_master ca 
+                ON ca.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_income_expenditure_gl_num IS NOT NULL      
+        UNION
+        -- Get interest receivable/payable GLs 
+    from
+        sub-products with customer accounts     SELECT
+            DISTINCT sp.interest_receivable_payable_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            cust_acct_master ca 
+                ON ca.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_receivable_payable_gl_num IS NOT NULL      
+        UNION
+        -- Get interest income/expenditure GLs 
+    from
+        sub-products with office accounts     SELECT
+            DISTINCT sp.interest_income_expenditure_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            of_acct_master oa 
+                ON oa.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_income_expenditure_gl_num IS NOT NULL      
+        UNION
+        -- Get interest receivable/payable GLs 
+    from
+        sub-products with office accounts     SELECT
+            DISTINCT sp.interest_receivable_payable_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            of_acct_master oa 
+                ON oa.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_receivable_payable_gl_num IS NOT NULL ) 
+    ORDER BY
+        gl.GL_Num 
+Hibernate: 
+    SELECT
+        DISTINCT gl.GL_Num 
+    FROM
+        gl_setup gl 
+    WHERE
+        gl.GL_Num IN (     -- Get GLs 
+    from
+        sub-products that have customer accounts     SELECT
+            DISTINCT sp.Cum_GL_Num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            cust_acct_master ca 
+                ON ca.Sub_Product_Id = sp.Sub_Product_Id      
+        UNION
+        -- Get GLs 
+    from
+        sub-products that have office accounts     SELECT
+            DISTINCT sp.Cum_GL_Num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            of_acct_master oa 
+                ON oa.Sub_Product_Id = sp.Sub_Product_Id      
+        UNION
+        -- Get interest income/expenditure GLs 
+    from
+        sub-products with customer accounts     SELECT
+            DISTINCT sp.interest_income_expenditure_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            cust_acct_master ca 
+                ON ca.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_income_expenditure_gl_num IS NOT NULL      
+        UNION
+        -- Get interest receivable/payable GLs 
+    from
+        sub-products with customer accounts     SELECT
+            DISTINCT sp.interest_receivable_payable_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            cust_acct_master ca 
+                ON ca.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_receivable_payable_gl_num IS NOT NULL      
+        UNION
+        -- Get interest income/expenditure GLs 
+    from
+        sub-products with office accounts     SELECT
+            DISTINCT sp.interest_income_expenditure_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            of_acct_master oa 
+                ON oa.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_income_expenditure_gl_num IS NOT NULL      
+        UNION
+        -- Get interest receivable/payable GLs 
+    from
+        sub-products with office accounts     SELECT
+            DISTINCT sp.interest_receivable_payable_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            of_acct_master oa 
+                ON oa.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_receivable_payable_gl_num IS NOT NULL ) 
+    ORDER BY
+        gl.GL_Num 
+2025-10-30 10:07:13 [main] WARN  c.e.m.s.FinancialReportsService [] - No active GL numbers found with accounts
+2025-10-30 10:07:13 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        g1_0.id,
+        g1_0.closing_bal,
+        g1_0.cr_summation,
+        g1_0.current_balance,
+        g1_0.dr_summation,
+        g1_0.gl_num,
+        g1_0.last_updated,
+        g1_0.opening_bal,
+        g1_0.tran_date 
+    from
+        gl_balance g1_0 
+    where
+        g1_0.tran_date=?
+Hibernate: 
+    select
+        g1_0.id,
+        g1_0.closing_bal,
+        g1_0.cr_summation,
+        g1_0.current_balance,
+        g1_0.dr_summation,
+        g1_0.gl_num,
+        g1_0.last_updated,
+        g1_0.opening_bal,
+        g1_0.tran_date 
+    from
+        gl_balance g1_0 
+    where
+        g1_0.tran_date=?
+2025-10-30 10:07:13 [main] WARN  c.e.m.s.FinancialReportsService [] - No GL balances found for date: 2024-01-15
+2025-10-30 10:07:14 [main] INFO  c.e.m.s.FinancialReportsService [] - Trial Balance Report generated: 0 GL accounts, Total DR=0, Total CR=0
+2025-10-30 10:07:14 [main] INFO  c.e.m.s.FinancialReportsService [] - Trial Balance validation passed: DR = CR = 0
+2025-10-30 10:07:14 [main] INFO  c.e.m.s.FinancialReportsService [] - Generating Balance Sheet Report (Excel): reports\20240115\BalanceSheet_20240115.xlsx
+2025-10-30 10:07:14 [main] DEBUG org.hibernate.SQL [] - 
+    SELECT
+        DISTINCT gl.GL_Num 
+    FROM
+        gl_setup gl 
+    WHERE
+        gl.GL_Num IN (     -- Main GLs (Cum_GL_Num) 
+    from
+        sub-products with customer accounts     -- These should exclude Income (14%) 
+        and Expenditure (24%) GLs     SELECT
+            DISTINCT sp.Cum_GL_Num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            cust_acct_master ca 
+                ON ca.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            (sp.Cum_GL_Num LIKE '1%' 
+            OR sp.Cum_GL_Num LIKE '2%')     
+            AND sp.Cum_GL_Num NOT LIKE '14%'     
+            AND sp.Cum_GL_Num NOT LIKE '24%'      
+        UNION
+        -- Main GLs (Cum_GL_Num) 
+    from
+        sub-products with office accounts     -- These should exclude Income (14%) 
+        and Expenditure (24%) GLs     SELECT
+            DISTINCT sp.Cum_GL_Num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            of_acct_master oa 
+                ON oa.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            (sp.Cum_GL_Num LIKE '1%' 
+            OR sp.Cum_GL_Num LIKE '2%')     
+            AND sp.Cum_GL_Num NOT LIKE '14%'     
+            AND sp.Cum_GL_Num NOT LIKE '24%'      
+        UNION
+        -- Interest income/expenditure GLs 
+    from
+        sub-products with customer accounts     -- Authority: Include ALL interest GLs even if they start with 14% 
+        or 24%     SELECT
+            DISTINCT sp.interest_income_expenditure_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            cust_acct_master ca 
+                ON ca.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_income_expenditure_gl_num IS NOT NULL      
+        UNION
+        -- Interest receivable/payable GLs 
+    from
+        sub-products with customer accounts     -- Authority: Include ALL interest GLs even if they start with 14% 
+        or 24%     SELECT
+            DISTINCT sp.interest_receivable_payable_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            cust_acct_master ca 
+                ON ca.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_receivable_payable_gl_num IS NOT NULL      
+        UNION
+        -- Interest income/expenditure GLs 
+    from
+        sub-products with office accounts     -- Authority: Include ALL interest GLs even if they start with 14% 
+        or 24%     SELECT
+            DISTINCT sp.interest_income_expenditure_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            of_acct_master oa 
+                ON oa.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_income_expenditure_gl_num IS NOT NULL      
+        UNION
+        -- Interest receivable/payable GLs 
+    from
+        sub-products with office accounts     -- Authority: Include ALL interest GLs even if they start with 14% 
+        or 24%     SELECT
+            DISTINCT sp.interest_receivable_payable_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            of_acct_master oa 
+                ON oa.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_receivable_payable_gl_num IS NOT NULL ) 
+        AND (gl.GL_Num LIKE '1%' 
+        OR gl.GL_Num LIKE '2%') 
+    ORDER BY
+        gl.GL_Num 
+Hibernate: 
+    SELECT
+        DISTINCT gl.GL_Num 
+    FROM
+        gl_setup gl 
+    WHERE
+        gl.GL_Num IN (     -- Main GLs (Cum_GL_Num) 
+    from
+        sub-products with customer accounts     -- These should exclude Income (14%) 
+        and Expenditure (24%) GLs     SELECT
+            DISTINCT sp.Cum_GL_Num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            cust_acct_master ca 
+                ON ca.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            (sp.Cum_GL_Num LIKE '1%' 
+            OR sp.Cum_GL_Num LIKE '2%')     
+            AND sp.Cum_GL_Num NOT LIKE '14%'     
+            AND sp.Cum_GL_Num NOT LIKE '24%'      
+        UNION
+        -- Main GLs (Cum_GL_Num) 
+    from
+        sub-products with office accounts     -- These should exclude Income (14%) 
+        and Expenditure (24%) GLs     SELECT
+            DISTINCT sp.Cum_GL_Num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            of_acct_master oa 
+                ON oa.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            (sp.Cum_GL_Num LIKE '1%' 
+            OR sp.Cum_GL_Num LIKE '2%')     
+            AND sp.Cum_GL_Num NOT LIKE '14%'     
+            AND sp.Cum_GL_Num NOT LIKE '24%'      
+        UNION
+        -- Interest income/expenditure GLs 
+    from
+        sub-products with customer accounts     -- Authority: Include ALL interest GLs even if they start with 14% 
+        or 24%     SELECT
+            DISTINCT sp.interest_income_expenditure_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            cust_acct_master ca 
+                ON ca.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_income_expenditure_gl_num IS NOT NULL      
+        UNION
+        -- Interest receivable/payable GLs 
+    from
+        sub-products with customer accounts     -- Authority: Include ALL interest GLs even if they start with 14% 
+        or 24%     SELECT
+            DISTINCT sp.interest_receivable_payable_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            cust_acct_master ca 
+                ON ca.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_receivable_payable_gl_num IS NOT NULL      
+        UNION
+        -- Interest income/expenditure GLs 
+    from
+        sub-products with office accounts     -- Authority: Include ALL interest GLs even if they start with 14% 
+        or 24%     SELECT
+            DISTINCT sp.interest_income_expenditure_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            of_acct_master oa 
+                ON oa.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_income_expenditure_gl_num IS NOT NULL      
+        UNION
+        -- Interest receivable/payable GLs 
+    from
+        sub-products with office accounts     -- Authority: Include ALL interest GLs even if they start with 14% 
+        or 24%     SELECT
+            DISTINCT sp.interest_receivable_payable_gl_num     
+        FROM
+            sub_prod_master sp     
+        INNER JOIN
+            of_acct_master oa 
+                ON oa.Sub_Product_Id = sp.Sub_Product_Id     
+        WHERE
+            sp.interest_receivable_payable_gl_num IS NOT NULL ) 
+        AND (gl.GL_Num LIKE '1%' 
+        OR gl.GL_Num LIKE '2%') 
+    ORDER BY
+        gl.GL_Num 
+2025-10-30 10:07:14 [main] WARN  c.e.m.s.FinancialReportsService [] - No Balance Sheet GL numbers found with accounts
+2025-10-30 10:07:14 [main] INFO  c.e.m.s.FinancialReportsService [] - Batch Job 7 completed successfully. Reports generated: {trialBalancePath=reports\20240115\TrialBalance_20240115.csv, reportDate=20240115, success=true, balanceSheetPath=reports\20240115\BalanceSheet_20240115.xlsx, message=Reports generated successfully}
+2025-10-30 10:07:14 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:14 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:14 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:14.730251700
+2025-10-30 10:07:14 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:14 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:14 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:14.730251700
+2025-10-30 10:07:14 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:14 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-15
+2025-10-30 10:07:14 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-15T10:07:14.745874900
+2025-10-30 10:07:14 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        eod_log_table
+        (created_timestamp,end_timestamp,eod_date,error_message,failed_at_step,job_name,records_processed,start_timestamp,status,system_date,user_id,eod_log_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        eod_log_table
+        (created_timestamp,end_timestamp,eod_date,error_message,failed_at_step,job_name,records_processed,start_timestamp,status,system_date,user_id,eod_log_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,default)
+2025-10-30 10:07:14 [main] INFO  c.e.m.s.EODOrchestrationService [] - Batch Job 7 completed successfully. Reports generated: {trialBalancePath=reports\20240115\TrialBalance_20240115.csv, reportDate=20240115, success=true, balanceSheetPath=reports\20240115\BalanceSheet_20240115.xlsx, message=Reports generated successfully}
+2025-10-30 10:07:14 [main] INFO  c.e.m.s.EODOrchestrationService [] - Starting Batch Job 8: System Date Increment
+2025-10-30 10:07:14 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_id,
+        p1_0.last_updated,
+        p1_0.parameter_description,
+        p1_0.parameter_name,
+        p1_0.parameter_value,
+        p1_0.updated_by 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name=?
+Hibernate: 
+    select
+        p1_0.parameter_id,
+        p1_0.last_updated,
+        p1_0.parameter_description,
+        p1_0.parameter_name,
+        p1_0.parameter_value,
+        p1_0.updated_by 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name=?
+2025-10-30 10:07:14 [main] DEBUG org.hibernate.SQL [] - 
+    update
+        parameter_table 
+    set
+        last_updated=?,
+        parameter_description=?,
+        parameter_name=?,
+        parameter_value=?,
+        updated_by=? 
+    where
+        parameter_id=?
+Hibernate: 
+    update
+        parameter_table 
+    set
+        last_updated=?,
+        parameter_description=?,
+        parameter_name=?,
+        parameter_value=?,
+        updated_by=? 
+    where
+        parameter_id=?
+2025-10-30 10:07:14 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:14 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-16
+2025-10-30 10:07:14 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-16T10:07:14.768225400
+2025-10-30 10:07:14 [main] DEBUG org.hibernate.SQL [] - 
+    update
+        parameter_table 
+    set
+        last_updated=?,
+        parameter_description=?,
+        parameter_name=?,
+        parameter_value=?,
+        updated_by=? 
+    where
+        parameter_id=?
+Hibernate: 
+    update
+        parameter_table 
+    set
+        last_updated=?,
+        parameter_description=?,
+        parameter_name=?,
+        parameter_value=?,
+        updated_by=? 
+    where
+        parameter_id=?
+2025-10-30 10:07:14 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_id,
+        p1_0.last_updated,
+        p1_0.parameter_description,
+        p1_0.parameter_name,
+        p1_0.parameter_value,
+        p1_0.updated_by 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name=?
+Hibernate: 
+    select
+        p1_0.parameter_id,
+        p1_0.last_updated,
+        p1_0.parameter_description,
+        p1_0.parameter_name,
+        p1_0.parameter_value,
+        p1_0.updated_by 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name=?
+2025-10-30 10:07:14 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:14 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-16
+2025-10-30 10:07:14 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-16T10:07:14.786332800
+2025-10-30 10:07:14 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_id,
+        p1_0.last_updated,
+        p1_0.parameter_description,
+        p1_0.parameter_name,
+        p1_0.parameter_value,
+        p1_0.updated_by 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name=?
+Hibernate: 
+    select
+        p1_0.parameter_id,
+        p1_0.last_updated,
+        p1_0.parameter_description,
+        p1_0.parameter_name,
+        p1_0.parameter_value,
+        p1_0.updated_by 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name=?
+2025-10-30 10:07:14 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_id,
+        p1_0.last_updated,
+        p1_0.parameter_description,
+        p1_0.parameter_name,
+        p1_0.parameter_value,
+        p1_0.updated_by 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name=?
+Hibernate: 
+    select
+        p1_0.parameter_id,
+        p1_0.last_updated,
+        p1_0.parameter_description,
+        p1_0.parameter_name,
+        p1_0.parameter_value,
+        p1_0.updated_by 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name=?
+2025-10-30 10:07:14 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:14 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-16
+2025-10-30 10:07:14 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-16T10:07:14.793329200
+2025-10-30 10:07:14 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:14 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-16
+2025-10-30 10:07:14 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-16T10:07:14.794328100
+2025-10-30 10:07:14 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:14 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-16
+2025-10-30 10:07:14 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-16T10:07:14.796326700
+2025-10-30 10:07:14 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        eod_log_table
+        (created_timestamp,end_timestamp,eod_date,error_message,failed_at_step,job_name,records_processed,start_timestamp,status,system_date,user_id,eod_log_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        eod_log_table
+        (created_timestamp,end_timestamp,eod_date,error_message,failed_at_step,job_name,records_processed,start_timestamp,status,system_date,user_id,eod_log_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,default)
+2025-10-30 10:07:14 [main] INFO  c.e.m.s.EODOrchestrationService [] - Batch Job 8 completed successfully. System date incremented from 2024-01-15 to 2024-01-16
+2025-10-30 10:07:14 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:14 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-16
+2025-10-30 10:07:14 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-16T10:07:14.801397
+2025-10-30 10:07:14 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:14 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-16
+2025-10-30 10:07:14 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-16T10:07:14.802396100
+2025-10-30 10:07:14 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:14 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-16
+2025-10-30 10:07:14 [main] DEBUG c.e.m.service.SystemDateService [] - Generated System_DateTime: 2024-01-16T10:07:14.804395
+2025-10-30 10:07:14 [main] DEBUG org.hibernate.SQL [] - 
+    insert 
+    into
+        eod_log_table
+        (created_timestamp,end_timestamp,eod_date,error_message,failed_at_step,job_name,records_processed,start_timestamp,status,system_date,user_id,eod_log_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,default)
+Hibernate: 
+    insert 
+    into
+        eod_log_table
+        (created_timestamp,end_timestamp,eod_date,error_message,failed_at_step,job_name,records_processed,start_timestamp,status,system_date,user_id,eod_log_id) 
+    values
+        (?,?,?,?,?,?,?,?,?,?,?,default)
+2025-10-30 10:07:14 [main] INFO  c.e.m.s.EODOrchestrationService [] - === EOD PROCESS COMPLETED SUCCESSFULLY ===
+2025-10-30 10:07:14 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+Hibernate: 
+    select
+        p1_0.parameter_value 
+    from
+        parameter_table p1_0 
+    where
+        p1_0.parameter_name='System_Date'
+2025-10-30 10:07:14 [main] DEBUG c.e.m.service.SystemDateService [] - Retrieved System_Date from Parameter_Table: 2024-01-16
+2025-10-30 10:07:14 [main] DEBUG org.hibernate.SQL [] - 
+    select
+        e1_0.eod_log_id,
+        e1_0.created_timestamp,
+        e1_0.end_timestamp,
+        e1_0.eod_date,
+        e1_0.error_message,
+        e1_0.failed_at_step,
+        e1_0.job_name,
+        e1_0.records_processed,
+        e1_0.start_timestamp,
+        e1_0.status,
+        e1_0.system_date,
+        e1_0.user_id 
+    from
+        eod_log_table e1_0 
+    where
+        e1_0.eod_date=?
+Hibernate: 
+    select
+        e1_0.eod_log_id,
+        e1_0.created_timestamp,
+        e1_0.end_timestamp,
+        e1_0.eod_date,
+        e1_0.error_message,
+        e1_0.failed_at_step,
+        e1_0.job_name,
+        e1_0.records_processed,
+        e1_0.start_timestamp,
+        e1_0.status,
+        e1_0.system_date,
+        e1_0.user_id 
+    from
+        eod_log_table e1_0 
+    where
+        e1_0.eod_date=?
+]]></system-out>
+  </testcase>
+</testsuite>

@@ -60,6 +60,9 @@ class TransactionControllerTest {
     @MockBean
     private TransactionService transactionService;
 
+    @MockBean
+    private com.example.moneymarket.service.UnifiedAccountService unifiedAccountService;
+
     // Using @Primary bean from TestConfig instead of @MockBean
     // private TransactionValidator transactionValidator;
 

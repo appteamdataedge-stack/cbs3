@@ -52,7 +52,7 @@ public class EODLogTable {
     @Column(name = "Error_Message", columnDefinition = "TEXT")
     private String errorMessage;
 
-    @Column(name = "Failed_At_Step", length = 100)
+    @Column(name = "Failed_At_Step", length = 500)
     private String failedAtStep;
 
     @Column(name = "Created_Timestamp", nullable = false)

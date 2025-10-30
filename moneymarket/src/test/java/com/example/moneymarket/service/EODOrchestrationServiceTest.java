@@ -33,10 +33,25 @@ class EODOrchestrationServiceTest {
     private InterestAccrualService interestAccrualService;
 
     @Mock
+    private InterestAccrualGLMovementService interestAccrualGLMovementService;
+
+    @Mock
+    private GLMovementUpdateService glMovementUpdateService;
+
+    @Mock
+    private GLBalanceUpdateService glBalanceUpdateService;
+
+    @Mock
+    private InterestAccrualAccountBalanceService interestAccrualAccountBalanceService;
+
+    @Mock
     private EODValidationService eodValidationService;
 
     @Mock
     private EODReportingService eodReportingService;
+
+    @Mock
+    private FinancialReportsService financialReportsService;
 
     @Mock
     private SystemDateService systemDateService;
@@ -84,7 +99,11 @@ class EODOrchestrationServiceTest {
                 .thenReturn(EODValidationService.EODValidationResult.success("All validations passed"));
         when(accountBalanceUpdateService.executeAccountBalanceUpdate(any())).thenReturn(5);
         when(interestAccrualService.runEODAccruals(any())).thenReturn(3);
-        when(eodReportingService.generateFinancialReports(any())).thenReturn(true);
+        when(interestAccrualGLMovementService.processInterestAccrualGLMovements(any())).thenReturn(2);
+        when(glMovementUpdateService.processGLMovements(any())).thenReturn(10);
+        when(glBalanceUpdateService.updateGLBalances(any())).thenReturn(8);
+        when(interestAccrualAccountBalanceService.updateInterestAccrualAccountBalances(any())).thenReturn(3);
+        when(financialReportsService.generateFinancialReports(any())).thenReturn(java.util.Collections.singletonMap("report", "path"));
         when(parameterTableRepository.findByParameterName(any())).thenReturn(Optional.empty());
 
         // When
@@ -95,12 +114,16 @@ class EODOrchestrationServiceTest {
         assertEquals("EOD completed successfully", result.getMessage());
         assertEquals(5, result.getAccountsProcessed());
         assertEquals(3, result.getInterestEntriesProcessed());
-        
+
         // Verify all services were called
         verify(eodValidationService).performPreEODValidations(userId, systemDate);
         verify(accountBalanceUpdateService).executeAccountBalanceUpdate(systemDate);
         verify(interestAccrualService).runEODAccruals(systemDate);
-        verify(eodReportingService).generateFinancialReports(systemDate);
+        verify(interestAccrualGLMovementService).processInterestAccrualGLMovements(systemDate);
+        verify(glMovementUpdateService).processGLMovements(systemDate);
+        verify(glBalanceUpdateService).updateGLBalances(systemDate);
+        verify(interestAccrualAccountBalanceService).updateInterestAccrualAccountBalances(systemDate);
+        verify(financialReportsService).generateFinancialReports(systemDate);
     }
 
     @Test
@@ -186,14 +209,14 @@ class EODOrchestrationServiceTest {
     @Test
     void testExecuteBatchJob7_Success() {
         // Given
-        when(eodReportingService.generateFinancialReports(any())).thenReturn(true);
+        when(financialReportsService.generateFinancialReports(any())).thenReturn(java.util.Collections.singletonMap("TrialBalance", "/path/to/report"));
 
         // When
         boolean result = eodOrchestrationService.executeBatchJob7(LocalDate.now(), systemDate, userId);
 
         // Then
         assertTrue(result);
-        verify(eodReportingService).generateFinancialReports(systemDate);
+        verify(financialReportsService).generateFinancialReports(systemDate);
     }
 
     @Test

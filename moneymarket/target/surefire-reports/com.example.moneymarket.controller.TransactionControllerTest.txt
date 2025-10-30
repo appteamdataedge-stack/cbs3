@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.example.moneymarket.controller.TransactionControllerTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 15.27 s - in com.example.moneymarket.controller.TransactionControllerTest

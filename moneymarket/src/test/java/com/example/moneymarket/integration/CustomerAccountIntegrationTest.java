@@ -13,7 +13,9 @@ import com.example.moneymarket.repository.CustMasterRepository;
 import com.example.moneymarket.repository.AcctBalRepository;
 import com.example.moneymarket.repository.SubProdMasterRepository;
 import com.example.moneymarket.service.AccountNumberService;
+import com.example.moneymarket.service.BalanceService;
 import com.example.moneymarket.service.CustomerAccountService;
+import com.example.moneymarket.service.SystemDateService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -53,13 +55,23 @@ class CustomerAccountIntegrationTest {
     
     @Mock
     private AcctBalRepository acctBalRepository;
-    
+
+    @Mock
+    private SystemDateService systemDateService;
+
+    @Mock
+    private BalanceService balanceService;
+
     @InjectMocks
     private CustomerAccountService customerAccountService;
     
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+
+        // Mock SystemDateService
+        when(systemDateService.getSystemDate()).thenReturn(LocalDate.now());
+        when(systemDateService.getSystemDateTime()).thenReturn(java.time.LocalDateTime.now());
     }
 
     @Test
@@ -93,7 +105,7 @@ class CustomerAccountIntegrationTest {
         
         // Configure the mock repository behavior
         when(custMasterRepository.findById(1)).thenReturn(java.util.Optional.of(mockCustomer));
-        when(subProdMasterRepository.findById(1)).thenReturn(java.util.Optional.of(mockSubProduct));
+        when(subProdMasterRepository.findByIdWithProduct(1)).thenReturn(java.util.Optional.of(mockSubProduct));
         when(accountNumberService.generateCustomerAccountNumber(any(), any())).thenReturn(mockAccountNo);
         
         // Mock account saving
@@ -120,6 +132,16 @@ class CustomerAccountIntegrationTest {
         // Mock account retrieval
         when(custAcctMasterRepository.findById(mockAccountNo)).thenReturn(java.util.Optional.of(mockAccount));
         when(acctBalRepository.findLatestByAccountNo(mockAccountNo)).thenReturn(java.util.Optional.of(mockBalance));
+
+        // Mock BalanceService for getComputedAccountBalance
+        com.example.moneymarket.dto.AccountBalanceDTO mockBalanceDTO = com.example.moneymarket.dto.AccountBalanceDTO.builder()
+                .accountNo(mockAccountNo)
+                .currentBalance(BigDecimal.ZERO)
+                .availableBalance(BigDecimal.ZERO)
+                .computedBalance(BigDecimal.ZERO)
+                .interestAccrued(BigDecimal.ZERO)
+                .build();
+        when(balanceService.getComputedAccountBalance(mockAccountNo)).thenReturn(mockBalanceDTO);
         
         // Create the account
         CustomerAccountResponseDTO createdAccount = customerAccountService.createAccount(requestDTO);

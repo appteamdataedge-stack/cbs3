@@ -75,13 +75,13 @@ class EODIntegrationTest {
         // Then
         assertTrue(result.isSuccess());
         assertTrue(result.getAccountsProcessed() >= 0);
-        
+
         // Verify system date was incremented
         LocalDate newSystemDate = eodOrchestrationService.getSystemDate();
         assertEquals(systemDate.plusDays(1), newSystemDate);
-        
-        // Verify EOD log entries were created
-        List<EODLogTable> logEntries = eodLogTableRepository.findByEodDate(LocalDate.now());
+
+        // Verify EOD log entries were created (use systemDate, not LocalDate.now())
+        List<EODLogTable> logEntries = eodLogTableRepository.findByEodDate(systemDate);
         assertFalse(logEntries.isEmpty());
     }
 
