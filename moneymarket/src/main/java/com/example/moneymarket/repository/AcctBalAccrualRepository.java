@@ -39,7 +39,7 @@ public interface AcctBalAccrualRepository extends JpaRepository<AcctBalAccrual, 
      * @return Optional of the latest accrual record
      */
     @org.springframework.data.jpa.repository.Query(
-        value = "SELECT * FROM Acct_Bal_Accrual WHERE Account_No = ?1 AND Tran_date IS NOT NULL ORDER BY Tran_date DESC LIMIT 1",
+        value = "SELECT * FROM acct_bal_accrual WHERE Account_No = ?1 AND Tran_date IS NOT NULL ORDER BY Tran_date DESC LIMIT 1",
         nativeQuery = true
     )
     Optional<AcctBalAccrual> findLatestByAccountNo(String accountNo);

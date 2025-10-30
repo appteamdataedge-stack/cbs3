@@ -269,27 +269,32 @@ public class BalanceService {
     private BigDecimal getLatestInterestAccrued(String accountNo) {
         log.debug("Fetching latest interest accrued for account: {}", accountNo);
         
-        // Use native query method to directly query by Account_No column
-        Optional<AcctBalAccrual> latestAccrualOpt = acctBalAccrualRepository.findLatestByAccountNo(accountNo);
-        
-        if (latestAccrualOpt.isEmpty()) {
-            log.info("No interest accrual records found for account {} (with non-null Tran_date)", accountNo);
+        try {
+            // Use native query method to directly query by Account_No column
+            Optional<AcctBalAccrual> latestAccrualOpt = acctBalAccrualRepository.findLatestByAccountNo(accountNo);
+            
+            if (latestAccrualOpt.isEmpty()) {
+                log.debug("No interest accrual records found for account {} (with non-null Tran_date)", accountNo);
+                return BigDecimal.ZERO;
+            }
+
+            AcctBalAccrual latestAccrual = latestAccrualOpt.get();
+            BigDecimal closingBal = latestAccrual.getClosingBal();
+            
+            if (closingBal == null) {
+                log.warn("Latest interest accrual record for account {} has null closing balance (Tran_date: {})", 
+                        accountNo, latestAccrual.getTranDate());
+                return BigDecimal.ZERO;
+            }
+
+            log.debug("Latest interest accrued for account {}: {} (from Tran_date: {}, Accrual_Date: {})",
+                    accountNo, closingBal, latestAccrual.getTranDate(), latestAccrual.getAccrualDate());
+
+            return closingBal;
+        } catch (Exception e) {
+            log.warn("Error fetching interest accrual for account {}: {}. Returning 0.", accountNo, e.getMessage());
             return BigDecimal.ZERO;
         }
-
-        AcctBalAccrual latestAccrual = latestAccrualOpt.get();
-        BigDecimal closingBal = latestAccrual.getClosingBal();
-        
-        if (closingBal == null) {
-            log.warn("Latest interest accrual record for account {} has null closing balance (Tran_date: {})", 
-                    accountNo, latestAccrual.getTranDate());
-            return BigDecimal.ZERO;
-        }
-
-        log.info("Latest interest accrued for account {}: {} (from Tran_date: {}, Accrual_Date: {})",
-                accountNo, closingBal, latestAccrual.getTranDate(), latestAccrual.getAccrualDate());
-
-        return closingBal;
     }
 
     /**
