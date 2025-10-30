@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * Supports dynamic origins from environment variables for EC2 deployment
  */
 @Configuration
-public class CorsConfig implements WebMvcConfigurer {
+public class CorsConfig {
 
     @Value("${cors.allowed.origins:}")
     private String additionalAllowedOrigins;
@@ -53,43 +53,10 @@ public class CorsConfig implements WebMvcConfigurer {
             }
         }
         
+        System.out.println("CORS Allowed Origins: " + origins);
         return origins;
     }
 
-    @Override
-    public void addCorsMappings(@NonNull CorsRegistry registry) {
-        List<String> allowedOrigins = getAllowedOrigins();
-        registry.addMapping("/**") // Map all paths, not just /api/**
-                .allowedOrigins(allowedOrigins.toArray(new String[0]))
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD")
-                .allowedHeaders("*")
-                .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Methods", "Access-Control-Allow-Headers", "Access-Control-Max-Age", "Access-Control-Allow-Credentials")
-                .allowCredentials(true)
-                .maxAge(3600);
-    }
-
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        List<String> allowedOrigins = getAllowedOrigins();
-        configuration.setAllowedOrigins(allowedOrigins);
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", "X-XSRF-TOKEN"));
-        configuration.setExposedHeaders(Arrays.asList(
-            "Access-Control-Allow-Origin", 
-            "Access-Control-Allow-Methods", 
-            "Access-Control-Allow-Headers", 
-            "Access-Control-Max-Age", 
-            "Access-Control-Allow-Credentials"
-        ));
-        configuration.setAllowCredentials(true);
-        configuration.setMaxAge(3600L);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
-    
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
@@ -97,19 +64,22 @@ public class CorsConfig implements WebMvcConfigurer {
         
         // Use dynamic allowed origins
         List<String> allowedOrigins = getAllowedOrigins();
-        for (String origin : allowedOrigins) {
-            corsConfiguration.addAllowedOrigin(origin);
-        }
+        corsConfiguration.setAllowedOrigins(allowedOrigins);
         
+        // Allow all headers and methods
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.setMaxAge(3600L);
+        
+        // Expose headers
         corsConfiguration.setExposedHeaders(Arrays.asList(
             "Access-Control-Allow-Origin", 
             "Access-Control-Allow-Methods", 
             "Access-Control-Allow-Headers", 
             "Access-Control-Max-Age", 
-            "Access-Control-Allow-Credentials"
+            "Access-Control-Allow-Credentials",
+            "Content-Type",
+            "Authorization"
         ));
         
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
