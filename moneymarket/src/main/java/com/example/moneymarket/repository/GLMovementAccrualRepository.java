@@ -49,7 +49,7 @@ public interface GLMovementAccrualRepository extends JpaRepository<GLMovementAcc
      * @param accrualDate The accrual date
      * @return List of unique GL numbers
      */
-    @Query(value = "SELECT DISTINCT GL_Num FROM GL_Movement_Accrual WHERE Accrual_Date = :accrualDate", nativeQuery = true)
+    @Query(value = "SELECT DISTINCT GL_Num FROM gl_movement_accrual WHERE Accrual_Date = :accrualDate", nativeQuery = true)
     List<String> findDistinctGLNumbersByAccrualDate(@Param("accrualDate") LocalDate accrualDate);
 
     /**
@@ -69,7 +69,7 @@ public interface GLMovementAccrualRepository extends JpaRepository<GLMovementAcc
             GL_Num,
             COALESCE(SUM(CASE WHEN Dr_Cr_Flag = 'D' THEN Amount ELSE 0 END), 0) AS totalDr,
             COALESCE(SUM(CASE WHEN Dr_Cr_Flag = 'C' THEN Amount ELSE 0 END), 0) AS totalCr
-        FROM GL_Movement_Accrual
+        FROM gl_movement_accrual
         WHERE GL_Num = :glNum
           AND Accrual_Date BETWEEN :fromDate AND :toDate
         GROUP BY GL_Num

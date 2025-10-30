@@ -34,7 +34,7 @@ public interface GLMovementRepository extends JpaRepository<GLMovement, Long> {
      * @param tranDate The transaction date
      * @return List of unique GL numbers
      */
-    @Query(value = "SELECT DISTINCT GL_Num FROM GL_Movement WHERE Tran_Date = :tranDate", nativeQuery = true)
+    @Query(value = "SELECT DISTINCT GL_Num FROM gl_movement WHERE Tran_Date = :tranDate", nativeQuery = true)
     List<String> findDistinctGLNumbersByTranDate(@Param("tranDate") LocalDate tranDate);
 
     /**
@@ -54,7 +54,7 @@ public interface GLMovementRepository extends JpaRepository<GLMovement, Long> {
             GL_Num,
             COALESCE(SUM(CASE WHEN Dr_Cr_Flag = 'D' THEN Amount ELSE 0 END), 0) AS totalDr,
             COALESCE(SUM(CASE WHEN Dr_Cr_Flag = 'C' THEN Amount ELSE 0 END), 0) AS totalCr
-        FROM GL_Movement
+        FROM gl_movement
         WHERE GL_Num = :glNum
           AND Tran_Date BETWEEN :fromDate AND :toDate
         GROUP BY GL_Num
