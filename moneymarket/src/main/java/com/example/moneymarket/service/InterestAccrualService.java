@@ -136,8 +136,8 @@ public class InterestAccrualService {
             return 0;
         }
 
-        // Calculate Accrued Interest: AI = (Account_Balance × Interest_Rate) / 36500
-        BigDecimal accruedInterest = closingBal
+        // Calculate Accrued Interest: AI = |Account_Balance| × Interest_Rate / 36500
+        BigDecimal accruedInterest = closingBal.abs()
                 .multiply(effectiveInterestRate)
                 .divide(new BigDecimal("36500"), 2, RoundingMode.HALF_UP);
 
