@@ -48,6 +48,7 @@ public class TransactionService {
     private final TransactionValidationService validationService;
     private final SystemDateService systemDateService;
     private final UnifiedAccountService unifiedAccountService;
+    private final TransactionHistoryService transactionHistoryService;
 
     private final Random random = new Random();
 
@@ -219,6 +220,7 @@ public class TransactionService {
     /**
      * Verify a transaction (move from any status to Verified status)
      * Simple verification logic like products/customers/subproducts
+     * Also creates transaction history records for Statement of Accounts
      * 
      * @param tranId The transaction ID
      * @return The updated transaction response
@@ -246,6 +248,13 @@ public class TransactionService {
         // Update status to Verified
         transactions.forEach(t -> t.setTranStatus(TranStatus.Verified));
         tranTableRepository.saveAll(transactions);
+        
+        // Create transaction history records for each transaction line
+        // This populates TXN_HIST_ACCT table for Statement of Accounts
+        String verifierUserId = "SYSTEM"; // TODO: Get from security context when authentication is implemented
+        for (TranTable transaction : transactions) {
+            transactionHistoryService.createTransactionHistory(transaction, verifierUserId);
+        }
         
         TranTable firstLine = transactions.get(0);
         TransactionResponseDTO response = buildTransactionResponse(tranId, firstLine.getTranDate(), 

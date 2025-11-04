@@ -4,6 +4,7 @@ import com.example.moneymarket.entity.AcctBal;
 import com.example.moneymarket.entity.TranTable.DrCrFlag;
 import com.example.moneymarket.exception.BusinessException;
 import com.example.moneymarket.repository.AcctBalRepository;
+import com.example.moneymarket.repository.CustAcctMasterRepository;
 import com.example.moneymarket.repository.TranTableRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,6 +39,9 @@ class TransactionValidationServiceTest {
     private GLValidationService glValidationService;
     
     @Mock
+    private CustAcctMasterRepository custAcctMasterRepository;
+    
+    @Mock
     private SystemDateService systemDateService;
     
     @Mock
@@ -54,7 +58,7 @@ class TransactionValidationServiceTest {
     @BeforeEach
     void setUp() {
         transactionValidationService = new TransactionValidationService(
-                acctBalRepository, tranTableRepository,
+                acctBalRepository, tranTableRepository, custAcctMasterRepository,
                 systemDateService, unifiedAccountService, glHierarchyService, accountBalanceUpdateService);
     }
 

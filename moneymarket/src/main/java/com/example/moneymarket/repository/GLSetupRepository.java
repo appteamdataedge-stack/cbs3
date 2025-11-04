@@ -57,49 +57,47 @@ public interface GLSetupRepository extends JpaRepository<GLSetup, String> {
             
             UNION
             
-            -- Get interest income/expenditure GLs from sub-products with customer accounts
-            SELECT DISTINCT sp.interest_income_expenditure_gl_num
+            -- Get interest receivable/expenditure GLs from sub-products with customer accounts
+            SELECT DISTINCT sp.interest_receivable_expenditure_gl_num
             FROM sub_prod_master sp
             INNER JOIN cust_acct_master ca ON ca.Sub_Product_Id = sp.Sub_Product_Id
-            WHERE sp.interest_income_expenditure_gl_num IS NOT NULL
+            WHERE sp.interest_receivable_expenditure_gl_num IS NOT NULL
             
             UNION
             
-            -- Get interest receivable/payable GLs from sub-products with customer accounts
-            SELECT DISTINCT sp.interest_receivable_payable_gl_num
+            -- Get interest income/payable GLs from sub-products with customer accounts
+            SELECT DISTINCT sp.interest_income_payable_gl_num
             FROM sub_prod_master sp
             INNER JOIN cust_acct_master ca ON ca.Sub_Product_Id = sp.Sub_Product_Id
-            WHERE sp.interest_receivable_payable_gl_num IS NOT NULL
+            WHERE sp.interest_income_payable_gl_num IS NOT NULL
             
             UNION
             
-            -- Get interest income/expenditure GLs from sub-products with office accounts
-            SELECT DISTINCT sp.interest_income_expenditure_gl_num
+            -- Get interest receivable/expenditure GLs from sub-products with office accounts
+            SELECT DISTINCT sp.interest_receivable_expenditure_gl_num
             FROM sub_prod_master sp
             INNER JOIN of_acct_master oa ON oa.Sub_Product_Id = sp.Sub_Product_Id
-            WHERE sp.interest_income_expenditure_gl_num IS NOT NULL
+            WHERE sp.interest_receivable_expenditure_gl_num IS NOT NULL
             
             UNION
             
-            -- Get interest receivable/payable GLs from sub-products with office accounts
-            SELECT DISTINCT sp.interest_receivable_payable_gl_num
+            -- Get interest income/payable GLs from sub-products with office accounts
+            SELECT DISTINCT sp.interest_income_payable_gl_num
             FROM sub_prod_master sp
             INNER JOIN of_acct_master oa ON oa.Sub_Product_Id = sp.Sub_Product_Id
-            WHERE sp.interest_receivable_payable_gl_num IS NOT NULL
+            WHERE sp.interest_income_payable_gl_num IS NOT NULL
         )
         ORDER BY gl.GL_Num
         """, nativeQuery = true)
     List<String> findActiveGLNumbersWithAccounts();
 
     /**
-     * Get GL numbers for Balance Sheet only (Assets and Liabilities, excluding Income and Expenditure)
-     * This filters to include:
-     * 1. Main GLs (Cum_GL_Num): Liabilities (1* except Income 14*) and Assets (2* except Expenditure 24*)
-     * 2. Interest-related GLs: ALL interest GLs from sub-products INCLUDING those starting with 14% or 24%
-     *    These represent accrued interest balances and should appear in Balance Sheet
-     *    Examples: 140103001 (IISTLTR), 240101001 (Interest Expenditure Savings Bank Regular), 240102001 (IETDCUM)
-     * 3. Only GLs that are actively used in accounts (from sub-products with customer or office accounts)
-     * 
+     * Get GL numbers for Balance Sheet (Assets and Liabilities)
+     * Simple classification:
+     * - All GL numbers starting with '1' are Liabilities
+     * - All GL numbers starting with '2' are Assets
+     * Only includes GLs that are actively used in accounts (from sub-products with customer or office accounts)
+     *
      * @return List of GL numbers for Balance Sheet
      */
     @Query(value = """
@@ -107,60 +105,54 @@ public interface GLSetupRepository extends JpaRepository<GLSetup, String> {
         FROM gl_setup gl
         WHERE gl.GL_Num IN (
             -- Main GLs (Cum_GL_Num) from sub-products with customer accounts
-            -- These should exclude Income (14%) and Expenditure (24%) GLs
             SELECT DISTINCT sp.Cum_GL_Num
             FROM sub_prod_master sp
             INNER JOIN cust_acct_master ca ON ca.Sub_Product_Id = sp.Sub_Product_Id
-            WHERE (sp.Cum_GL_Num LIKE '1%' OR sp.Cum_GL_Num LIKE '2%')
-            AND sp.Cum_GL_Num NOT LIKE '14%'
-            AND sp.Cum_GL_Num NOT LIKE '24%'
-            
+            WHERE sp.Cum_GL_Num LIKE '1%' OR sp.Cum_GL_Num LIKE '2%'
+
             UNION
-            
+
             -- Main GLs (Cum_GL_Num) from sub-products with office accounts
-            -- These should exclude Income (14%) and Expenditure (24%) GLs
             SELECT DISTINCT sp.Cum_GL_Num
             FROM sub_prod_master sp
             INNER JOIN of_acct_master oa ON oa.Sub_Product_Id = sp.Sub_Product_Id
-            WHERE (sp.Cum_GL_Num LIKE '1%' OR sp.Cum_GL_Num LIKE '2%')
-            AND sp.Cum_GL_Num NOT LIKE '14%'
-            AND sp.Cum_GL_Num NOT LIKE '24%'
-            
+            WHERE sp.Cum_GL_Num LIKE '1%' OR sp.Cum_GL_Num LIKE '2%'
+
             UNION
-            
-            -- Interest income/expenditure GLs from sub-products with customer accounts
-            -- Authority: Include ALL interest GLs even if they start with 14% or 24%
-            SELECT DISTINCT sp.interest_income_expenditure_gl_num
+
+            -- Interest receivable/expenditure GLs from sub-products with customer accounts
+            SELECT DISTINCT sp.interest_receivable_expenditure_gl_num
             FROM sub_prod_master sp
             INNER JOIN cust_acct_master ca ON ca.Sub_Product_Id = sp.Sub_Product_Id
-            WHERE sp.interest_income_expenditure_gl_num IS NOT NULL
-            
+            WHERE sp.interest_receivable_expenditure_gl_num IS NOT NULL
+            AND (sp.interest_receivable_expenditure_gl_num LIKE '1%' OR sp.interest_receivable_expenditure_gl_num LIKE '2%')
+
             UNION
-            
-            -- Interest receivable/payable GLs from sub-products with customer accounts
-            -- Authority: Include ALL interest GLs even if they start with 14% or 24%
-            SELECT DISTINCT sp.interest_receivable_payable_gl_num
+
+            -- Interest income/payable GLs from sub-products with customer accounts
+            SELECT DISTINCT sp.interest_income_payable_gl_num
             FROM sub_prod_master sp
             INNER JOIN cust_acct_master ca ON ca.Sub_Product_Id = sp.Sub_Product_Id
-            WHERE sp.interest_receivable_payable_gl_num IS NOT NULL
-            
+            WHERE sp.interest_income_payable_gl_num IS NOT NULL
+            AND (sp.interest_income_payable_gl_num LIKE '1%' OR sp.interest_income_payable_gl_num LIKE '2%')
+
             UNION
-            
-            -- Interest income/expenditure GLs from sub-products with office accounts
-            -- Authority: Include ALL interest GLs even if they start with 14% or 24%
-            SELECT DISTINCT sp.interest_income_expenditure_gl_num
+
+            -- Interest receivable/expenditure GLs from sub-products with office accounts
+            SELECT DISTINCT sp.interest_receivable_expenditure_gl_num
             FROM sub_prod_master sp
             INNER JOIN of_acct_master oa ON oa.Sub_Product_Id = sp.Sub_Product_Id
-            WHERE sp.interest_income_expenditure_gl_num IS NOT NULL
-            
+            WHERE sp.interest_receivable_expenditure_gl_num IS NOT NULL
+            AND (sp.interest_receivable_expenditure_gl_num LIKE '1%' OR sp.interest_receivable_expenditure_gl_num LIKE '2%')
+
             UNION
-            
-            -- Interest receivable/payable GLs from sub-products with office accounts
-            -- Authority: Include ALL interest GLs even if they start with 14% or 24%
-            SELECT DISTINCT sp.interest_receivable_payable_gl_num
+
+            -- Interest income/payable GLs from sub-products with office accounts
+            SELECT DISTINCT sp.interest_income_payable_gl_num
             FROM sub_prod_master sp
             INNER JOIN of_acct_master oa ON oa.Sub_Product_Id = sp.Sub_Product_Id
-            WHERE sp.interest_receivable_payable_gl_num IS NOT NULL
+            WHERE sp.interest_income_payable_gl_num IS NOT NULL
+            AND (sp.interest_income_payable_gl_num LIKE '1%' OR sp.interest_income_payable_gl_num LIKE '2%')
         )
         AND (gl.GL_Num LIKE '1%' OR gl.GL_Num LIKE '2%')
         ORDER BY gl.GL_Num

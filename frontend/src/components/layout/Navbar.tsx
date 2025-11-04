@@ -9,6 +9,7 @@ import ViewListIcon from '@mui/icons-material/ViewList';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import BusinessIcon from '@mui/icons-material/Business';
 import PaymentIcon from '@mui/icons-material/Payment';
+import DescriptionIcon from '@mui/icons-material/Description';
 import SettingsIcon from '@mui/icons-material/Settings';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -31,6 +32,7 @@ const Navbar = () => {
     { name: 'Accounts', path: '/accounts', icon: <AccountBalanceIcon /> },
     { name: 'Office Accounts', path: '/office-accounts', icon: <BusinessIcon /> },
     { name: 'Transactions', path: '/transactions', icon: <PaymentIcon /> },
+    { name: 'Statement of Accounts', path: '/statement-of-accounts', icon: <DescriptionIcon /> },
     { name: 'System Date', path: '/admin/system-date', icon: <CalendarTodayIcon /> },
     { name: 'EOD', path: '/admin/eod', icon: <SettingsIcon /> },
   ];

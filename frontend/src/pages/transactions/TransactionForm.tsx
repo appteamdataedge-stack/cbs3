@@ -38,7 +38,7 @@ const TransactionForm = () => {
   const [currentDate, setCurrentDate] = useState<string>('');
   const [accountBalances, setAccountBalances] = useState<Map<string, AccountBalanceDTO>>(new Map());
   const [accountOverdraftStatus, setAccountOverdraftStatus] = useState<Map<string, boolean>>(new Map());
-  const [assetOfficeAccounts, setAssetOfficeAccounts] = useState<Map<string, boolean>>(new Map());
+  const [assetAccounts, setAssetAccounts] = useState<Map<string, boolean>>(new Map());
   const [loadingBalances, setLoadingBalances] = useState<Set<number>>(new Set());
 
   // Fetch customer accounts for dropdown
@@ -158,10 +158,9 @@ const TransactionForm = () => {
     try {
       setLoadingBalances(prev => new Set(prev).add(index));
       
-      // Find the selected account to check if it's an Asset Office Account
+      // Find the selected account to check if it's an Asset Account (both Customer and Office)
       const selectedAccount = allAccounts.find(acc => acc.accountNo === accountNo);
-      const isAssetOfficeAccount = selectedAccount?.accountType === 'Office' && 
-                                    selectedAccount?.glNum?.startsWith('2');
+      const isAssetAccount = selectedAccount?.glNum?.startsWith('2');
       
       // Fetch both balance and overdraft status in parallel
       const [balanceData, overdraftData] = await Promise.all([
@@ -171,7 +170,7 @@ const TransactionForm = () => {
       
       setAccountBalances(prev => new Map(prev).set(`${index}`, balanceData));
       setAccountOverdraftStatus(prev => new Map(prev).set(`${index}`, overdraftData.isOverdraftAccount));
-      setAssetOfficeAccounts(prev => new Map(prev).set(`${index}`, isAssetOfficeAccount || false));
+      setAssetAccounts(prev => new Map(prev).set(`${index}`, isAssetAccount || false));
       
     } catch (error) {
       console.error(`Failed to fetch data for account ${accountNo}:`, error);
@@ -230,13 +229,38 @@ const TransactionForm = () => {
       if (line.drCrFlag === DrCrFlag.D) {
         const balance = accountBalances.get(`${i}`);
         const isOverdraftAccount = accountOverdraftStatus.get(`${i}`) || false;
-        const isAssetOfficeAccount = assetOfficeAccounts.get(`${i}`) || false;
+        const isAssetAccount = assetAccounts.get(`${i}`) || false;
         
         // Skip balance validation for:
         // 1. Overdraft accounts (can go negative by design)
-        // 2. Asset Office Accounts (GL starting with "2" - no validation required)
-        if (!isOverdraftAccount && !isAssetOfficeAccount && balance && line.lcyAmt > balance.computedBalance) {
+        // 2. Asset Accounts (GL starting with "2" - no validation required for negative balance)
+        if (!isOverdraftAccount && !isAssetAccount && balance && line.lcyAmt > balance.computedBalance) {
           toast.error(`Insufficient balance for account ${line.accountNo}. Available: ${balance.computedBalance.toFixed(2)} BDT, Requested: ${line.lcyAmt} BDT`);
+          return;
+        }
+      }
+    }
+
+    // Validate asset accounts cannot have positive balance
+    for (let i = 0; i < data.lines.length; i++) {
+      const line = data.lines[i];
+      const balance = accountBalances.get(`${i}`);
+      const isAssetAccount = assetAccounts.get(`${i}`) || false;
+      
+      // Check if this is an asset account (GL starting with '2')
+      if (isAssetAccount && balance) {
+        let resultingBalance = balance.computedBalance;
+        
+        // Calculate resulting balance after this transaction
+        if (line.drCrFlag === DrCrFlag.D) {
+          resultingBalance -= line.lcyAmt;
+        } else {
+          resultingBalance += line.lcyAmt;
+        }
+        
+        // Asset accounts cannot have positive balance
+        if (resultingBalance > 0) {
+          toast.error(`Asset account ${line.accountNo} cannot have positive balance. Current: ${balance.computedBalance.toFixed(2)} BDT, Transaction: ${line.drCrFlag} ${line.lcyAmt} BDT would result in positive balance: ${resultingBalance.toFixed(2)} BDT. Asset accounts can only have zero or negative balances.`);
           return;
         }
       }
@@ -602,9 +626,9 @@ const TransactionForm = () => {
                       const currentLine = watchedLines?.[index];
                       const balance = accountBalances.get(`${index}`);
                       const isOverdraftAccount = accountOverdraftStatus.get(`${index}`) || false;
-                      const isAssetOfficeAccount = assetOfficeAccounts.get(`${index}`) || false;
+                      const isAssetAccount = assetAccounts.get(`${index}`) || false;
                       const isDebit = currentLine?.drCrFlag === DrCrFlag.D;
-                      const exceedsBalance = isDebit && !isOverdraftAccount && !isAssetOfficeAccount && balance && field.value > balance.computedBalance;
+                      const exceedsBalance = isDebit && !isOverdraftAccount && !isAssetAccount && balance && field.value > balance.computedBalance;
                       
                       return (
                         <TextField
@@ -642,8 +666,8 @@ const TransactionForm = () => {
                           helperText={
                             exceedsBalance 
                               ? `⚠️ Insufficient balance! Available: ${balance.computedBalance.toFixed(2)} BDT`
-                              : isAssetOfficeAccount && isDebit
-                              ? `💼 Asset Office Account - no balance restriction`
+                              : isAssetAccount && isDebit
+                              ? `💼 Asset Account - Available balance includes loan limit`
                               : isOverdraftAccount && isDebit
                               ? `💳 Overdraft account - negative balance allowed`
                               : errors.lines?.[index]?.lcyAmt?.message

@@ -156,8 +156,8 @@ public class InterestAccrualService {
         }
 
         // Get consolidated GL account numbers from sub-product configuration
-        String incomeExpenditureGLNum = subProduct.getInterestIncomeExpenditureGLNum();
-        String receivablePayableGLNum = subProduct.getInterestReceivablePayableGLNum();
+        String receivableExpenditureGLNum = subProduct.getInterestReceivableExpenditureGLNum();
+        String incomePayableGLNum = subProduct.getInterestIncomePayableGLNum();
 
         // Validate at least ONE GL number is configured based on account type
         String debitGLAccount = null;
@@ -165,39 +165,39 @@ public class InterestAccrualService {
 
         if (isLiabilityAccount) {
             // For LIABILITY accounts:
-            // - incomeExpenditureGLNum stores EXPENDITURE GL (debit side)
-            // - receivablePayableGLNum stores PAYABLE GL (credit side)
-            boolean hasIncomeExp = (incomeExpenditureGLNum != null && !incomeExpenditureGLNum.trim().isEmpty());
-            boolean hasRecvPay = (receivablePayableGLNum != null && !receivablePayableGLNum.trim().isEmpty());
+            // - receivableExpenditureGLNum stores EXPENDITURE GL (debit side)
+            // - incomePayableGLNum stores PAYABLE GL (credit side)
+            boolean hasReceivableExp = (receivableExpenditureGLNum != null && !receivableExpenditureGLNum.trim().isEmpty());
+            boolean hasIncomePay = (incomePayableGLNum != null && !incomePayableGLNum.trim().isEmpty());
 
-            if (!hasIncomeExp && !hasRecvPay) {
+            if (!hasReceivableExp && !hasIncomePay) {
                 log.warn("Skipping liability account {} - no interest GL configured", accountNo);
                 return 0;
             }
 
             // Select GL accounts for debit and credit entries
             // Debit entry: prefer expenditure GL, fallback to payable GL
-            debitGLAccount = hasIncomeExp ? incomeExpenditureGLNum : receivablePayableGLNum;
+            debitGLAccount = hasReceivableExp ? receivableExpenditureGLNum : incomePayableGLNum;
             // Credit entry: prefer payable GL, fallback to expenditure GL
-            creditGLAccount = hasRecvPay ? receivablePayableGLNum : incomeExpenditureGLNum;
+            creditGLAccount = hasIncomePay ? incomePayableGLNum : receivableExpenditureGLNum;
 
         } else if (isAssetAccount) {
             // For ASSET accounts:
-            // - incomeExpenditureGLNum stores INCOME GL (credit side)
-            // - receivablePayableGLNum stores RECEIVABLE GL (debit side)
-            boolean hasIncomeExp = (incomeExpenditureGLNum != null && !incomeExpenditureGLNum.trim().isEmpty());
-            boolean hasRecvPay = (receivablePayableGLNum != null && !receivablePayableGLNum.trim().isEmpty());
+            // - incomePayableGLNum stores INCOME GL (credit side)
+            // - receivableExpenditureGLNum stores RECEIVABLE GL (debit side)
+            boolean hasIncomePay = (incomePayableGLNum != null && !incomePayableGLNum.trim().isEmpty());
+            boolean hasReceivableExp = (receivableExpenditureGLNum != null && !receivableExpenditureGLNum.trim().isEmpty());
 
-            if (!hasIncomeExp && !hasRecvPay) {
+            if (!hasIncomePay && !hasReceivableExp) {
                 log.warn("Skipping asset account {} - no interest GL configured", accountNo);
                 return 0;
             }
 
             // Select GL accounts for debit and credit entries
             // Debit entry: prefer receivable GL, fallback to income GL
-            debitGLAccount = hasRecvPay ? receivablePayableGLNum : incomeExpenditureGLNum;
+            debitGLAccount = hasReceivableExp ? receivableExpenditureGLNum : incomePayableGLNum;
             // Credit entry: prefer income GL, fallback to receivable GL
-            creditGLAccount = hasIncomeExp ? incomeExpenditureGLNum : receivablePayableGLNum;
+            creditGLAccount = hasIncomePay ? incomePayableGLNum : receivableExpenditureGLNum;
         }
 
         // Generate custom Accr_Tran_Ids for the two entries

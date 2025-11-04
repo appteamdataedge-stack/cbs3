@@ -122,11 +122,11 @@ const SubProductForm = () => {
       if ((subProductData as any).interestIncrement !== undefined) {
         setValue('interestIncrement' as any, (subProductData as any).interestIncrement);
       }
-      if ((subProductData as any).interestIncomeExpenditureGLNum) {
-        setValue('interestIncomeExpenditureGLNum' as any, (subProductData as any).interestIncomeExpenditureGLNum);
+      if ((subProductData as any).interestReceivableExpenditureGLNum) {
+        setValue('interestReceivableExpenditureGLNum' as any, (subProductData as any).interestReceivableExpenditureGLNum);
       }
-      if ((subProductData as any).interestReceivablePayableGLNum) {
-        setValue('interestReceivablePayableGLNum' as any, (subProductData as any).interestReceivablePayableGLNum);
+      if ((subProductData as any).interestIncomePayableGLNum) {
+        setValue('interestIncomePayableGLNum' as any, (subProductData as any).interestIncomePayableGLNum);
       }
     }
   }, [subProductData, isEdit, setValue]);
@@ -198,10 +198,10 @@ const SubProductForm = () => {
       }
       
       // At least one GL field must be configured
-      const hasIncomeExp = data.interestIncomeExpenditureGLNum && data.interestIncomeExpenditureGLNum.trim() !== '';
-      const hasRecvPay = data.interestReceivablePayableGLNum && data.interestReceivablePayableGLNum.trim() !== '';
+      const hasReceivableExp = data.interestReceivableExpenditureGLNum && data.interestReceivableExpenditureGLNum.trim() !== '';
+      const hasIncomePay = data.interestIncomePayableGLNum && data.interestIncomePayableGLNum.trim() !== '';
 
-      if (!hasIncomeExp && !hasRecvPay) {
+      if (!hasReceivableExp && !hasIncomePay) {
         alert('Please enter at least one interest GL field for interest-bearing products');
         return;
       }
@@ -216,8 +216,8 @@ const SubProductForm = () => {
       interestIncrement: isInterestBearingProduct
         ? (typeof data.interestIncrement === 'string' ? parseFloat(data.interestIncrement) : data.interestIncrement)
         : undefined,
-      interestIncomeExpenditureGLNum: data.interestIncomeExpenditureGLNum?.trim() || undefined,
-      interestReceivablePayableGLNum: data.interestReceivablePayableGLNum?.trim() || undefined,
+      interestReceivableExpenditureGLNum: data.interestReceivableExpenditureGLNum?.trim() || undefined,
+      interestIncomePayableGLNum: data.interestIncomePayableGLNum?.trim() || undefined,
     };
     
     console.log('Original data:', data);
@@ -486,15 +486,15 @@ const SubProductForm = () => {
                 {/* Layer 4 GL Selection for Interest Receivable/Payable (Consolidated) */}
                 <Grid item xs={12} md={6}>
                   <Controller
-                    name={"interestReceivablePayableGLNum" as any}
+                    name={"interestIncomePayableGLNum" as any}
                     control={control}
                     render={({ field }) => (
-                      <FormControl fullWidth error={!!(errors as any).interestReceivablePayableGLNum}>
-                        <InputLabel id="interest-receivable-payable-gl-label">Interest Receivable/Payable GL</InputLabel>
+                      <FormControl fullWidth error={!!(errors as any).interestIncomePayableGLNum}>
+                        <InputLabel id="interest-receivable-payable-gl-label">Interest Payable/Income GL</InputLabel>
                         <Select
                           {...field}
                           labelId="interest-receivable-payable-gl-label"
-                          label="Interest Receivable/Payable GL"
+                          label="Interest Payable/Income GL"
                           disabled={isDisabled || isLoadingInterestPayableReceivable}
                         >
                           {interestPayableReceivableLayer4GLs?.map((gl) => (
@@ -504,9 +504,9 @@ const SubProductForm = () => {
                           ))}
                         </Select>
                         <FormHelperText>
-                          {(errors as any).interestReceivablePayableGLNum?.message ||
+                          {(errors as any).interestIncomePayableGLNum?.message ||
                            (isLoadingInterestPayableReceivable ? "Loading GL options..." :
-                            "Payable for liabilities, Receivable for assets (at least one GL required)")}
+                            "Payable and Income for liabilities (GL starting with 13, 14)")}
                         </FormHelperText>
                       </FormControl>
                     )}
@@ -516,15 +516,15 @@ const SubProductForm = () => {
                 {/* Layer 4 GL Selection for Interest Income/Expenditure (Consolidated) */}
                 <Grid item xs={12} md={6}>
                   <Controller
-                    name={"interestIncomeExpenditureGLNum" as any}
+                    name={"interestReceivableExpenditureGLNum" as any}
                     control={control}
                     render={({ field }) => (
-                      <FormControl fullWidth error={!!(errors as any).interestIncomeExpenditureGLNum}>
-                        <InputLabel id="interest-income-expenditure-gl-label">Interest Income/Expenditure GL</InputLabel>
+                      <FormControl fullWidth error={!!(errors as any).interestReceivableExpenditureGLNum}>
+                        <InputLabel id="interest-income-expenditure-gl-label">Interest Expenditure/Receivable GL</InputLabel>
                         <Select
                           {...field}
                           labelId="interest-income-expenditure-gl-label"
-                          label="Interest Income/Expenditure GL"
+                          label="Interest Expenditure/Receivable GL"
                           disabled={isDisabled || isLoadingInterestIncomeExpenditure}
                         >
                           {interestIncomeExpenditureLayer4GLs?.map((gl) => (
@@ -534,9 +534,9 @@ const SubProductForm = () => {
                           ))}
                         </Select>
                         <FormHelperText>
-                          {(errors as any).interestIncomeExpenditureGLNum?.message ||
+                          {(errors as any).interestReceivableExpenditureGLNum?.message ||
                            (isLoadingInterestIncomeExpenditure ? "Loading GL options..." :
-                            "Expenditure for liabilities, Income for assets (at least one GL required)")}
+                            "Expenditure and Receivable for assets (GL starting with 23, 24)")}
                         </FormHelperText>
                       </FormControl>
                     )}

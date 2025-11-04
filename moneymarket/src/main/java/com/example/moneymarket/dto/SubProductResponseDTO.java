@@ -26,8 +26,8 @@ public class SubProductResponseDTO {
     private String cumGLNum;
     private String extGLNum;
     private java.math.BigDecimal interestIncrement;
-    private String interestIncomeExpenditureGLNum;  // Consolidated: expenditure for liabilities, income for assets
-    private String interestReceivablePayableGLNum;  // Consolidated: payable for liabilities, receivable for assets
+    private String interestReceivableExpenditureGLNum;  // Consolidated: receivable for assets, expenditure for liabilities
+    private String interestIncomePayableGLNum;  // Consolidated: income for assets, payable for liabilities
     private java.math.BigDecimal effectiveInterestRate;
     private SubProductStatus subProductStatus;
     private String makerId;

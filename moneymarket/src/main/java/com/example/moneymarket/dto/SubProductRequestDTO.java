@@ -40,18 +40,18 @@ public class SubProductRequestDTO {
     private java.math.BigDecimal interestIncrement;
 
     /**
-     * Consolidated GL field for Income/Expenditure
+     * Consolidated GL field for Receivable/Expenditure
      * - For LIABILITY products: stores EXPENDITURE GL
-     * - For ASSET products: stores INCOME GL
-     */
-    private String interestIncomeExpenditureGLNum;
-
-    /**
-     * Consolidated GL field for Receivable/Payable
-     * - For LIABILITY products: stores PAYABLE GL
      * - For ASSET products: stores RECEIVABLE GL
      */
-    private String interestReceivablePayableGLNum;
+    private String interestReceivableExpenditureGLNum;
+
+    /**
+     * Consolidated GL field for Income/Payable
+     * - For LIABILITY products: stores PAYABLE GL
+     * - For ASSET products: stores INCOME GL
+     */
+    private String interestIncomePayableGLNum;
 
     @NotNull(message = "Sub-Product Status is mandatory")
     private SubProductStatus subProductStatus;

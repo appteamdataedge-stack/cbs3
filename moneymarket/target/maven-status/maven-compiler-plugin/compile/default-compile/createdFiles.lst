@@ -13,7 +13,9 @@ com\example\moneymarket\dto\OfficeAccountRequestDTO$OfficeAccountRequestDTOBuild
 com\example\moneymarket\dto\CustomerVerificationDTO$CustomerVerificationDTOBuilder.class
 com\example\moneymarket\service\SubProductService.class
 com\example\moneymarket\service\BalanceService.class
+com\example\moneymarket\dto\AccountOptionDTO$AccountOptionDTOBuilder.class
 com\example\moneymarket\dto\TransactionLineDTO.class
+com\example\moneymarket\dto\AccountOptionDTO.class
 com\example\moneymarket\repository\ProdMasterRepository.class
 com\example\moneymarket\service\GLMovementUpdateService.class
 com\example\moneymarket\service\EODJobManagementService$1.class
@@ -28,6 +30,7 @@ com\example\moneymarket\service\EODService.class
 com\example\moneymarket\service\GLNumberService.class
 com\example\moneymarket\entity\GLMovement$GLMovementBuilder.class
 com\example\moneymarket\entity\TranTable$DrCrFlag.class
+com\example\moneymarket\service\StatementOfAccountsService.class
 com\example\moneymarket\dto\ErrorResponseDTO$ErrorResponseDTOBuilder.class
 com\example\moneymarket\MoneyMarketApplication.class
 com\example\moneymarket\service\UnifiedAccountService$AccountInfo.class
@@ -37,6 +40,7 @@ com\example\moneymarket\controller\CustomerAccountController.class
 com\example\moneymarket\repository\AccountSeqRepository.class
 com\example\moneymarket\entity\AcctBal.class
 com\example\moneymarket\service\AccountBalanceUpdateService.class
+com\example\moneymarket\controller\StatementOfAccountsController.class
 com\example\moneymarket\dto\OfficeAccountResponseDTO$OfficeAccountResponseDTOBuilder.class
 com\example\moneymarket\repository\SubProdMasterRepository.class
 com\example\moneymarket\entity\GLMovementAccrual.class
@@ -46,11 +50,14 @@ com\example\moneymarket\entity\CustAcctMaster$CustAcctMasterBuilder.class
 com\example\moneymarket\repository\InterestRateMasterRepository.class
 com\example\moneymarket\dto\InterestRateResponseDTO.class
 com\example\moneymarket\dto\TransactionLineResponseDTO$TransactionLineResponseDTOBuilder.class
+com\example\moneymarket\service\TransactionHistoryService.class
 com\example\moneymarket\dto\CustomerRequestDTO.class
+com\example\moneymarket\dto\AccountDetailsDTO$AccountDetailsDTOBuilder.class
 com\example\moneymarket\dto\OfficeAccountRequestDTO.class
 com\example\moneymarket\entity\GLMovementAccrual$GLMovementAccrualBuilder.class
 com\example\moneymarket\service\OfficeAccountService.class
 com\example\moneymarket\entity\ProdMaster$ProdMasterBuilder.class
+com\example\moneymarket\repository\TxnHistAcctRepository.class
 com\example\moneymarket\entity\OFAcctMaster$AccountStatus.class
 com\example\moneymarket\entity\CustMaster$CustomerType.class
 com\example\moneymarket\dto\TransactionLineResponseDTO.class
@@ -88,6 +95,7 @@ com\example\moneymarket\dto\ProductResponseDTO.class
 com\example\moneymarket\dto\CustomerAccountRequestDTO$CustomerAccountRequestDTOBuilder.class
 com\example\moneymarket\service\InterestAccrualService$AccountType.class
 com\example\moneymarket\service\GLBalanceUpdateService.class
+com\example\moneymarket\entity\TxnHistAcct.class
 com\example\moneymarket\service\CustomerService.class
 com\example\moneymarket\controller\EODJobController.class
 com\example\moneymarket\dto\CustomerResponseDTO.class
@@ -106,6 +114,7 @@ com\example\moneymarket\service\TransactionValidationService.class
 com\example\moneymarket\controller\AccountBalanceController.class
 com\example\moneymarket\controller\EODController$ProcessResponse.class
 com\example\moneymarket\dto\CustomerAccountRequestDTO.class
+com\example\moneymarket\entity\TxnHistAcct$TransactionType.class
 com\example\moneymarket\validation\SubProductValidator.class
 com\example\moneymarket\dto\SubProductRequestDTO$SubProductRequestDTOBuilder.class
 com\example\moneymarket\entity\AccountSeq$AccountSeqBuilder.class
@@ -129,6 +138,7 @@ com\example\moneymarket\controller\TransactionController.class
 com\example\moneymarket\dto\TransactionRequestDTO.class
 com\example\moneymarket\entity\CustAcctMaster$AccountStatus.class
 com\example\moneymarket\repository\GLMovementRepository.class
+com\example\moneymarket\service\TransactionHistoryService$AccountDetails.class
 com\example\moneymarket\controller\GLSetupController.class
 com\example\moneymarket\service\EODService$EODSummary.class
 com\example\moneymarket\exception\ResourceNotFoundException.class
@@ -150,11 +160,11 @@ com\example\moneymarket\controller\EODController$InterestAccrualResponse.class
 com\example\moneymarket\entity\InterestRateMaster$InterestRateMasterBuilder.class
 com\example\moneymarket\repository\GLBalanceRepository.class
 com\example\moneymarket\dto\TransactionRequestDTO$TransactionRequestDTOBuilder.class
-com\example\moneymarket\config\WebConfig.class
 com\example\moneymarket\entity\SubProdMaster.class
 com\example\moneymarket\dto\ProductRequestDTO.class
 com\example\moneymarket\entity\ProdMaster.class
 com\example\moneymarket\service\EODValidationService.class
+com\example\moneymarket\dto\AccountDetailsDTO.class
 com\example\moneymarket\service\InterestAccrualService.class
 com\example\moneymarket\service\EODReportingService.class
 com\example\moneymarket\validation\TransactionValidator.class

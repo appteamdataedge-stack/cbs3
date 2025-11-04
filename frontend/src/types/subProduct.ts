@@ -18,8 +18,8 @@ export interface SubProductRequestDTO {
   cumGLNum: string;
   extGLNum?: string;
   interestIncrement?: number;
-  interestIncomeExpenditureGLNum?: string;  // Consolidated: expenditure for liabilities, income for assets
-  interestReceivablePayableGLNum?: string;  // Consolidated: payable for liabilities, receivable for assets
+  interestReceivableExpenditureGLNum?: string;  // Consolidated: expenditure for liabilities, receivable for assets (GL starting with 23, 24)
+  interestIncomePayableGLNum?: string;  // Consolidated: payable for liabilities, income for assets (GL starting with 13, 14)
   subProductStatus: SubProductStatus;
   makerId: string;
 }
@@ -37,8 +37,8 @@ export interface SubProductResponseDTO {
   cumGLNum: string;
   extGLNum?: string;
   interestIncrement?: number;
-  interestIncomeExpenditureGLNum?: string;  // Consolidated: expenditure for liabilities, income for assets
-  interestReceivablePayableGLNum?: string;  // Consolidated: payable for liabilities, receivable for assets
+  interestReceivableExpenditureGLNum?: string;  // Consolidated: expenditure for liabilities, receivable for assets (GL starting with 23, 24)
+  interestIncomePayableGLNum?: string;  // Consolidated: payable for liabilities, income for assets (GL starting with 13, 14)
   effectiveInterestRate?: number;
   subProductStatus: SubProductStatus;
   makerId: string;

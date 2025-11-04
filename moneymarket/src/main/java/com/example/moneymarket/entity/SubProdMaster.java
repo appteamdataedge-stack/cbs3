@@ -49,20 +49,20 @@ public class SubProdMaster {
     private java.math.BigDecimal effectiveInterestRate;
 
     /**
-     * Consolidated GL field for Income/Expenditure
+     * Consolidated GL field for Receivable/Expenditure
      * - For LIABILITY products (GL starts with '1'): stores EXPENDITURE GL (debit side)
-     * - For ASSET products (GL starts with '2'): stores INCOME GL (credit side)
-     */
-    @Column(name = "interest_income_expenditure_gl_num", length = 20)
-    private String interestIncomeExpenditureGLNum;
-
-    /**
-     * Consolidated GL field for Receivable/Payable
-     * - For LIABILITY products (GL starts with '1'): stores PAYABLE GL (credit side)
      * - For ASSET products (GL starts with '2'): stores RECEIVABLE GL (debit side)
      */
-    @Column(name = "interest_receivable_payable_gl_num", length = 20)
-    private String interestReceivablePayableGLNum;
+    @Column(name = "interest_receivable_expenditure_gl_num", length = 20)
+    private String interestReceivableExpenditureGLNum;
+
+    /**
+     * Consolidated GL field for Income/Payable
+     * - For LIABILITY products (GL starts with '1'): stores PAYABLE GL (credit side)
+     * - For ASSET products (GL starts with '2'): stores INCOME GL (credit side)
+     */
+    @Column(name = "interest_income_payable_gl_num", length = 20)
+    private String interestIncomePayableGLNum;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "Sub_Product_Status", nullable = false)

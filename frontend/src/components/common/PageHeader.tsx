@@ -12,16 +12,18 @@ interface PageHeaderProps {
   startIcon?: ReactNode;
   subtitle?: string;
   showBreadcrumbs?: boolean;
+  compact?: boolean;
 }
 
-const PageHeader = ({ 
-  title, 
-  buttonText, 
-  buttonLink, 
+const PageHeader = ({
+  title,
+  buttonText,
+  buttonLink,
   buttonAction,
   startIcon,
   subtitle,
-  showBreadcrumbs = true
+  showBreadcrumbs = true,
+  compact = false
 }: PageHeaderProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -62,11 +64,11 @@ const PageHeader = ({
   const breadcrumbs = generateBreadcrumbs();
   
   return (
-    <Paper 
-      elevation={0} 
-      sx={{ 
-        mb: 3, 
-        p: { xs: 2, md: 3 },
+    <Paper
+      elevation={0}
+      sx={{
+        mb: compact ? 1.5 : 3,
+        p: compact ? { xs: 1.5, md: 2 } : { xs: 2, md: 3 },
         borderRadius: 2,
         backgroundImage: `linear-gradient(to right, ${theme.palette.primary.main}15, ${theme.palette.background.paper})`,
         border: '1px solid',
@@ -79,27 +81,28 @@ const PageHeader = ({
           flexDirection: isMobile ? 'column' : 'row',
           justifyContent: 'space-between',
           alignItems: isMobile ? 'flex-start' : 'center',
-          mb: showBreadcrumbs ? 2 : 0
+          mb: showBreadcrumbs ? (compact ? 1 : 2) : 0
         }}
       >
         <Box>
-          <Typography 
-            variant="h4" 
+          <Typography
+            variant={compact ? "h5" : "h4"}
             component="h1"
-            sx={{ 
+            sx={{
               fontWeight: 'bold',
               color: theme.palette.primary.main,
-              mb: subtitle ? 1 : 0
+              mb: subtitle ? (compact ? 0.5 : 1) : 0,
+              fontSize: compact ? '1.5rem' : undefined
             }}
           >
             {title}
           </Typography>
-          
+
           {subtitle && (
-            <Typography 
-              variant="subtitle1" 
+            <Typography
+              variant={compact ? "body2" : "subtitle1"}
               color="text.secondary"
-              sx={{ mb: 1 }}
+              sx={{ mb: compact ? 0.5 : 1, fontSize: compact ? '0.875rem' : undefined }}
             >
               {subtitle}
             </Typography>

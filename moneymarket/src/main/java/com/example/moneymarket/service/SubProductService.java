@@ -101,12 +101,12 @@ public class SubProductService {
             }
             
             // Interest GL fields validation: at least ONE consolidated GL must be configured
-            boolean hasIncomeExp = (subProductRequestDTO.getInterestIncomeExpenditureGLNum() != null &&
-                                   !subProductRequestDTO.getInterestIncomeExpenditureGLNum().trim().isEmpty());
-            boolean hasRecvPay = (subProductRequestDTO.getInterestReceivablePayableGLNum() != null &&
-                                 !subProductRequestDTO.getInterestReceivablePayableGLNum().trim().isEmpty());
+            boolean hasReceivableExp = (subProductRequestDTO.getInterestReceivableExpenditureGLNum() != null &&
+                                   !subProductRequestDTO.getInterestReceivableExpenditureGLNum().trim().isEmpty());
+            boolean hasIncomePay = (subProductRequestDTO.getInterestIncomePayableGLNum() != null &&
+                                 !subProductRequestDTO.getInterestIncomePayableGLNum().trim().isEmpty());
 
-            if (!hasIncomeExp && !hasRecvPay) {
+            if (!hasReceivableExp && !hasIncomePay) {
                 throw new BusinessException("At least one interest GL field must be configured for customer interest-bearing products");
             }
         }
@@ -186,12 +186,12 @@ public class SubProductService {
             }
             
             // Interest GL fields validation: at least ONE consolidated GL must be configured
-            boolean hasIncomeExp = (subProductRequestDTO.getInterestIncomeExpenditureGLNum() != null &&
-                                   !subProductRequestDTO.getInterestIncomeExpenditureGLNum().trim().isEmpty());
-            boolean hasRecvPay = (subProductRequestDTO.getInterestReceivablePayableGLNum() != null &&
-                                 !subProductRequestDTO.getInterestReceivablePayableGLNum().trim().isEmpty());
+            boolean hasReceivableExp = (subProductRequestDTO.getInterestReceivableExpenditureGLNum() != null &&
+                                   !subProductRequestDTO.getInterestReceivableExpenditureGLNum().trim().isEmpty());
+            boolean hasIncomePay = (subProductRequestDTO.getInterestIncomePayableGLNum() != null &&
+                                 !subProductRequestDTO.getInterestIncomePayableGLNum().trim().isEmpty());
 
-            if (!hasIncomeExp && !hasRecvPay) {
+            if (!hasReceivableExp && !hasIncomePay) {
                 throw new BusinessException("At least one interest GL field must be configured for customer interest-bearing products");
             }
         }
@@ -227,8 +227,8 @@ public class SubProductService {
         subProduct.setCumGLNum(subProductRequestDTO.getCumGLNum());
         subProduct.setExtGLNum(subProductRequestDTO.getExtGLNum());
         subProduct.setInterestIncrement(subProductRequestDTO.getInterestIncrement());
-        subProduct.setInterestIncomeExpenditureGLNum(subProductRequestDTO.getInterestIncomeExpenditureGLNum());
-        subProduct.setInterestReceivablePayableGLNum(subProductRequestDTO.getInterestReceivablePayableGLNum());
+        subProduct.setInterestReceivableExpenditureGLNum(subProductRequestDTO.getInterestReceivableExpenditureGLNum());
+        subProduct.setInterestIncomePayableGLNum(subProductRequestDTO.getInterestIncomePayableGLNum());
         subProduct.setSubProductStatus(subProductRequestDTO.getSubProductStatus());
         subProduct.setMakerId(subProductRequestDTO.getMakerId());
         
@@ -351,8 +351,8 @@ public class SubProductService {
                 .cumGLNum(dto.getCumGLNum())
                 .extGLNum(dto.getExtGLNum())
                 .interestIncrement(dto.getInterestIncrement())
-                .interestIncomeExpenditureGLNum(dto.getInterestIncomeExpenditureGLNum())
-                .interestReceivablePayableGLNum(dto.getInterestReceivablePayableGLNum())
+                .interestReceivableExpenditureGLNum(dto.getInterestReceivableExpenditureGLNum())
+                .interestIncomePayableGLNum(dto.getInterestIncomePayableGLNum())
                 .subProductStatus(dto.getSubProductStatus())
                 .makerId(dto.getMakerId())
                 // Replaced device-based date/time with System_Date (SystemDateService) - CBS Compliance Fix
@@ -380,8 +380,8 @@ public class SubProductService {
                 .cumGLNum(entity.getCumGLNum())
                 .extGLNum(entity.getExtGLNum())
                 .interestIncrement(entity.getInterestIncrement())
-                .interestIncomeExpenditureGLNum(entity.getInterestIncomeExpenditureGLNum())
-                .interestReceivablePayableGLNum(entity.getInterestReceivablePayableGLNum())
+                .interestReceivableExpenditureGLNum(entity.getInterestReceivableExpenditureGLNum())
+                .interestIncomePayableGLNum(entity.getInterestIncomePayableGLNum())
                 .effectiveInterestRate(entity.getEffectiveInterestRate())
                 .subProductStatus(entity.getSubProductStatus())
                 .makerId(entity.getMakerId())

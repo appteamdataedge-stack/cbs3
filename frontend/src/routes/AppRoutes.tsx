@@ -17,6 +17,7 @@ import OfficeAccountForm from '../pages/officeaccounts/OfficeAccountForm';
 import OfficeAccountDetails from '../pages/officeaccounts/OfficeAccountDetails';
 import TransactionList from '../pages/transactions/TransactionList';
 import TransactionForm from '../pages/transactions/TransactionForm';
+import StatementOfAccounts from '../pages/StatementOfAccounts';
 import EOD from '../pages/admin/EOD';
 import SystemDate from '../pages/admin/SystemDate';
 import Login from '../pages/auth/Login';
@@ -111,6 +112,9 @@ const AppRoutes = () => {
         <Route path="/transactions" element={<TransactionList />} />
         <Route path="/transactions/new" element={<TransactionForm />} />
         <Route path="/transactions/:tranId" element={<TransactionList />} />
+
+        {/* Statement of Accounts */}
+        <Route path="/statement-of-accounts" element={<StatementOfAccounts />} />
 
         {/* Admin - Requires admin role */}
         <Route element={<ProtectedRoute requiredRole="ADMIN" />}>

@@ -48,42 +48,42 @@ public class GLSetupService {
     }
 
     /**
-     * Get Layer 4 GL numbers for interest payable/receivable accounts
+     * Get Layer 4 GL numbers for interest payable and income accounts (for liabilities)
      *
      * Filters Layer 4 GL accounts that start with:
      * - 13: Interest Payable (for liability accounts)
-     * - 23: Interest Receivable (for asset accounts)
+     * - 14: Interest Income (for liability accounts)
      *
-     * @return List of Layer 4 GL setup responses for payable/receivable accounts
+     * @return List of Layer 4 GL setup responses for payable and income accounts
      */
     public List<GLSetupResponseDTO> getInterestPayableReceivableLayer4GLs() {
         List<GLSetup> layer4GLs = glSetupRepository.findByLayerId(4);
         return layer4GLs.stream()
                 .filter(glSetup -> {
                     String glNum = glSetup.getGlNum();
-                    // Filter GL numbers starting with 13 (Payable) or 23 (Receivable)
-                    return glNum != null && (glNum.startsWith("13") || glNum.startsWith("23"));
+                    // Filter GL numbers starting with 13 (Payable) or 14 (Income) for liabilities
+                    return glNum != null && (glNum.startsWith("13") || glNum.startsWith("14"));
                 })
                 .map(this::mapToResponse)
                 .toList();
     }
 
     /**
-     * Get Layer 4 GL numbers for interest income/expenditure accounts
+     * Get Layer 4 GL numbers for interest expenditure and receivable accounts (for assets)
      *
      * Filters Layer 4 GL accounts that start with:
-     * - 14: Interest Expenditure (for liability accounts)
+     * - 23: Interest Receivable (for asset accounts)
      * - 24: Interest Income (for asset accounts)
      *
-     * @return List of Layer 4 GL setup responses for income/expenditure accounts
+     * @return List of Layer 4 GL setup responses for expenditure and receivable accounts
      */
     public List<GLSetupResponseDTO> getInterestIncomeExpenditureLayer4GLs() {
         List<GLSetup> layer4GLs = glSetupRepository.findByLayerId(4);
         return layer4GLs.stream()
                 .filter(glSetup -> {
                     String glNum = glSetup.getGlNum();
-                    // Filter GL numbers starting with 14 (Expenditure) or 24 (Income)
-                    return glNum != null && (glNum.startsWith("14") || glNum.startsWith("24"));
+                    // Filter GL numbers starting with 23 (Receivable) or 24 (Income) for assets
+                    return glNum != null && (glNum.startsWith("23") || glNum.startsWith("24"));
                 })
                 .map(this::mapToResponse)
                 .toList();

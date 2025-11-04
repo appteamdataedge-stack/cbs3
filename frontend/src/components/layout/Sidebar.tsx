@@ -27,6 +27,7 @@ import BusinessIcon from '@mui/icons-material/Business';
 import PaymentIcon from '@mui/icons-material/Payment';
 import SettingsIcon from '@mui/icons-material/Settings';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import DescriptionIcon from '@mui/icons-material/Description';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -56,6 +57,7 @@ const Sidebar = ({ open, onToggle }: SidebarProps) => {
     { name: 'Accounts', path: '/accounts', icon: <AccountBalanceIcon /> },
     { name: 'Office Accounts', path: '/office-accounts', icon: <BusinessIcon /> },
     { name: 'Transactions', path: '/transactions', icon: <PaymentIcon /> },
+    { name: 'Statement of Accounts', path: '/statement-of-accounts', icon: <DescriptionIcon /> },
     { name: 'System Date', path: '/admin/system-date', icon: <CalendarTodayIcon /> },
     { name: 'EOD', path: '/admin/eod', icon: <SettingsIcon /> },
   ];

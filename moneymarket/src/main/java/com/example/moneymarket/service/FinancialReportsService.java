@@ -241,28 +241,14 @@ public class FinancialReportsService {
         }
 
         // Separate Liabilities and Assets
-        // Note: Interest GLs (14* and 24*) from sub-products are included:
-        // - Interest Income (14*) → Assets (accrued receivable)
-        // - Interest Expenditure (24*) → Liabilities (accrued payable)
+        // Simple classification: All GL starting with '1' are Liabilities, all starting with '2' are Assets
         List<GLBalance> liabilities = glBalances.stream()
-                .filter(gl -> {
-                    String glNum = gl.getGlNum();
-                    // Regular Liabilities: 1* except 14* (Income)
-                    // Interest Expenditure: 24* (accrued payable - Liability)
-                    return (glNum.startsWith("1") && !glNum.startsWith("14")) || 
-                           glNum.startsWith("24");
-                })
+                .filter(gl -> gl.getGlNum().startsWith("1"))
                 .sorted(Comparator.comparing(GLBalance::getGlNum))
                 .collect(Collectors.toList());
-        
+
         List<GLBalance> assets = glBalances.stream()
-                .filter(gl -> {
-                    String glNum = gl.getGlNum();
-                    // Regular Assets: 2* except 24* (Expenditure)
-                    // Interest Income: 14* (accrued receivable - Asset)
-                    return (glNum.startsWith("2") && !glNum.startsWith("24")) || 
-                           glNum.startsWith("14");
-                })
+                .filter(gl -> gl.getGlNum().startsWith("2"))
                 .sorted(Comparator.comparing(GLBalance::getGlNum))
                 .collect(Collectors.toList());
 
@@ -288,51 +274,60 @@ public class FinancialReportsService {
      * Generate Balance Sheet Excel file with side-by-side layout
      * Liabilities on left, Assets on right
      */
-    private void generateBalanceSheetExcel(Path filePath, String reportDateStr, 
+    private void generateBalanceSheetExcel(Path filePath, String reportDateStr,
                                            List<GLBalance> liabilities, List<GLBalance> assets) throws IOException {
         try (Workbook workbook = new XSSFWorkbook();
              FileOutputStream fileOut = new FileOutputStream(filePath.toFile())) {
-            
+
             Sheet sheet = workbook.createSheet("Balance Sheet");
 
             // Create cell styles
             CellStyle headerStyle = createHeaderStyle(workbook);
             CellStyle sectionHeaderStyle = createSectionHeaderStyle(workbook);
+            CellStyle columnHeaderStyle = createHeaderStyle(workbook);
             CellStyle dataStyle = createDataStyle(workbook);
             CellStyle totalStyle = createTotalStyle(workbook);
             CellStyle numberStyle = createNumberStyle(workbook);
 
             int currentRow = 0;
 
-            // Row 0: Title
+            // Row 0: Title (merged across all columns)
             Row titleRow = sheet.createRow(currentRow++);
             Cell titleCell = titleRow.createCell(0);
             titleCell.setCellValue("BALANCE SHEET - " + reportDateStr);
             titleCell.setCellStyle(headerStyle);
-            currentRow++; // Empty row
+            sheet.addMergedRegion(new org.apache.poi.ss.util.CellRangeAddress(0, 0, 0, 6));
 
-            // Row 2: Column Headers
-            Row headerRow = sheet.createRow(currentRow++);
-            
-            // Liability headers (columns 0-3)
-            createStyledCell(headerRow, 0, "Category", headerStyle);
-            createStyledCell(headerRow, 1, "GL_Code", headerStyle);
-            createStyledCell(headerRow, 2, "GL_Name", headerStyle);
-            createStyledCell(headerRow, 3, "Closing_Bal", headerStyle);
-            
-            // Empty column
-            createStyledCell(headerRow, 4, "", headerStyle);
-            
-            // Asset headers (columns 5-8)
-            createStyledCell(headerRow, 5, "Category", headerStyle);
-            createStyledCell(headerRow, 6, "GL_Code", headerStyle);
-            createStyledCell(headerRow, 7, "GL_Name", headerStyle);
-            createStyledCell(headerRow, 8, "Closing_Bal", headerStyle);
+            // Row 1: Empty spacer row
+            sheet.createRow(currentRow++);
 
-            // Row 3: Section headers
+            // Row 2: Section headers
             Row sectionRow = sheet.createRow(currentRow++);
-            createStyledCell(sectionRow, 0, "=== LIABILITIES ===", sectionHeaderStyle);
-            createStyledCell(sectionRow, 5, "=== ASSETS ===", sectionHeaderStyle);
+            Cell leftSectionHeader = sectionRow.createCell(0);
+            leftSectionHeader.setCellValue("=== LIABILITIES ===");
+            leftSectionHeader.setCellStyle(sectionHeaderStyle);
+            sheet.addMergedRegion(new org.apache.poi.ss.util.CellRangeAddress(2, 2, 0, 2)); // Merge A3:C3
+
+            Cell rightSectionHeader = sectionRow.createCell(4);
+            rightSectionHeader.setCellValue("=== ASSETS ===");
+            rightSectionHeader.setCellStyle(sectionHeaderStyle);
+            sheet.addMergedRegion(new org.apache.poi.ss.util.CellRangeAddress(2, 2, 4, 6)); // Merge E3:G3
+
+            // Row 3: Column Headers
+            Row headerRow = sheet.createRow(currentRow++);
+
+            // Liability headers (columns 0-2: A, B, C)
+            createStyledCell(headerRow, 0, "GL_Code", columnHeaderStyle);
+            createStyledCell(headerRow, 1, "GL_Name", columnHeaderStyle);
+            createStyledCell(headerRow, 2, "Closing_Bal", columnHeaderStyle);
+
+            // Empty column (column 3: D)
+            headerRow.createCell(3);
+
+            // Asset headers (columns 4-6: E, F, G)
+            createStyledCell(headerRow, 4, "GL_Code", columnHeaderStyle);
+            createStyledCell(headerRow, 5, "GL_Name", columnHeaderStyle);
+            createStyledCell(headerRow, 6, "Closing_Bal", columnHeaderStyle);
 
             // Data rows - populate side by side
             int maxRows = Math.max(liabilities.size(), assets.size());
@@ -341,35 +336,33 @@ public class FinancialReportsService {
 
             for (int i = 0; i < maxRows; i++) {
                 Row row = sheet.createRow(currentRow++);
-                
-                // Liability side (columns 0-3)
+
+                // Liability side (columns 0-2: A, B, C)
                 if (i < liabilities.size()) {
                     GLBalance liability = liabilities.get(i);
                     String glName = getGLName(liability.getGlNum());
                     BigDecimal closingBal = nvl(liability.getClosingBal());
-                    
-                    createStyledCell(row, 0, "LIABILITY", dataStyle);
-                    createStyledCell(row, 1, liability.getGlNum(), dataStyle);
-                    createStyledCell(row, 2, glName, dataStyle);
-                    createStyledNumericCell(row, 3, closingBal, numberStyle);
-                    
+
+                    createStyledCell(row, 0, liability.getGlNum(), dataStyle);
+                    createStyledCell(row, 1, glName, dataStyle);
+                    createStyledNumericCell(row, 2, closingBal, numberStyle);
+
                     totalLiabilities = totalLiabilities.add(closingBal);
                 }
-                
-                // Empty column
-                row.createCell(4);
-                
-                // Asset side (columns 5-8)
+
+                // Empty column (column 3: D)
+                row.createCell(3);
+
+                // Asset side (columns 4-6: E, F, G)
                 if (i < assets.size()) {
                     GLBalance asset = assets.get(i);
                     String glName = getGLName(asset.getGlNum());
                     BigDecimal closingBal = nvl(asset.getClosingBal());
-                    
-                    createStyledCell(row, 5, "ASSET", dataStyle);
-                    createStyledCell(row, 6, asset.getGlNum(), dataStyle);
-                    createStyledCell(row, 7, glName, dataStyle);
-                    createStyledNumericCell(row, 8, closingBal, numberStyle);
-                    
+
+                    createStyledCell(row, 4, asset.getGlNum(), dataStyle);
+                    createStyledCell(row, 5, glName, dataStyle);
+                    createStyledNumericCell(row, 6, closingBal, numberStyle);
+
                     totalAssets = totalAssets.add(closingBal);
                 }
             }
@@ -380,17 +373,19 @@ public class FinancialReportsService {
             // Totals row
             Row totalRow = sheet.createRow(currentRow);
             createStyledCell(totalRow, 0, "TOTAL LIABILITIES", totalStyle);
-            createStyledNumericCell(totalRow, 3, totalLiabilities, totalStyle);
-            
-            createStyledCell(totalRow, 5, "TOTAL ASSETS", totalStyle);
-            createStyledNumericCell(totalRow, 8, totalAssets, totalStyle);
+            createStyledNumericCell(totalRow, 2, totalLiabilities, totalStyle);
 
-            // Auto-size columns
-            for (int i = 0; i < 9; i++) {
-                if (i != 4) { // Skip empty column
-                    sheet.autoSizeColumn(i);
-                }
-            }
+            createStyledCell(totalRow, 4, "TOTAL ASSETS", totalStyle);
+            createStyledNumericCell(totalRow, 6, totalAssets, totalStyle);
+
+            // Set column widths
+            sheet.setColumnWidth(0, 15 * 256); // GL_Code left
+            sheet.setColumnWidth(1, 40 * 256); // GL_Name left
+            sheet.setColumnWidth(2, 15 * 256); // Closing_Bal left
+            sheet.setColumnWidth(3, 2 * 256);  // Separator (narrow)
+            sheet.setColumnWidth(4, 15 * 256); // GL_Code right
+            sheet.setColumnWidth(5, 40 * 256); // GL_Name right
+            sheet.setColumnWidth(6, 15 * 256); // Closing_Bal right
 
             workbook.write(fileOut);
             log.info("Balance Sheet Excel file created: {}", filePath);

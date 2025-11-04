@@ -1,9 +1,12 @@
 package com.example.moneymarket.service;
 
 import com.example.moneymarket.entity.AcctBal;
+import com.example.moneymarket.entity.CustAcctMaster;
 import com.example.moneymarket.entity.TranTable.DrCrFlag;
 import com.example.moneymarket.exception.BusinessException;
+import com.example.moneymarket.exception.ResourceNotFoundException;
 import com.example.moneymarket.repository.AcctBalRepository;
+import com.example.moneymarket.repository.CustAcctMasterRepository;
 import com.example.moneymarket.repository.TranTableRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +37,7 @@ public class TransactionValidationService {
 
     private final AcctBalRepository acctBalRepository;
     private final TranTableRepository tranTableRepository;
+    private final CustAcctMasterRepository custAcctMasterRepository;
     private final SystemDateService systemDateService;
     private final UnifiedAccountService unifiedAccountService;
     private final GLHierarchyService glHierarchyService;
@@ -95,10 +99,66 @@ public class TransactionValidationService {
      * Validate transaction for customer accounts
      * Business Rule: Debit transactions are allowed only up to the available balance
      * Exception: Overdraft accounts (Layer 3 GL_Num = 210201000 or 140101000) can go into negative balance
+     * Asset Account Rules:
+     *   1. Debit transactions cannot exceed (Available Balance + Loan Limit)
+     *   2. Asset accounts cannot have positive balances (credit balance)
      */
     private boolean validateCustomerAccountTransaction(String accountNo, DrCrFlag drCrFlag, BigDecimal amount, 
                                                      LocalDate systemDate, UnifiedAccountService.AccountInfo accountInfo, 
                                                      AcctBal balance) {
+        BigDecimal currentBalance = balance.getCurrentBalance();
+        BigDecimal resultingBalance;
+        
+        if (drCrFlag == DrCrFlag.D) {
+            resultingBalance = currentBalance.subtract(amount);
+        } else {
+            resultingBalance = currentBalance.add(amount);
+        }
+        
+        // ASSET CUSTOMER ACCOUNTS (GL starting with "2"): Dual validation
+        if (accountInfo.isAssetAccount()) {
+            // Rule 1: For DEBIT transactions, check against available balance (includes loan limit)
+            if (drCrFlag == DrCrFlag.D) {
+                BigDecimal availableBalance = calculateAvailableBalance(accountNo, balance.getCurrentBalance(), systemDate);
+                
+                if (amount.compareTo(availableBalance) > 0) {
+                    log.warn("Customer Asset Account {} (GL: {}) - Debit exceeds available balance (including loan limit). " +
+                            "Available: {}, Debit amount: {}", 
+                            accountNo, accountInfo.getGlNum(), availableBalance, amount);
+                    
+                    throw new BusinessException(
+                        String.format("Insufficient balance for Asset Account %s (GL: %s). " +
+                                    "Available balance (including loan limit): %s, Debit amount: %s. " +
+                                    "Cannot debit more than available balance plus loan limit.",
+                                    accountNo, accountInfo.getGlNum(), availableBalance, amount)
+                    );
+                }
+                
+                log.debug("Customer Asset Account {} (GL: {}) - Debit validation passed. " +
+                        "Available balance (with loan limit): {}, Debit amount: {}", 
+                        accountNo, accountInfo.getGlNum(), availableBalance, amount);
+            }
+            
+            // Rule 2: Resulting balance cannot be positive (applies to both debit and credit)
+            if (resultingBalance.compareTo(BigDecimal.ZERO) > 0) {
+                log.warn("Customer Asset Account {} (GL: {}) - Cannot have positive balance. " +
+                        "Current: {}, Transaction: {} {}, Resulting: {}", 
+                        accountNo, accountInfo.getGlNum(), currentBalance, drCrFlag, amount, resultingBalance);
+                
+                throw new BusinessException(
+                    String.format("Asset Account %s (GL: %s) cannot have positive balance. " +
+                                "Current balance: %s, Transaction: %s %s would result in positive balance: %s. " +
+                                "Asset accounts can only have zero or negative balances.",
+                                accountNo, accountInfo.getGlNum(), currentBalance, drCrFlag, amount, resultingBalance)
+                );
+            }
+            
+            log.info("Customer Asset Account {} (GL: {}) - All validations passed. " +
+                    "Resulting balance: {} (zero or negative)", accountNo, accountInfo.getGlNum(), resultingBalance);
+            return true;
+        }
+        
+        // LIABILITY CUSTOMER ACCOUNTS (GL starting with "1"): Standard validation
         if (drCrFlag == DrCrFlag.D) {
             // Check if this is an overdraft account (Layer 3 GL_Num = 210201000 or 140101000)
             boolean isOverdraftAccount = glHierarchyService.isOverdraftAccount(accountInfo.getGlNum());
@@ -121,7 +181,7 @@ public class TransactionValidationService {
             }
         }
         
-        // Credit transactions have no restriction beyond standard balance updates
+        // Credit transactions have no restriction beyond standard balance updates for liability accounts
         return true;
     }
 
@@ -131,9 +191,9 @@ public class TransactionValidationService {
      * Business Rules (Based on GL Code Classification):
      * 
      * 1. ASSET Office Accounts (GL starting with "2"):
-     *    - NO balance validation required
+     *    - Cannot have positive balance (can go to 0 but not exceed 0)
      *    - Can go negative (debit balances are normal for assets)
-     *    - Transactions proceed without balance checks
+     *    - Validates against positive balance only
      * 
      * 2. LIABILITY Office Accounts (GL starting with "1"):
      *    - MUST validate balance
@@ -141,19 +201,35 @@ public class TransactionValidationService {
      *    - Requires sufficient balance before transaction
      * 
      * This conditional validation allows proper accounting flexibility:
-     * - Asset accounts can handle temporary negative balances
+     * - Asset accounts can handle negative balances but not positive
      * - Liability accounts maintain obligation integrity
      */
     private boolean validateOfficeAccountTransaction(String accountNo, DrCrFlag drCrFlag, BigDecimal amount, 
                                                    BigDecimal resultingBalance, UnifiedAccountService.AccountInfo accountInfo) {
         String glNum = accountInfo.getGlNum();
         
-        // ASSET OFFICE ACCOUNTS (GL starting with "2"): SKIP validation entirely
+        // ASSET OFFICE ACCOUNTS (GL starting with "2"): Cannot have positive balance
         if (accountInfo.isAssetAccount()) {
-            log.info("Office Asset Account {} (GL: {}) - Skipping balance validation. " +
-                    "Transaction allowed regardless of resulting balance: {}", 
-                    accountNo, glNum, resultingBalance);
-            return true;  // Allow transaction without any balance validation
+            if (resultingBalance.compareTo(BigDecimal.ZERO) > 0) {
+                log.warn("Office Asset Account {} (GL: {}) - Cannot have positive balance. " +
+                        "Current: {}, Transaction: {} {}, Resulting: {}", 
+                        accountNo, glNum, 
+                        resultingBalance.subtract(drCrFlag == DrCrFlag.D ? amount.negate() : amount),
+                        drCrFlag, amount, resultingBalance);
+                
+                throw new BusinessException(
+                    String.format("Asset Account %s (GL: %s) cannot have positive balance. " +
+                                "Current balance: %s, Transaction: %s %s would result in positive balance: %s. " +
+                                "Asset accounts can only have zero or negative balances.",
+                                accountNo, glNum,
+                                resultingBalance.subtract(drCrFlag == DrCrFlag.D ? amount.negate() : amount),
+                                drCrFlag, amount, resultingBalance)
+                );
+            }
+            
+            log.info("Office Asset Account {} (GL: {}) - Balance validation passed. " +
+                    "Resulting balance: {} (zero or negative allowed)", accountNo, glNum, resultingBalance);
+            return true;
         }
         
         // LIABILITY OFFICE ACCOUNTS (GL starting with "1"): APPLY strict validation
@@ -231,7 +307,12 @@ public class TransactionValidationService {
 
     /**
      * Calculate available balance for an account for a specific date
-     * Available Balance = Opening_Bal - Date's debits + Date's credits
+     * 
+     * For LIABILITY accounts (GL starting with "1"):
+     * Available Balance = Opening_Bal + Date's credits - Date's debits
+     * 
+     * For ASSET accounts (GL starting with "2"):
+     * Available Balance = Opening_Bal + Loan Limit + Date's credits - Date's debits
      *
      * Uses 3-tier fallback logic for opening balance retrieval:
      * - Tier 1: Previous day's record (systemDate - 1)
@@ -255,11 +336,39 @@ public class TransactionValidationService {
         BigDecimal dateCredits = tranTableRepository.sumCreditTransactionsForAccountOnDate(accountNo, systemDate)
                 .orElse(BigDecimal.ZERO);
 
-        // Calculate available balance: Opening_Bal + Today's Credits - Today's Debits
-        BigDecimal availableBalance = openingBalance.add(dateCredits).subtract(dateDebits);
+        // Get account information to determine if asset or liability account
+        UnifiedAccountService.AccountInfo accountInfo = unifiedAccountService.getAccountInfo(accountNo);
+        BigDecimal loanLimit = BigDecimal.ZERO;
+        
+        // For ASSET customer accounts (GL starting with "2"), include loan limit in available balance
+        if (accountInfo.isCustomerAccount() && accountInfo.isAssetAccount()) {
+            try {
+                CustAcctMaster customerAccount = custAcctMasterRepository.findById(accountNo)
+                        .orElseThrow(() -> new ResourceNotFoundException("Customer Account", "Account Number", accountNo));
+                loanLimit = customerAccount.getLoanLimit() != null ? customerAccount.getLoanLimit() : BigDecimal.ZERO;
+                
+                log.debug("Asset account {} - Including loan limit {} in available balance calculation",
+                        accountNo, loanLimit);
+            } catch (Exception e) {
+                log.warn("Failed to retrieve loan limit for asset account {}: {}", accountNo, e.getMessage());
+            }
+        }
 
-        log.debug("Available Balance for account {} on {}: Opening={}, Credits={}, Debits={}, Available={}",
-                accountNo, systemDate, openingBalance, dateCredits, dateDebits, availableBalance);
+        // Calculate available balance
+        // For Asset accounts: Opening + Loan Limit + Credits - Debits
+        // For Liability accounts: Opening + Credits - Debits
+        BigDecimal availableBalance = openingBalance
+                .add(loanLimit)
+                .add(dateCredits)
+                .subtract(dateDebits);
+
+        if (accountInfo.isAssetAccount() && loanLimit.compareTo(BigDecimal.ZERO) > 0) {
+            log.debug("Available Balance for ASSET account {} on {}: Opening={}, Loan Limit={}, Credits={}, Debits={}, Available={}",
+                    accountNo, systemDate, openingBalance, loanLimit, dateCredits, dateDebits, availableBalance);
+        } else {
+            log.debug("Available Balance for LIABILITY account {} on {}: Opening={}, Credits={}, Debits={}, Available={}",
+                    accountNo, systemDate, openingBalance, dateCredits, dateDebits, availableBalance);
+        }
 
         return availableBalance;
     }

@@ -32,9 +32,9 @@ public class GLSetupController {
     }
 
     /**
-     * Get Layer 4 GL numbers for interest payable/receivable accounts
+     * Get Layer 4 GL numbers for interest payable and income accounts (for liabilities)
      * 
-     * @return List of Layer 4 GL setups for payable/receivable accounts
+     * @return List of Layer 4 GL setups for payable and income accounts (GL starting with 13, 14)
      */
     @GetMapping("/interest/payable-receivable/layer4")
     public ResponseEntity<List<GLSetupResponseDTO>> getInterestPayableReceivableLayer4GLs() {
@@ -43,9 +43,9 @@ public class GLSetupController {
     }
 
     /**
-     * Get Layer 4 GL numbers for interest income/expenditure accounts
+     * Get Layer 4 GL numbers for interest expenditure and receivable accounts (for assets)
      * 
-     * @return List of Layer 4 GL setups for income/expenditure accounts
+     * @return List of Layer 4 GL setups for expenditure and receivable accounts (GL starting with 23, 24)
      */
     @GetMapping("/interest/income-expenditure/layer4")
     public ResponseEntity<List<GLSetupResponseDTO>> getInterestIncomeExpenditureLayer4GLs() {
