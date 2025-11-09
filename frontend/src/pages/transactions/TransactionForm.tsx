@@ -24,7 +24,7 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { getAllCustomerAccounts } from '../../api/customerAccountService';
 import { getAllOfficeAccounts } from '../../api/officeAccountService';
-import { createTransaction, getAccountBalance, getAccountOverdraftStatus } from '../../api/transactionService';
+import { createTransaction, getAccountBalance, getAccountOverdraftStatus, getTransactionSystemDate } from '../../api/transactionService';
 import { FormSection, PageHeader } from '../../components/common';
 import type { CombinedAccountDTO, TransactionRequestDTO, AccountBalanceDTO } from '../../types';
 import { DrCrFlag } from '../../types';
@@ -35,7 +35,6 @@ const CURRENCIES = ['BDT', 'USD', 'EUR', 'GBP', 'JPY'];
 const TransactionForm = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const [currentDate, setCurrentDate] = useState<string>('');
   const [accountBalances, setAccountBalances] = useState<Map<string, AccountBalanceDTO>>(new Map());
   const [accountOverdraftStatus, setAccountOverdraftStatus] = useState<Map<string, boolean>>(new Map());
   const [assetAccounts, setAssetAccounts] = useState<Map<string, boolean>>(new Map());
@@ -51,6 +50,20 @@ const TransactionForm = () => {
   const { data: officeAccountsData, isLoading: isLoadingOfficeAccounts } = useQuery({
     queryKey: ['office-accounts', { page: 0, size: 100 }], // Get all office accounts for dropdown
     queryFn: () => getAllOfficeAccounts(0, 100),
+  });
+
+  // Fetch system date for default value
+  const { data: systemDate, isLoading: isLoadingSystemDate } = useQuery({
+    queryKey: ['system-date'],
+    queryFn: async () => {
+      const response = await getTransactionSystemDate();
+      return response.systemDate;
+    },
+    onError: (error: unknown) => {
+      console.error('Failed to fetch system date:', error);
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      toast.error(`Failed to fetch system date: ${message}`);
+    }
   });
 
   // Combine customer and office accounts into a unified list
@@ -75,7 +88,7 @@ const TransactionForm = () => {
   // Set current date on component mount
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
-    setCurrentDate(today);
+    // setCurrentDate(today); // This line is removed as per the edit hint
   }, []);
 
   // Form setup with react-hook-form
@@ -87,7 +100,7 @@ const TransactionForm = () => {
     formState: { errors }
   } = useForm<TransactionRequestDTO>({
     defaultValues: {
-      valueDate: currentDate || new Date().toISOString().split('T')[0],
+      valueDate: '',
       narration: '',
       lines: [
         { accountNo: '', drCrFlag: DrCrFlag.D, tranCcy: 'BDT', fcyAmt: 0, exchangeRate: 1, lcyAmt: 0, udf1: '' },
@@ -146,10 +159,13 @@ const TransactionForm = () => {
 
   // Set current date when available
   useEffect(() => {
-    if (currentDate) {
-      setValue('valueDate', currentDate);
+    if (systemDate) {
+      setValue('valueDate', systemDate);
+    } else if (!isLoadingSystemDate) {
+      const today = new Date().toISOString().split('T')[0];
+      setValue('valueDate', today);
     }
-  }, [currentDate, setValue]);
+  }, [systemDate, isLoadingSystemDate, setValue]);
 
   // Fetch account balance and overdraft status when account is selected
   const fetchAccountBalance = async (accountNo: string, index: number) => {
@@ -198,7 +214,7 @@ const TransactionForm = () => {
     }
   });
 
-  const isLoading = createTransactionMutation.isPending || isLoadingAccounts;
+  const isLoading = createTransactionMutation.isPending || isLoadingAccounts || isLoadingSystemDate;
 
   // Add a new transaction line
   const addLine = () => {

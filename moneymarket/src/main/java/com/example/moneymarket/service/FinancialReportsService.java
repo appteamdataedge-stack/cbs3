@@ -9,17 +9,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -38,195 +33,78 @@ public class FinancialReportsService {
     private final GLSetupRepository glSetupRepository;
     private final SystemDateService systemDateService;
 
-    @Value("${reports.directory:reports}")
-    private String reportsBaseDirectory;
-
     /**
      * Batch Job 7: Financial Reports Generation
      *
-     * Generates:
-     * 1. Trial Balance Report (TrialBalance_YYYYMMDD.csv)
-     * 2. Balance Sheet Report (BalanceSheet_YYYYMMDD.csv)
+     * Generates report metadata (reports are generated on-demand when downloaded)
      *
      * @param systemDate The system date for reporting
-     * @return Map with report file paths
+     * @return Map with report metadata
      */
     @Transactional(readOnly = true)
     public Map<String, String> generateFinancialReports(LocalDate systemDate) {
         LocalDate reportDate = systemDate != null ? systemDate : systemDateService.getSystemDate();
         log.info("Starting Batch Job 7: Financial Reports Generation for date: {}", reportDate);
 
+        String reportDateStr = reportDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+
         Map<String, String> result = new HashMap<>();
+        result.put("success", "true");
+        result.put("reportDate", reportDateStr);
+        result.put("message", "Reports can be downloaded on-demand");
 
-        try {
-            // Create reports directory
-            String reportDateStr = reportDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-            Path reportDir = createReportDirectory(reportDateStr);
-
-            // Generate Trial Balance Report
-            String trialBalancePath = generateTrialBalanceReport(reportDate, reportDir, reportDateStr);
-            
-            // Generate Balance Sheet Report
-            String balanceSheetPath = generateBalanceSheetReport(reportDate, reportDir, reportDateStr);
-
-            // Return structured response
-            result.put("success", "true");
-            result.put("trialBalancePath", trialBalancePath);
-            result.put("balanceSheetPath", balanceSheetPath);
-            result.put("reportDate", reportDateStr);
-            result.put("message", "Reports generated successfully");
-
-            log.info("Batch Job 7 completed successfully. Reports generated: {}", result);
-            return result;
-
-        } catch (Exception e) {
-            log.error("Failed to generate financial reports: {}", e.getMessage(), e);
-            throw new BusinessException("Financial reports generation failed: " + e.getMessage());
-        }
+        log.info("Batch Job 7 completed successfully. Reports can be downloaded for date: {}", reportDateStr);
+        return result;
     }
 
     /**
-     * Create report directory for the given date
-     */
-    private Path createReportDirectory(String reportDateStr) throws IOException {
-        Path reportDir = Paths.get(reportsBaseDirectory, reportDateStr);
-
-        if (!Files.exists(reportDir)) {
-            Files.createDirectories(reportDir);
-            log.info("Created report directory: {}", reportDir);
-        }
-
-        return reportDir;
-    }
-
-    /**
-     * Generate Trial Balance Report
+     * Generate Trial Balance Report as byte array (in memory)
      *
-     * Format:
-     * GL_Code, GL_Name, Opening_Bal, DR_Summation, CR_Summation, Closing_Bal
-     *
-     * Footer row: "TOTAL", sum(Opening_Bal), sum(DR_Summation), sum(CR_Summation), sum(Closing_Bal)
-     * Validation: Total DR_Summation must equal Total CR_Summation
+     * @param systemDate The system date for reporting
+     * @return byte array containing CSV content
      */
-    private String generateTrialBalanceReport(LocalDate reportDate, Path reportDir, String reportDateStr)
-            throws IOException {
-        String fileName = "TrialBalance_" + reportDateStr + ".csv";
-        Path filePath = reportDir.resolve(fileName);
-
-        log.info("Generating Trial Balance Report: {}", filePath);
+    @Transactional(readOnly = true)
+    public byte[] generateTrialBalanceReportAsBytes(LocalDate systemDate) throws IOException {
+        LocalDate reportDate = systemDate != null ? systemDate : systemDateService.getSystemDate();
+        
+        log.info("Generating Trial Balance Report in memory for date: {}", reportDate);
 
         // Get only active GL numbers (those used in account creation through sub-products)
         List<String> activeGLNumbers = glSetupRepository.findActiveGLNumbersWithAccounts();
         
+        List<GLBalance> glBalances;
         if (activeGLNumbers.isEmpty()) {
             log.warn("No active GL numbers found with accounts");
             // Return all GLs as fallback
-            List<GLBalance> glBalances = glBalanceRepository.findByTranDate(reportDate);
-            return generateTrialBalanceReportFromBalances(glBalances, filePath, reportDate);
+            glBalances = glBalanceRepository.findByTranDate(reportDate);
+        } else {
+            log.info("Found {} active GL numbers with accounts", activeGLNumbers.size());
+            // Get GL balances only for active GLs
+            glBalances = glBalanceRepository.findByTranDateAndGlNumIn(reportDate, activeGLNumbers);
         }
-        
-        log.info("Found {} active GL numbers with accounts", activeGLNumbers.size());
-        
-        // Get GL balances only for active GLs
-        List<GLBalance> glBalances = glBalanceRepository.findByTranDateAndGlNumIn(reportDate, activeGLNumbers);
 
-        return generateTrialBalanceReportFromBalances(glBalances, filePath, reportDate);
+        return generateTrialBalanceReportFromBalancesAsBytes(glBalances, reportDate);
     }
 
     /**
-     * Generate Trial Balance Report from GL balances
-     * Extracted method to avoid duplication
-     */
-    private String generateTrialBalanceReportFromBalances(List<GLBalance> glBalances, Path filePath, LocalDate reportDate)
-            throws IOException {
-        
-        if (glBalances.isEmpty()) {
-            log.warn("No GL balances found for date: {}", reportDate);
-        }
-
-        // Sort by GL Code
-        glBalances.sort(Comparator.comparing(GLBalance::getGlNum));
-
-        try (BufferedWriter writer = Files.newBufferedWriter(filePath)) {
-            // Write header
-            writer.write("GL_Code,GL_Name,Opening_Bal,DR_Summation,CR_Summation,Closing_Bal");
-            writer.newLine();
-
-            // Initialize totals
-            BigDecimal totalOpeningBal = BigDecimal.ZERO;
-            BigDecimal totalDRSummation = BigDecimal.ZERO;
-            BigDecimal totalCRSummation = BigDecimal.ZERO;
-            BigDecimal totalClosingBal = BigDecimal.ZERO;
-
-            // Write data rows
-            for (GLBalance glBalance : glBalances) {
-                String glNum = glBalance.getGlNum();
-                String glName = getGLName(glNum);
-
-                BigDecimal openingBal = nvl(glBalance.getOpeningBal());
-                BigDecimal drSummation = nvl(glBalance.getDrSummation());
-                BigDecimal crSummation = nvl(glBalance.getCrSummation());
-                BigDecimal closingBal = nvl(glBalance.getClosingBal());
-
-                writer.write(String.format("%s,%s,%s,%s,%s,%s",
-                        glNum, glName, openingBal, drSummation, crSummation, closingBal));
-                writer.newLine();
-
-                // Accumulate totals
-                totalOpeningBal = totalOpeningBal.add(openingBal);
-                totalDRSummation = totalDRSummation.add(drSummation);
-                totalCRSummation = totalCRSummation.add(crSummation);
-                totalClosingBal = totalClosingBal.add(closingBal);
-            }
-
-            // Write footer row with totals
-            writer.write(String.format("TOTAL,,%s,%s,%s,%s",
-                    totalOpeningBal, totalDRSummation, totalCRSummation, totalClosingBal));
-            writer.newLine();
-
-            log.info("Trial Balance Report generated: {} GL accounts, Total DR={}, Total CR={}",
-                    glBalances.size(), totalDRSummation, totalCRSummation);
-
-            // Validation: Total DR must equal Total CR
-            if (totalDRSummation.compareTo(totalCRSummation) != 0) {
-                String errorMsg = String.format(
-                        "Trial Balance validation failed! Total DR (%s) != Total CR (%s). Difference: %s",
-                        totalDRSummation, totalCRSummation, totalDRSummation.subtract(totalCRSummation));
-                log.error(errorMsg);
-                throw new BusinessException(errorMsg);
-            }
-
-            log.info("Trial Balance validation passed: DR = CR = {}", totalDRSummation);
-        }
-
-        return filePath.toString();
-    }
-
-    /**
-     * Generate Balance Sheet Report in Excel Format (Side-by-Side Layout)
+     * Generate Balance Sheet Report as byte array (in memory)
      *
-     * NEW FORMAT:
-     * - Liabilities on left (columns A-D)
-     * - Assets on right (columns F-I)
-     * - Only includes Balance Sheet items (excludes Income/Expenditure)
-     * - Only GLs from sub-products with accounts
-     * - Excel (.xlsx) format
+     * @param systemDate The system date for reporting
+     * @return byte array containing Excel content
      */
-    private String generateBalanceSheetReport(LocalDate reportDate, Path reportDir, String reportDateStr)
-            throws IOException {
-        String fileName = "BalanceSheet_" + reportDateStr + ".xlsx";
-        Path filePath = reportDir.resolve(fileName);
-
-        log.info("Generating Balance Sheet Report (Excel): {}", filePath);
+    @Transactional(readOnly = true)
+    public byte[] generateBalanceSheetReportAsBytes(LocalDate systemDate) throws IOException {
+        LocalDate reportDate = systemDate != null ? systemDate : systemDateService.getSystemDate();
+        String reportDateStr = reportDate.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        
+        log.info("Generating Balance Sheet Report in memory for date: {}", reportDate);
 
         // Get Balance Sheet GL numbers only (excludes Income 14* and Expenditure 24*)
         List<String> balanceSheetGLNumbers = glSetupRepository.findBalanceSheetGLNumbersWithAccounts();
         
         if (balanceSheetGLNumbers.isEmpty()) {
             log.warn("No Balance Sheet GL numbers found with accounts");
-            // Create empty workbook as fallback
-            createEmptyBalanceSheet(filePath, reportDateStr);
-            return filePath.toString();
+            return createEmptyBalanceSheetAsBytes(reportDateStr);
         }
         
         log.info("Found {} Balance Sheet GL numbers with accounts", balanceSheetGLNumbers.size());
@@ -236,12 +114,10 @@ public class FinancialReportsService {
 
         if (glBalances.isEmpty()) {
             log.warn("No GL balances found for Balance Sheet GLs on date: {}", reportDate);
-            createEmptyBalanceSheet(filePath, reportDateStr);
-            return filePath.toString();
+            return createEmptyBalanceSheetAsBytes(reportDateStr);
         }
 
         // Separate Liabilities and Assets
-        // Simple classification: All GL starting with '1' are Liabilities, all starting with '2' are Assets
         List<GLBalance> liabilities = glBalances.stream()
                 .filter(gl -> gl.getGlNum().startsWith("1"))
                 .sorted(Comparator.comparing(GLBalance::getGlNum))
@@ -252,32 +128,89 @@ public class FinancialReportsService {
                 .sorted(Comparator.comparing(GLBalance::getGlNum))
                 .collect(Collectors.toList());
 
-        // Generate Excel file with side-by-side layout
-        generateBalanceSheetExcel(filePath, reportDateStr, liabilities, assets);
-
-        // Calculate totals for logging
-        BigDecimal totalLiabilities = liabilities.stream()
-                .map(gl -> nvl(gl.getClosingBal()))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-        
-        BigDecimal totalAssets = assets.stream()
-                .map(gl -> nvl(gl.getClosingBal()))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        log.info("Balance Sheet Report (Excel): {} Liabilities (Total: {}), {} Assets (Total: {})",
-                liabilities.size(), totalLiabilities, assets.size(), totalAssets);
-
-        return filePath.toString();
+        return generateBalanceSheetExcelAsBytes(reportDateStr, liabilities, assets);
     }
 
     /**
-     * Generate Balance Sheet Excel file with side-by-side layout
+     * Generate Trial Balance Report from GL balances as byte array (in memory)
+     * 
+     * Format:
+     * GL_Code, GL_Name, Opening_Bal, DR_Summation, CR_Summation, Closing_Bal
+     *
+     * Footer row: "TOTAL", sum(Opening_Bal), sum(DR_Summation), sum(CR_Summation), sum(Closing_Bal)
+     * Validation: Total DR_Summation must equal Total CR_Summation
+     */
+    private byte[] generateTrialBalanceReportFromBalancesAsBytes(List<GLBalance> glBalances, LocalDate reportDate)
+            throws IOException {
+        
+        if (glBalances.isEmpty()) {
+            log.warn("No GL balances found for date: {}", reportDate);
+        }
+
+        // Sort by GL Code
+        glBalances.sort(Comparator.comparing(GLBalance::getGlNum));
+
+        StringBuilder csvContent = new StringBuilder();
+        
+        // Write header
+        csvContent.append("GL_Code,GL_Name,Opening_Bal,DR_Summation,CR_Summation,Closing_Bal\n");
+
+        // Initialize totals
+        BigDecimal totalOpeningBal = BigDecimal.ZERO;
+        BigDecimal totalDRSummation = BigDecimal.ZERO;
+        BigDecimal totalCRSummation = BigDecimal.ZERO;
+        BigDecimal totalClosingBal = BigDecimal.ZERO;
+
+        // Write data rows
+        for (GLBalance glBalance : glBalances) {
+            String glNum = glBalance.getGlNum();
+            String glName = getGLName(glNum);
+
+            BigDecimal openingBal = nvl(glBalance.getOpeningBal());
+            BigDecimal drSummation = nvl(glBalance.getDrSummation());
+            BigDecimal crSummation = nvl(glBalance.getCrSummation());
+            BigDecimal closingBal = nvl(glBalance.getClosingBal());
+
+            csvContent.append(String.format("%s,%s,%s,%s,%s,%s\n",
+                    glNum, glName, openingBal, drSummation, crSummation, closingBal));
+
+            // Accumulate totals
+            totalOpeningBal = totalOpeningBal.add(openingBal);
+            totalDRSummation = totalDRSummation.add(drSummation);
+            totalCRSummation = totalCRSummation.add(crSummation);
+            totalClosingBal = totalClosingBal.add(closingBal);
+        }
+
+        // Write footer row with totals
+        csvContent.append(String.format("TOTAL,,%s,%s,%s,%s\n",
+                totalOpeningBal, totalDRSummation, totalCRSummation, totalClosingBal));
+
+        log.info("Trial Balance Report generated: {} GL accounts, Total DR={}, Total CR={}",
+                glBalances.size(), totalDRSummation, totalCRSummation);
+
+        // Validation: Total DR must equal Total CR
+        if (totalDRSummation.compareTo(totalCRSummation) != 0) {
+            String errorMsg = String.format(
+                    "Trial Balance validation failed! Total DR (%s) != Total CR (%s). Difference: %s",
+                    totalDRSummation, totalCRSummation, totalDRSummation.subtract(totalCRSummation));
+            log.error(errorMsg);
+            throw new BusinessException(errorMsg);
+        }
+
+        log.info("Trial Balance validation passed: DR = CR = {}", totalDRSummation);
+
+        return csvContent.toString().getBytes("UTF-8");
+    }
+
+
+    /**
+     * Generate Balance Sheet Excel file with side-by-side layout as byte array (in memory)
      * Liabilities on left, Assets on right
      */
-    private void generateBalanceSheetExcel(Path filePath, String reportDateStr,
-                                           List<GLBalance> liabilities, List<GLBalance> assets) throws IOException {
+    private byte[] generateBalanceSheetExcelAsBytes(String reportDateStr,
+                                                    List<GLBalance> liabilities, List<GLBalance> assets) throws IOException {
         try (Workbook workbook = new XSSFWorkbook();
-             FileOutputStream fileOut = new FileOutputStream(filePath.toFile())) {
+             ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
 
             Sheet sheet = workbook.createSheet("Balance Sheet");
 
@@ -387,17 +320,23 @@ public class FinancialReportsService {
             sheet.setColumnWidth(5, 40 * 256); // GL_Name right
             sheet.setColumnWidth(6, 15 * 256); // Closing_Bal right
 
-            workbook.write(fileOut);
-            log.info("Balance Sheet Excel file created: {}", filePath);
+            workbook.write(outputStream);
+            log.info("Balance Sheet Excel file generated in memory ({} bytes)", outputStream.size());
+            
+            // Calculate totals for logging
+            log.info("Balance Sheet Report (Excel): {} Liabilities (Total: {}), {} Assets (Total: {})",
+                    liabilities.size(), totalLiabilities, assets.size(), totalAssets);
+            
+            return outputStream.toByteArray();
         }
     }
 
     /**
-     * Create empty Balance Sheet when no data available
+     * Create empty Balance Sheet when no data available as byte array (in memory)
      */
-    private void createEmptyBalanceSheet(Path filePath, String reportDateStr) throws IOException {
+    private byte[] createEmptyBalanceSheetAsBytes(String reportDateStr) throws IOException {
         try (Workbook workbook = new XSSFWorkbook();
-             FileOutputStream fileOut = new FileOutputStream(filePath.toFile())) {
+             ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
             
             Sheet sheet = workbook.createSheet("Balance Sheet");
             Row titleRow = sheet.createRow(0);
@@ -405,7 +344,8 @@ public class FinancialReportsService {
             Row messageRow = sheet.createRow(2);
             messageRow.createCell(0).setCellValue("No Balance Sheet data available for this date.");
             
-            workbook.write(fileOut);
+            workbook.write(outputStream);
+            return outputStream.toByteArray();
         }
     }
 
@@ -471,47 +411,6 @@ public class FinancialReportsService {
         cell.setCellStyle(style);
     }
 
-    /**
-     * Write a section of the balance sheet and return the total
-     */
-    private BigDecimal writeBalanceSheetSection(BufferedWriter writer, String category,
-                                                List<GLBalance> glBalances) throws IOException {
-        BigDecimal total = BigDecimal.ZERO;
-
-        // Sort by GL Code
-        glBalances.sort(Comparator.comparing(GLBalance::getGlNum));
-
-        for (GLBalance glBalance : glBalances) {
-            String glNum = glBalance.getGlNum();
-            String glName = getGLName(glNum);
-            BigDecimal closingBal = nvl(glBalance.getClosingBal());
-
-            writer.write(String.format("%s,%s,%s,%s", category, glNum, glName, closingBal));
-            writer.newLine();
-
-            total = total.add(closingBal);
-        }
-
-        return total;
-    }
-
-    /**
-     * Filter GL balances by GL number prefix
-     */
-    private List<GLBalance> filterGLsByPrefix(List<GLBalance> glBalances, String prefix) {
-        return glBalances.stream()
-                .filter(gl -> gl.getGlNum().startsWith(prefix))
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * Filter GL balances excluding a specific prefix
-     */
-    private List<GLBalance> filterGLsExcluding(List<GLBalance> glBalances, String excludePrefix) {
-        return glBalances.stream()
-                .filter(gl -> !gl.getGlNum().startsWith(excludePrefix))
-                .collect(Collectors.toList());
-    }
 
     /**
      * Get GL name from GL setup
@@ -528,28 +427,4 @@ public class FinancialReportsService {
         return value != null ? value : BigDecimal.ZERO;
     }
 
-    /**
-     * Read CSV file as byte array for download
-     *
-     * @param filePath The absolute path to the CSV file
-     * @return byte array containing file content
-     * @throws IOException if file cannot be read
-     */
-    public byte[] readCsvFileAsBytes(String filePath) throws IOException {
-        try {
-            Path path = Paths.get(filePath);
-            
-            if (!Files.exists(path)) {
-                throw new IOException("Report file not found: " + filePath);
-            }
-            
-            byte[] content = Files.readAllBytes(path);
-            log.debug("Successfully read file: {} ({} bytes)", filePath, content.length);
-            return content;
-            
-        } catch (IOException e) {
-            log.error("Failed to read file: {}", filePath, e);
-            throw e;
-        }
-    }
 }

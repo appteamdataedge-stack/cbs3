@@ -49,6 +49,9 @@ public class TransactionService {
     private final SystemDateService systemDateService;
     private final UnifiedAccountService unifiedAccountService;
     private final TransactionHistoryService transactionHistoryService;
+    private final ValueDateValidationService valueDateValidationService;
+    private final ValueDateCalculationService valueDateCalculationService;
+    private final ValueDatePostingService valueDatePostingService;
 
     private final Random random = new Random();
 
@@ -62,25 +65,33 @@ public class TransactionService {
     public TransactionResponseDTO createTransaction(TransactionRequestDTO transactionRequestDTO) {
         // Validate transaction balance
         validateTransactionBalance(transactionRequestDTO);
-        
+
         // Validate all transactions using new business rules
         for (TransactionLineDTO lineDTO : transactionRequestDTO.getLines()) {
             try {
                 validationService.validateTransaction(
                         lineDTO.getAccountNo(), lineDTO.getDrCrFlag(), lineDTO.getLcyAmt());
             } catch (BusinessException e) {
-                throw new BusinessException("Transaction validation failed for account " + 
+                throw new BusinessException("Transaction validation failed for account " +
                         lineDTO.getAccountNo() + ": " + e.getMessage());
             }
         }
-        
+
         // Generate a transaction ID
         String tranId = generateTransactionId();
         LocalDate tranDate = systemDateService.getSystemDate();
         LocalDate valueDate = transactionRequestDTO.getValueDate();
+
+        // Validate value date
+        valueDateValidationService.validateValueDate(valueDate);
         
         List<TranTable> transactions = new ArrayList<>();
         
+        String transactionNarration = transactionRequestDTO.getNarration();
+        if ((transactionNarration == null || transactionNarration.isBlank()) && !transactionRequestDTO.getLines().isEmpty()) {
+            transactionNarration = transactionRequestDTO.getLines().get(0).getUdf1();
+        }
+
         // Process each transaction line - create in Entry status
         int lineNumber = 1;
         for (TransactionLineDTO lineDTO : transactionRequestDTO.getLines()) {
@@ -90,7 +101,7 @@ public class TransactionService {
             }
             
             // Get account info for GL number
-            UnifiedAccountService.AccountInfo accountInfo = unifiedAccountService.getAccountInfo(lineDTO.getAccountNo());
+            unifiedAccountService.getAccountInfo(lineDTO.getAccountNo());
             
             // Create transaction record with Entry status
             String lineId = tranId + "-" + lineNumber++;
@@ -107,8 +118,8 @@ public class TransactionService {
                     .lcyAmt(lineDTO.getLcyAmt())
                     .debitAmount(lineDTO.getDrCrFlag() == DrCrFlag.D ? lineDTO.getLcyAmt() : BigDecimal.ZERO)
                     .creditAmount(lineDTO.getDrCrFlag() == DrCrFlag.C ? lineDTO.getLcyAmt() : BigDecimal.ZERO)
-                    .narration(transactionRequestDTO.getNarration())
-                    .udf1(lineDTO.getUdf1())
+                    .narration(lineDTO.getUdf1())
+                    .udf1(null)
                     .build();
             
             transactions.add(transaction);
@@ -118,8 +129,15 @@ public class TransactionService {
         tranTableRepository.saveAll(transactions);
         
         // Create response
+        String responseNarration = (transactionNarration != null && !transactionNarration.isBlank())
+                ? transactionNarration
+                : transactions.stream()
+                        .findFirst()
+                        .map(TranTable::getNarration)
+                        .orElse(null);
+
         TransactionResponseDTO response = buildTransactionResponse(tranId, tranDate, valueDate, 
-                transactionRequestDTO.getNarration(), transactions);
+                responseNarration, transactions);
         
         log.info("Transaction created with ID: {} in Entry status", tranId);
         return response;
@@ -128,7 +146,8 @@ public class TransactionService {
     /**
      * Post a transaction (move from Entry to Posted status)
      * This updates balances and creates GL movements
-     * 
+     * Enhanced with value dating logic
+     *
      * @param tranId The transaction ID
      * @return The updated transaction response
      */
@@ -138,57 +157,79 @@ public class TransactionService {
         List<TranTable> transactions = tranTableRepository.findAll().stream()
                 .filter(t -> t.getTranId().startsWith(tranId + "-") && t.getTranStatus() == TranStatus.Entry)
                 .collect(Collectors.toList());
-        
+
         if (transactions.isEmpty()) {
             throw new ResourceNotFoundException("Transaction", "ID", tranId);
         }
-        
+
         // Validate again before posting
         BigDecimal totalDebit = transactions.stream()
                 .filter(t -> t.getDrCrFlag() == DrCrFlag.D)
                 .map(TranTable::getLcyAmt)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        
+
         BigDecimal totalCredit = transactions.stream()
                 .filter(t -> t.getDrCrFlag() == DrCrFlag.C)
                 .map(TranTable::getLcyAmt)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        
+
         if (totalDebit.compareTo(totalCredit) != 0) {
             throw new BusinessException("Cannot post unbalanced transaction");
         }
-        
+
         // Validate all transactions again before posting using new business rules
         for (TranTable transaction : transactions) {
             try {
                 validationService.validateTransaction(
                         transaction.getAccountNo(), transaction.getDrCrFlag(), transaction.getLcyAmt());
             } catch (BusinessException e) {
-                throw new BusinessException("Transaction validation failed for account " + 
+                throw new BusinessException("Transaction validation failed for account " +
                         transaction.getAccountNo() + ": " + e.getMessage());
             }
         }
-        
+
+        // Determine value date classification
+        TranTable firstLine = transactions.get(0);
+        LocalDate valueDate = firstLine.getValueDate();
+        String valueDateType = valueDateValidationService.classifyValueDate(valueDate);
+
+        // Process based on value date type
+        if ("FUTURE".equals(valueDateType)) {
+            // FUTURE-DATED: Set status to Future, don't update balances
+            return postFutureDatedTransaction(tranId, transactions);
+        } else if ("PAST".equals(valueDateType)) {
+            // PAST-DATED: Post normally + calculate and post interest adjustments
+            return postPastDatedTransaction(tranId, transactions);
+        } else {
+            // CURRENT: Process normally
+            return postCurrentTransaction(tranId, transactions);
+        }
+    }
+
+    /**
+     * Post a current-dated transaction (normal processing)
+     */
+    private TransactionResponseDTO postCurrentTransaction(String tranId, List<TranTable> transactions) {
         List<GLMovement> glMovements = new ArrayList<>();
-        
+
         // Process each transaction line - update balances and create GL movements
         for (TranTable transaction : transactions) {
             // Update status to Posted
             transaction.setTranStatus(TranStatus.Posted);
-            
+
             // Get GL number from account (customer or office)
             String glNum = unifiedAccountService.getGlNum(transaction.getAccountNo());
             GLSetup glSetup = glSetupRepository.findById(glNum)
                     .orElseThrow(() -> new ResourceNotFoundException("GL", "GL Number", glNum));
-            
+
             // Update account balance with validation
             validationService.updateAccountBalanceForTransaction(
                     transaction.getAccountNo(), transaction.getDrCrFlag(), transaction.getLcyAmt());
-            
+
             // Update GL balance
             BigDecimal newGLBalance = balanceService.updateGLBalance(
                     glNum, transaction.getDrCrFlag(), transaction.getLcyAmt());
-            
+
             // Create GL movement record
             GLMovement glMovement = GLMovement.builder()
                     .transaction(transaction)
@@ -199,21 +240,80 @@ public class TransactionService {
                     .amount(transaction.getLcyAmt())
                     .balanceAfter(newGLBalance)
                     .build();
-            
+
             glMovements.add(glMovement);
         }
-        
+
         // Save updated transaction status
         tranTableRepository.saveAll(transactions);
-        
+
         // Save all GL movements
         glMovementRepository.saveAll(glMovements);
-        
+
         TranTable firstLine = transactions.get(0);
-        TransactionResponseDTO response = buildTransactionResponse(tranId, firstLine.getTranDate(), 
+        TransactionResponseDTO response = buildTransactionResponse(tranId, firstLine.getTranDate(),
                 firstLine.getValueDate(), firstLine.getNarration(), transactions);
-        
-        log.info("Transaction posted with ID: {}", tranId);
+
+        log.info("Current-dated transaction posted with ID: {}", tranId);
+        return response;
+    }
+
+    /**
+     * Post a past-dated transaction
+     * Includes delta interest calculation and adjustment posting
+     */
+    private TransactionResponseDTO postPastDatedTransaction(String tranId, List<TranTable> transactions) {
+        // First, post the main transaction using normal logic
+        TransactionResponseDTO response = postCurrentTransaction(tranId, transactions);
+
+        // Calculate and post interest adjustments for each line
+        for (TranTable transaction : transactions) {
+            LocalDate valueDate = transaction.getValueDate();
+            int daysDifference = valueDateValidationService.calculateDaysDifference(valueDate);
+
+            // Calculate delta interest
+            BigDecimal deltaInterest = valueDateCalculationService.calculateDeltaInterest(
+                transaction.getAccountNo(), transaction.getLcyAmt(), daysDifference);
+
+            // Post interest adjustment if delta > 0
+            if (deltaInterest.compareTo(BigDecimal.ZERO) > 0) {
+                valueDatePostingService.postInterestAdjustment(transaction, deltaInterest);
+            }
+
+            // Log value date transaction
+            valueDatePostingService.logValueDateTransaction(
+                transaction.getTranId(), valueDate, daysDifference, deltaInterest, "Y");
+        }
+
+        log.info("Past-dated transaction posted with interest adjustments: {}", tranId);
+        return response;
+    }
+
+    /**
+     * Post a future-dated transaction
+     * Sets status to Future and does NOT update balances
+     */
+    private TransactionResponseDTO postFutureDatedTransaction(String tranId, List<TranTable> transactions) {
+        // Update status to Future (not Posted)
+        for (TranTable transaction : transactions) {
+            transaction.setTranStatus(TranStatus.Future);
+
+            LocalDate valueDate = transaction.getValueDate();
+            int daysDifference = valueDateValidationService.calculateDaysDifference(valueDate);
+
+            // Log future-dated transaction (no delta interest yet)
+            valueDatePostingService.logValueDateTransaction(
+                transaction.getTranId(), valueDate, daysDifference, BigDecimal.ZERO, "N");
+        }
+
+        // Save updated transaction status (but don't update balances or create GL movements)
+        tranTableRepository.saveAll(transactions);
+
+        TranTable firstLine = transactions.get(0);
+        TransactionResponseDTO response = buildTransactionResponse(tranId, firstLine.getTranDate(),
+                firstLine.getValueDate(), firstLine.getNarration(), transactions);
+
+        log.info("Future-dated transaction created with ID: {}. Balances NOT updated.", tranId);
         return response;
     }
 
@@ -312,7 +412,7 @@ public class TransactionService {
                     .creditAmount(oppositeDrCr == DrCrFlag.C ? original.getLcyAmt() : BigDecimal.ZERO)
                     .narration("REVERSAL: " + reason + " (Original: " + original.getTranId() + ")")
                     .pointingId(original.getPointingId()) // Link to original
-                    .udf1(original.getUdf1())
+                    .udf1(null)
                     .build();
             
             reversalTransactions.add(reversalTran);
@@ -515,7 +615,7 @@ public class TransactionService {
                             .fcyAmt(tran.getFcyAmt())
                             .exchangeRate(tran.getExchangeRate())
                             .lcyAmt(tran.getLcyAmt())
-                            .udf1(tran.getUdf1())
+                            .udf1(tran.getNarration())
                             .build();
                 })
                 .collect(Collectors.toList());

@@ -15,8 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -43,9 +41,6 @@ public class AdminController {
     private final FinancialReportsService financialReportsService;
     private final com.example.moneymarket.repository.GLMovementRepository glMovementRepository;
     private final com.example.moneymarket.repository.GLMovementAccrualRepository glMovementAccrualRepository;
-
-    @Value("${reports.directory:reports}")
-    private String reportsBaseDirectory;
 
     /**
      * Run End of Day (EOD) process manually
@@ -359,18 +354,17 @@ public class AdminController {
     }
 
     /**
-     * Download Trial Balance CSV file
+     * Download Trial Balance CSV file (generated on-demand, not stored on server)
      */
     @GetMapping("/eod/batch-job-7/download/trial-balance/{date}")
     public ResponseEntity<byte[]> downloadTrialBalance(@PathVariable String date) {
         try {
             validateDateFormat(date);
             
+            LocalDate reportDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd"));
+            byte[] content = financialReportsService.generateTrialBalanceReportAsBytes(reportDate);
+            
             String fileName = "TrialBalance_" + date + ".csv";
-            Path filePath = Paths.get(reportsBaseDirectory, date, fileName);
-            
-            byte[] content = financialReportsService.readCsvFileAsBytes(filePath.toString());
-            
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.parseMediaType("text/csv"));
             headers.setContentDispositionFormData("attachment", fileName);
@@ -390,20 +384,19 @@ public class AdminController {
     }
 
     /**
-     * Download Balance Sheet Excel file (.xlsx)
+     * Download Balance Sheet Excel file (.xlsx) (generated on-demand, not stored on server)
      */
     @GetMapping("/eod/batch-job-7/download/balance-sheet/{date}")
     public ResponseEntity<byte[]> downloadBalanceSheet(@PathVariable String date) {
         try {
             validateDateFormat(date);
             
-            String fileName = "BalanceSheet_" + date + ".xlsx";  // Excel format
-            Path filePath = Paths.get(reportsBaseDirectory, date, fileName);
+            LocalDate reportDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd"));
+            byte[] content = financialReportsService.generateBalanceSheetReportAsBytes(reportDate);
             
-            byte[] content = financialReportsService.readCsvFileAsBytes(filePath.toString());
-            
+            String fileName = "BalanceSheet_" + date + ".xlsx";
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"));  // Excel MIME type
+            headers.setContentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"));
             headers.setContentDispositionFormData("attachment", fileName);
             headers.setContentLength(content.length);
             

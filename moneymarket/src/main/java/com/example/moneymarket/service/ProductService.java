@@ -92,8 +92,8 @@ public class ProductService {
             throw new BusinessException("Invalid GL Number: " + e.getMessage());
         }
 
-        // Update fields
-        product.setProductCode(productRequestDTO.getProductCode());
+        // Update fields (productCode is not updated - it remains unchanged)
+        // product.setProductCode(productRequestDTO.getProductCode()); // Product code cannot be changed after creation
         product.setProductName(productRequestDTO.getProductName());
         product.setCumGLNum(productRequestDTO.getCumGLNum());
         product.setCustomerProductFlag(productRequestDTO.getCustomerProductFlag());

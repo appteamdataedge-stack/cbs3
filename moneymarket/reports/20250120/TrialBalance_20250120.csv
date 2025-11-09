@@ -1,6 +1,0 @@
-GL_Code,GL_Name,Opening_Bal,DR_Summation,CR_Summation,Closing_Bal
-130101001,Interest Payable Savings Bank Regular,85.36,0.00,21.79,107.15
-130102001,IPTDCUM,32.06,0.00,32.06,64.12
-240101001,Interest Expenditure Savings Bank Regular,-85.36,21.79,0.00,-107.15
-240102001,IETDCUM,-32.06,32.06,0.00,-64.12
-TOTAL,,0.00,53.85,53.85,0.00

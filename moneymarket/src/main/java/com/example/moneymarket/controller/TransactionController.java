@@ -2,6 +2,7 @@ package com.example.moneymarket.controller;
 
 import com.example.moneymarket.dto.TransactionRequestDTO;
 import com.example.moneymarket.dto.TransactionResponseDTO;
+import com.example.moneymarket.service.SystemDateService;
 import com.example.moneymarket.service.TransactionService;
 import com.example.moneymarket.service.UnifiedAccountService;
 import com.example.moneymarket.validation.TransactionValidator;
@@ -31,6 +32,7 @@ public class TransactionController {
     private final TransactionService transactionService;
     private final TransactionValidator transactionValidator;
     private final UnifiedAccountService unifiedAccountService;
+    private final SystemDateService systemDateService;
 
     /**
      * Initialize validator for transaction request
@@ -73,6 +75,18 @@ public class TransactionController {
     }
 
     /**
+     * Get the current system date used for transactions
+     *
+     * @return System date in ISO format
+     */
+    @GetMapping("/default-value-date")
+    public ResponseEntity<Map<String, String>> getSystemDate() {
+        Map<String, String> response = new HashMap<>();
+        response.put("systemDate", systemDateService.getSystemDate().toString());
+        return ResponseEntity.ok(response);
+    }
+
+    /**
      * Create a new transaction
      * 
      * @param transactionRequestDTO The transaction data
@@ -98,7 +112,7 @@ public class TransactionController {
      * @param tranId The transaction ID
      * @return The transaction
      */
-    @GetMapping("/{tranId}")
+    @GetMapping("/{tranId:T[0-9\\-]+}")
     public ResponseEntity<TransactionResponseDTO> getTransaction(@PathVariable String tranId) {
         TransactionResponseDTO transaction = transactionService.getTransaction(tranId);
         return ResponseEntity.ok(transaction);
@@ -111,7 +125,7 @@ public class TransactionController {
      * @param tranId The transaction ID
      * @return The posted transaction
      */
-    @PostMapping("/{tranId}/post")
+    @PostMapping("/{tranId:T[0-9\\-]+}/post")
     public ResponseEntity<TransactionResponseDTO> postTransaction(@PathVariable String tranId) {
         TransactionResponseDTO postedTransaction = transactionService.postTransaction(tranId);
         return ResponseEntity.ok(postedTransaction);
@@ -124,7 +138,7 @@ public class TransactionController {
      * @param tranId The transaction ID
      * @return The verified transaction
      */
-    @PostMapping("/{tranId}/verify")
+    @PostMapping("/{tranId:T[0-9\\-]+}/verify")
     public ResponseEntity<TransactionResponseDTO> verifyTransaction(@PathVariable String tranId) {
         TransactionResponseDTO verifiedTransaction = transactionService.verifyTransaction(tranId);
         return ResponseEntity.ok(verifiedTransaction);
@@ -164,7 +178,7 @@ public class TransactionController {
      * @param reason The reason for reversal
      * @return The reversal transaction
      */
-    @PostMapping("/{tranId}/reverse")
+    @PostMapping("/{tranId:T[0-9\\-]+}/reverse")
     public ResponseEntity<TransactionResponseDTO> reverseTransaction(
             @PathVariable String tranId,
             @RequestParam(required = false, defaultValue = "Manual reversal") String reason) {

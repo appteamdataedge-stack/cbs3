@@ -234,3 +234,50 @@ export const getEODJobStatus = async (jobNumber: number): Promise<EODJobStatus> 
     url: `/admin/eod/jobs/${jobNumber}`,
   });
 };
+
+// ============================================
+// BOD (Beginning of Day) API Functions
+// ============================================
+
+/**
+ * BOD Processing Result
+ */
+export interface BODResult {
+  systemDate: string;
+  pendingCountBefore: number;
+  processedCount: number;
+  pendingCountAfter: number;
+  status: string;
+  message: string;
+}
+
+/**
+ * BOD Status Information
+ */
+export interface BODStatus {
+  systemDate: string;
+  pendingFutureDatedCount: number;
+  pendingTransactions: any[]; // Transaction details
+}
+
+/**
+ * Run BOD (Beginning of Day) processing manually
+ * Processes all future-dated transactions whose value date has arrived
+ */
+export const runBOD = async (): Promise<BODResult> => {
+  return apiRequest<BODResult>({
+    method: 'POST',
+    url: '/bod/run',
+  });
+};
+
+/**
+ * Get BOD status information
+ * Returns pending future-dated transactions count and details
+ */
+export const getBODStatus = async (): Promise<BODStatus> => {
+  return apiRequest<BODStatus>({
+    method: 'GET',
+    url: '/bod/status',
+  });
+};

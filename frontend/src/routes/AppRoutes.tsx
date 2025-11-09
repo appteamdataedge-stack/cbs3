@@ -19,6 +19,7 @@ import TransactionList from '../pages/transactions/TransactionList';
 import TransactionForm from '../pages/transactions/TransactionForm';
 import StatementOfAccounts from '../pages/StatementOfAccounts';
 import EOD from '../pages/admin/EOD';
+import BOD from '../pages/admin/BOD';
 import SystemDate from '../pages/admin/SystemDate';
 import Login from '../pages/auth/Login';
 import TestPage from '../pages/TestPage';
@@ -118,6 +119,7 @@ const AppRoutes = () => {
 
         {/* Admin - Requires admin role */}
         <Route element={<ProtectedRoute requiredRole="ADMIN" />}>
+          <Route path="/admin/bod" element={<BOD />} />
           <Route path="/admin/eod" element={<EOD />} />
           <Route path="/admin/system-date" element={<SystemDate />} />
         </Route>

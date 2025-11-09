@@ -105,3 +105,15 @@ export const getAccountBalance = async (accountNo: string): Promise<AccountBalan
     url: `${ACCOUNTS_ENDPOINT}/${accountNo}/balance`,
   });
 };
+
+/**
+ * Get the system date used for transactions
+ */
+export const getTransactionSystemDate = async (): Promise<{
+  systemDate: string;
+}> => {
+  return apiRequest({
+    method: 'GET',
+    url: `${TRANSACTIONS_ENDPOINT}/default-value-date`,
+  });
+};

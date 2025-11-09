@@ -74,6 +74,6 @@ public class TranTable {
     }
 
     public enum TranStatus {
-        Entry, Posted, Verified
+        Entry, Posted, Verified, Future
     }
 }

@@ -122,7 +122,12 @@ const ProductForm = () => {
   // Submit handler
   const onSubmit = (data: ProductRequestDTO) => {
     if (isEdit) {
-      updateMutation.mutate(data);
+      // Preserve the original product code when editing
+      const updateData = {
+        ...data,
+        productCode: productData?.productCode || data.productCode
+      };
+      updateMutation.mutate(updateData);
     } else {
       createMutation.mutate(data);
     }
@@ -160,7 +165,8 @@ const ProductForm = () => {
                       required
                       error={!!errors.productCode}
                       helperText={errors.productCode?.message}
-                      disabled={isLoading || (isEdit && productData?.verified)}
+                      disabled={isLoading || isEdit}
+                      InputProps={isEdit ? { readOnly: true } : undefined}
                     />
                   )}
                 />
@@ -177,7 +183,7 @@ const ProductForm = () => {
                           <Switch
                             {...field}
                             checked={field.value || false}
-                            disabled={isLoading || (isEdit && productData?.verified)}
+                            disabled={isLoading}
                           />
                         }
                         label="Customer Product"
@@ -195,7 +201,7 @@ const ProductForm = () => {
                             <Switch
                               {...field}
                               checked={field.value || false}
-                              disabled={isLoading || (isEdit && productData?.verified)}
+                              disabled={isLoading}
                             />
                           }
                           label="Interest Bearing"
@@ -218,7 +224,7 @@ const ProductForm = () => {
                         {...field}
                         labelId="gl-number-label"
                         label="GL Number"
-                        disabled={isLoading || isLoadingGLSetups || (isEdit && productData?.verified)}
+                        disabled={isLoading || isLoadingGLSetups}
                       >
                         {glSetups?.map((glSetup) => (
                           <MenuItem key={glSetup.glNum} value={glSetup.glNum}>
@@ -245,7 +251,7 @@ const ProductForm = () => {
                       required
                       error={!!errors.productName}
                       helperText={errors.productName?.message}
-                      disabled={isLoading || (isEdit && productData?.verified)}
+                      disabled={isLoading}
                     />
                   )}
                 />
@@ -265,7 +271,7 @@ const ProductForm = () => {
                           {...field}
                           labelId="deal-or-running-label"
                           label="Deal or Running *"
-                          disabled={isLoading || (isEdit && productData?.verified)}
+                          disabled={isLoading}
                         >
                           <MenuItem value="Deal">Deal</MenuItem>
                           <MenuItem value="Running">Running</MenuItem>
@@ -290,7 +296,7 @@ const ProductForm = () => {
                         {...field}
                         labelId="currency-label"
                         label="Currency"
-                        disabled={isLoading || (isEdit && productData?.verified)}
+                        disabled={isLoading}
                       >
                         <MenuItem value="BDT">BDT</MenuItem>
                         <MenuItem value="USD">USD</MenuItem>
@@ -374,7 +380,7 @@ const ProductForm = () => {
             <Button
               type="submit"
               variant="contained"
-              disabled={isLoading || (isEdit && productData?.verified)}
+              disabled={isLoading}
               startIcon={isLoading ? <CircularProgress size={20} /> : <SaveIcon />}
             >
               {isEdit ? 'Update' : 'Create'} Product
